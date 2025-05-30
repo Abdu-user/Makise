@@ -63,13 +63,18 @@
             @click="logout"
             >Logout</CustomButton
           >
+
           <CustomButton
             type="button"
             variety="secondary"
             size="md"
-            @click="logGlobalState"
-            >LogGlobalState</CustomButton
-          >
+            @click="state.toggleIsPrefillUserField"
+            >Prefill the user Field
+            <input
+              type="check"
+              v-model="state.isPrefilltheUserField"
+            />
+          </CustomButton>
         </div>
         <!-- Tail -->
         <div class="w-6 h-6 absolute right-4 -bottom-3">

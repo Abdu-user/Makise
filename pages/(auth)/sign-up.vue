@@ -159,6 +159,8 @@ import { useRoute, useRouter } from "vue-router";
 const defErrorMessage = "An unexpected error occurred during sign up.";
 import { computed, ref, watch, onMounted } from "vue";
 import CustomButton from "~/components/CustomButton.vue";
+import { useGlobalSettingStore } from "~/store/globalSetting";
+const state = useGlobalSettingStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -185,9 +187,9 @@ const closeVerifyEmailModal = () => {
 const isHappy = ref(true);
 const errorMessage = ref("");
 
-const email = ref("igromen1997@gmail.com");
-const password = ref("12345678");
-const confirmPassword = ref("12345678");
+const email = ref(state.isPrefilltheUserField ? "igromen1997@gmail.com" : "");
+const password = ref(state.isPrefilltheUserField ? "12345678" : "");
+const confirmPassword = ref(state.isPrefilltheUserField ? "12345678" : "");
 
 const codeInput = ref("");
 const codeInputMessage = ref("");

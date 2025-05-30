@@ -9,6 +9,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     isDebugPanelOpen: false, // Default only
     isNavOpen: false,
     isEditingProfile: false,
+    isPrefilltheUserField: false,
     consoleMessages: [] as string[],
     user: null as Models.User<Models.Preferences> | null,
     userData: null as UserProfileType | null,
@@ -28,6 +29,9 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       this.isDebugPanelOpen = !this.isDebugPanelOpen;
       this.saveToLocalStorage();
     },
+    toggleIsPrefillUserField() {
+      this.isPrefilltheUserField = !this.isPrefilltheUserField;
+    },
     addConsoleMessage(message: string) {
       this.consoleMessages.unshift(message);
     },
@@ -38,6 +42,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
           isDebugPanelOpen: this.isDebugPanelOpen,
           isNavOpen: this.isNavOpen,
           isEditingProfile: this.isEditingProfile,
+          isPrefilltheUserField: this.isPrefilltheUserField,
         })
       );
     },
@@ -88,6 +93,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
         this.isDebugPanelOpen = parsed.isDebugPanelOpen ?? false;
         this.isNavOpen = parsed.isNavOpen ?? false;
         this.isEditingProfile = parsed.isEditingProfile ?? false;
+        this.isPrefilltheUserField = parsed.isPrefilltheUserField ?? false;
       }
     },
   },

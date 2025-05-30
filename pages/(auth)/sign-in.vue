@@ -68,11 +68,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAuth } from "~/composables/useSignUp";
+import { useGlobalSettingStore } from "~/store/globalSetting";
 const { login } = useAuth();
 const router = useRouter();
+const state = useGlobalSettingStore();
 
-const email = ref("igromen1997@gmail.com");
-const password = ref("12345679");
+const email = ref(state.isPrefilltheUserField ? "igromen1997@gmail.com" : "");
+const password = ref(state.isPrefilltheUserField ? "12345678" : "");
 const emailError = ref("");
 const passwordError = ref("");
 
