@@ -56,25 +56,28 @@
             @click="tryToLogin"
             >Login</CustomButton
           >
-          <CustomButton
+          <CustomButton2
             type="button"
             variety="secondary"
             size="md"
             @click="logout"
-            >Logout</CustomButton
+            >Logout</CustomButton2
           >
 
-          <CustomButton
+          <CustomButton2
             type="button"
             variety="secondary"
             size="md"
-            @click="state.toggleIsPrefillUserField"
+            @click="toggleField"
+            class="flex"
             >Prefill the user Field
             <input
-              type="check"
-              v-model="state.isPrefilltheUserField"
+              class="w-full pointer-events-none"
+              type="checkBox"
+              :value="state.isPrefilltheUserField"
             />
-          </CustomButton>
+            {{ state.isPrefilltheUserField }}
+          </CustomButton2>
         </div>
         <!-- Tail -->
         <div class="w-6 h-6 absolute right-4 -bottom-3">
@@ -117,8 +120,8 @@
 <script setup lang="ts">
 // @ts-ignore
 import colors from "~/colors.ts";
-import CustomButton from "./CustomButton.vue";
-import CustomButton2 from "./CustomButton2.vue";
+import CustomButton from "./Custom/Button.vue";
+import CustomButton2 from "./Custom/Button2.vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useAuth } from "~/composables/useSignUp";
 import { cons } from "~/utils";
@@ -145,6 +148,10 @@ function tryToLogin() {
 }
 function logGlobalState() {
   console.log("Global state:", state.user);
+}
+function toggleField() {
+  state.toggleIsPrefillUserField();
+  console.log(state.isPrefilltheUserField);
 }
 </script>
 

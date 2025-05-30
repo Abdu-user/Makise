@@ -31,6 +31,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     },
     toggleIsPrefillUserField() {
       this.isPrefilltheUserField = !this.isPrefilltheUserField;
+      this.saveToLocalStorage();
     },
     addConsoleMessage(message: string) {
       this.consoleMessages.unshift(message);

@@ -1,18 +1,17 @@
 <template>
-  <div class="min-h-screen flex flex-col justify-stretch items-stretch md:justify-center md:items-center bg-mainBg px-4 py-6 sm:px-0">
+  <ModalsAlert v-if="errorMessage || false"> </ModalsAlert>
+  <div class="min-h-screen flex flex-col justify-center items-center md:justify-center bg-mainBg px-4 py-6 sm:px-0">
     <div class="w-full h-full max-md:flex-1 max-w-md bg-accent rounded-lg shadow-lg p-6 sm:p-8">
       <div class="mb-6">
         <!-- Back button -->
-        <ClientOnly>
-          <CustomButton2
-            icon
-            name="material-symbols-light:keyboard-backspace"
-            class="relative -top-0 -left-3"
-            aria-label="back button"
-            size="lg"
-            @click="router.back"
-          />
-        </ClientOnly>
+        <CustomButton2
+          icon
+          name="material-symbols-light:keyboard-backspace"
+          class="relative -top-0 -left-3"
+          aria-label="back button"
+          size="lg"
+          @click="router.back"
+        />
       </div>
       <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign Up</h2>
       <form
@@ -20,53 +19,47 @@
         @submit.prevent="handleSubmit"
       >
         <div>
-          <label
-            class="block text-highlight font-medium mb-2"
-            for="email"
-            >Email</label
-          >
-          <input
+          <CustomLabel for="email">Email</CustomLabel>
+          <CustomInput
             id="email"
             type="email"
+            autocomplete="email"
             v-model="email"
-            class="w-full px-4 py-3 border border-primary rounded focus:outline-none focus:ring-2 focus:ring-active bg-white text-base"
+            variant="input"
             placeholder="you@example.com"
           />
         </div>
         <div>
-          <label
-            class="block text-highlight font-medium mb-2"
-            for="password"
-            >Password</label
-          >
-          <input
+          <CustomLabel for="password">Password</CustomLabel>
+
+          <CustomPasswordInput
             id="password"
-            type="password"
+            autocomplete="new-password"
             v-model="password"
-            class="w-full px-4 py-3 border border-primary rounded focus:outline-none focus:ring-2 focus:ring-active bg-white text-base"
             placeholder="••••••••"
           />
         </div>
         <div>
-          <label
-            class="block text-highlight font-medium mb-2"
+          <CustomLabel
             for="confirmPassword"
-            >Confirm Password</label
+            class="mb-2"
+            >Confirm Password</CustomLabel
           >
-          <input
-            id="confirmPassword"
-            type="password"
+          <CustomPasswordInput
+            id="password"
+            autocomplete="new-password"
             v-model="confirmPassword"
-            class="w-full px-4 py-3 border border-primary rounded focus:outline-none focus:ring-2 focus:ring-active bg-white text-base"
             placeholder="••••••••"
           />
         </div>
-        <button
+        <CustomButton2
           type="submit"
-          class="w-full py-3 px-4 bg-primary hover:bg-active text-white font-semibold rounded transition-colors text-base"
+          variant="primary"
+          block
+          size="lg"
         >
           Create Account
-        </button>
+        </CustomButton2>
       </form>
       <p class="mt-6 text-center text-highlight text-base">
         Already have an account?
@@ -88,16 +81,16 @@
       v-if="isHappy"
       class="bg-accent rounded-lg shadow-lg p-6 sm:p-8 max-w-md w-full flex flex-col items-center"
     >
-      <ClientOnly>
+      <template>
         <Icon
           name="mdi:check-circle"
           class="text-green-500 w-10 h-10"
         />
-      </ClientOnly>
+      </template>
 
       <h3 class="text-xl font-bold text-primary mb-2 text-center">Verify Your Email</h3>
       <p class="text-highlight text-center mb-6">
-        We've sent a verification code to your email address.<br />
+        We've sent a verification code to your email {{ email }} address.<br />
         Please check your inbox and follow the instructions to complete your registration.
       </p>
       <div class="w-full">
@@ -158,7 +151,7 @@ import { required, email as emailValidator, minLength, sameAs } from "@vuelidate
 import { useRoute, useRouter } from "vue-router";
 const defErrorMessage = "An unexpected error occurred during sign up.";
 import { computed, ref, watch, onMounted } from "vue";
-import CustomButton from "~/components/CustomButton.vue";
+import CustomButton from "~/components/Custom/Button.vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 
@@ -187,9 +180,9 @@ const closeVerifyEmailModal = () => {
 const isHappy = ref(true);
 const errorMessage = ref("");
 
-const email = ref(state.isPrefilltheUserField ? "igromen1997@gmail.com" : "");
-const password = ref(state.isPrefilltheUserField ? "12345678" : "");
-const confirmPassword = ref(state.isPrefilltheUserField ? "12345678" : "");
+const email = ref("idfdwjoshv@gmail.com");
+const password = ref("12345678");
+const confirmPassword = ref("12345678");
 
 const codeInput = ref("");
 const codeInputMessage = ref("");
@@ -209,7 +202,8 @@ async function handleSubmit() {
     return;
   }
   try {
-    sendCode(email.value);
+    const res = await sendCode(email.value);
+    console.log(res);
     router.push({ query: { ...route.query, "verify-email": "true" } });
     isHappy.value = true;
     errorMessage.value = "";
@@ -244,4 +238,7 @@ async function handleVerifyCode(code: string) {
     throw err;
   }
 }
+watch(password, (newP) => {
+  console.log(newP);
+});
 </script>

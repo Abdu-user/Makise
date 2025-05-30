@@ -33,7 +33,7 @@ async function getUser() {
   await refreshUserData();
 }
 async function quickCheck() {
-  console.log(state.userData);
+  console.log(state?.userData);
 }
 </script>
 <style>

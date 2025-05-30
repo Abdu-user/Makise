@@ -61,27 +61,34 @@ export default defineEventHandler(async (event) => {
     </div>
   </div>
   
-  <!-- Copy Button -->
-  <div style="text-align: center; margin-bottom: 30px;">
-    <button
-      onclick="navigator.clipboard.writeText('${code}').then(() => alert('Verification code copied to clipboard!'))"
-      style="
-        background-color: #2c54c6;
-        color: white;
-        font-size: 1.2rem;
-        font-weight: 600;
-        border: none;
-        padding: 14px 60px;
-        border-radius: 25px;
-        cursor: pointer;
-        box-shadow: 0 5px 15px rgba(44, 84, 198, 0.4);
-        transition: background-color 0.3s ease;
-      "
-      onmouseover="this.style.backgroundColor='#1f3ebd'"
-      onmouseout="this.style.backgroundColor='#2c54c6'">
-      Copy Code
-    </button>
+ <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px;">
+  <h2 style="color: #2c54c6;">Your Verification Code</h2>
+  <p style="font-size: 16px;">Please copy this verification code and paste it into the app or website:</p>
+
+  <!-- Code Box -->
+  <div style="
+    background: #f2f6ff;
+    padding: 18px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    letter-spacing: 4px;
+    color: #2c54c6;
+    user-select: all;">
+    ${code}
   </div>
+
+  <!-- Tip (not a real button) -->
+  <p style="text-align: center; font-size: 14px; color: #666; margin-top: 25px;">
+    📋 To copy, just <strong>tap and hold</strong> the code, then choose <em>"Copy"</em>.
+  </p>
+
+  <p style="text-align: center; font-size: 14px; color: #999;">
+    This code will expire in 5 minutes.
+  </p>
+</div>
+
   
   <!-- Troubleshooting -->
   <section style="font-size: 0.9rem; color: #555; line-height: 1.5; border-top: 1px solid #ddd; padding-top: 25px;">

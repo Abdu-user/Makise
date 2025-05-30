@@ -222,7 +222,6 @@ import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 
 import { ref, watch, computed } from "vue";
-import CustomInput from "../CustomInput.vue";
 import type { UserProfileType } from "~/types/type";
 import { profileInputPlaceholders } from "~/mainFrame";
 import { refreshUserData } from "~/composables/useSignUp";

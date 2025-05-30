@@ -14,37 +14,41 @@
       <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign In</h2>
       <form @submit.prevent="onSignIn">
         <div class="mb-4">
-          <label
-            :class="`block text-highlight mb-2 ${emailError ? 'text-red-500 font-bold uppercase' : ''}`"
+          <CustomLabel
+            class="mb-2"
+            :error="Boolean(emailError)"
             for="email"
-            >{{ emailError ? emailError : "Email" }}</label
+            >{{ emailError ? emailError : "Email" }}</CustomLabel
           >
-          <input
+          <CustomInput
             id="email"
             v-model="email"
             type="email"
             required
+            placeholder="Email"
             :class="`w-full px-4 py-2 border border-highlight rounded focus:outline-none focus:ring-2 focus:ring-primary bg-white ${
               emailError ? '  decoration-red-500 text-red-500' : ''
             }`"
+            variant="input"
             :style="emailError && `text-decoration: underline; text-decoration-style: wavy;`"
           />
         </div>
         <div class="mb-6">
-          <label
-            :class="`block text-highlight mb-2 ${passwordError ? 'uppercase text-red-500  font-bold' : ''}`"
+          <CustomLabel
+            class="mb-2"
+            :error="Boolean(passwordError)"
             for="password"
-            >{{ passwordError ? passwordError : "Password" }}</label
+            >{{ passwordError ? passwordError : "Password" }}</CustomLabel
           >
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            required
-            :class="`w-full px-4 py-2 border border-highlight rounded focus:outline-none focus:ring-2 focus:ring-primary bg-white ${
-              passwordError ? 'underline-dotted text-red-500' : ''
-            }`"
-          />
+          <ClientOnly>
+            <CustomPasswordInput
+              id="password"
+              v-model="password"
+              required
+              aria-placeholder="password"
+              placeholder="Password"
+            />
+          </ClientOnly>
         </div>
         <button
           type="submit"
@@ -73,8 +77,8 @@ const { login } = useAuth();
 const router = useRouter();
 const state = useGlobalSettingStore();
 
-const email = ref(state.isPrefilltheUserField ? "igromen1997@gmail.com" : "");
-const password = ref(state.isPrefilltheUserField ? "12345678" : "");
+const email = ref("");
+const password = ref("");
 const emailError = ref("");
 const passwordError = ref("");
 
@@ -107,5 +111,10 @@ function onSignIn() {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   }
+}
+
+function resetInputValues() {
+  email.value = state.isPrefilltheUserField ? "igromen1997@gmail.com" : "";
+  password.value = state.isPrefilltheUserField ? "12345678" : "";
 }
 </script>

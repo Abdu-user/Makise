@@ -52,6 +52,24 @@
           >Green Text</CustomButton2
         >
       </div>
+      <div class="space-x-2">
+        <CustomButton2
+          block
+          class="mb-2"
+          variant="primary"
+          >Primary</CustomButton2
+        >
+        <CustomButton2
+          variant="primary"
+          size="md"
+          >Red Primary</CustomButton2
+        >
+        <CustomButton2
+          variant="primary"
+          size="lg"
+          >Green Primary</CustomButton2
+        >
+      </div>
 
       <!-- Plain -->
       <div class="space-x-2">
@@ -125,8 +143,6 @@
 </template>
 
 <script setup lang="ts">
-// @ts-ignore
-import CustomButton2 from "~/components/CustomButton2"; // Adjust path as needed
 definePageMeta({
   layout: "login",
 });
