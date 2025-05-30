@@ -1,0 +1,109 @@
+<template>
+  <div class="min-h-screen flex items-center justify-center bg-mainBg">
+    <div class="bg-accent p-8 rounded-lg shadow-lg w-full max-w-md">
+      <ClientOnly>
+        <CustomButton2
+          icon
+          name="material-symbols-light:keyboard-backspace"
+          class="relative -top-0 -left-3"
+          aria-label="back button"
+          size="lg"
+          @click="router.back"
+        />
+      </ClientOnly>
+      <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign In</h2>
+      <form @submit.prevent="onSignIn">
+        <div class="mb-4">
+          <label
+            :class="`block text-highlight mb-2 ${emailError ? 'text-red-500 font-bold uppercase' : ''}`"
+            for="email"
+            >{{ emailError ? emailError : "Email" }}</label
+          >
+          <input
+            id="email"
+            v-model="email"
+            type="email"
+            required
+            :class="`w-full px-4 py-2 border border-highlight rounded focus:outline-none focus:ring-2 focus:ring-primary bg-white ${
+              emailError ? '  decoration-red-500 text-red-500' : ''
+            }`"
+            :style="emailError && `text-decoration: underline; text-decoration-style: wavy;`"
+          />
+        </div>
+        <div class="mb-6">
+          <label
+            :class="`block text-highlight mb-2 ${passwordError ? 'uppercase text-red-500  font-bold' : ''}`"
+            for="password"
+            >{{ passwordError ? passwordError : "Password" }}</label
+          >
+          <input
+            id="password"
+            v-model="password"
+            type="password"
+            required
+            :class="`w-full px-4 py-2 border border-highlight rounded focus:outline-none focus:ring-2 focus:ring-primary bg-white ${
+              passwordError ? 'underline-dotted text-red-500' : ''
+            }`"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-primary text-white py-2 rounded hover:bg-highlight transition-colors font-semibold"
+        >
+          Sign In
+        </button>
+      </form>
+      <p class="mt-4 text-center text-sm text-highlight">
+        Don't have an account?
+        <a
+          href="/sign-up"
+          class="text-primary hover:underline"
+          >Sign Up</a
+        >
+      </p>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import { useAuth } from "~/composables/useSignUp";
+const { login } = useAuth();
+const router = useRouter();
+
+const email = ref("igromen1997@gmail.com");
+const password = ref("12345679");
+const emailError = ref("");
+const passwordError = ref("");
+
+// Example validation logic (replace with your own as needed)
+function onSignIn() {
+  emailError.value = "";
+  passwordError.value = "";
+
+  if (!email.value) emailError.value = "Email is required";
+
+  if (!validateEmail(email.value)) emailError.value = "Invalid email format";
+
+  console.log(email.value, password.value);
+  login(email.value, password.value)
+    .then((res) => {
+      router.push("/"); // Redirect to dashboard or home page after successful login
+      console.log("Login successful:", res);
+    })
+    .catch((error) => {
+      // Handle login error
+      console.error("Login failed:", error);
+      if (error.message.includes("email")) {
+        emailError.value = "Email not found";
+      }
+      if (error.message.includes("password")) {
+        passwordError.value = "Incorrect password";
+      }
+    });
+  function validateEmail(email: string): boolean {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+}
+</script>
