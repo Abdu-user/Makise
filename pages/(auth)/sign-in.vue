@@ -1,68 +1,72 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-mainBg">
     <div class="bg-accent p-8 rounded-lg shadow-lg w-full max-w-md">
-      <ClientOnly>
+      <div class="relative flex items-center justify-center">
         <CustomButton2
           icon
           name="material-symbols-light:keyboard-backspace"
-          class="relative -top-0 -left-3"
+          class="absolute -top-3 -left-1"
           aria-label="back button"
           size="lg"
           @click="router.back"
         />
-      </ClientOnly>
-      <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign In</h2>
+        <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign In</h2>
+      </div>
       <form @submit.prevent="onSignIn">
         <div class="mb-4">
           <CustomLabel
             class="mb-2"
-            :error="Boolean(emailError)"
+            :error="emailError"
             for="email"
-            >{{ emailError ? emailError : "Email" }}</CustomLabel
           >
+            Email
+          </CustomLabel>
           <CustomInput
             id="email"
             v-model="email"
             type="email"
+            autocomplete="email"
             required
             placeholder="Email"
             :class="`w-full px-4 py-2 border border-highlight rounded focus:outline-none focus:ring-2 focus:ring-primary bg-white ${
               emailError ? '  decoration-red-500 text-red-500' : ''
             }`"
-            variant="input"
             :style="emailError && `text-decoration: underline; text-decoration-style: wavy;`"
+            variant="input"
           />
         </div>
         <div class="mb-6">
           <CustomLabel
             class="mb-2"
-            :error="Boolean(passwordError)"
+            :error="passwordError"
             for="password"
-            >{{ passwordError ? passwordError : "Password" }}</CustomLabel
           >
-          <ClientOnly>
-            <CustomPasswordInput
-              id="password"
-              v-model="password"
-              required
-              aria-placeholder="password"
-              placeholder="Password"
-            />
-          </ClientOnly>
+            Password</CustomLabel
+          >
+          <CustomPasswordInput
+            id="password"
+            v-model="password"
+            required
+            aria-placeholder="password"
+            placeholder="Password"
+            autocomplete="current-password"
+          />
         </div>
-        <button
+        <CustomButton2
           type="submit"
-          class="w-full bg-primary text-white py-2 rounded hover:bg-highlight transition-colors font-semibold"
+          variant="primary"
+          block
+          size="lg"
         >
           Sign In
-        </button>
+        </CustomButton2>
       </form>
-      <p class="mt-4 text-center text-sm text-highlight">
+      <p class="mt-4 text-center text-sm text-textParagraph">
         Don't have an account?
-        <a
+        <NuxtLink
           href="/sign-up"
           class="text-primary hover:underline"
-          >Sign Up</a
+          >Sign Up</NuxtLink
         >
       </p>
     </div>
@@ -91,7 +95,6 @@ function onSignIn() {
 
   if (!validateEmail(email.value)) emailError.value = "Invalid email format";
 
-  console.log(email.value, password.value);
   login(email.value, password.value)
     .then((res) => {
       router.push("/"); // Redirect to dashboard or home page after successful login
@@ -117,4 +120,10 @@ function resetInputValues() {
   email.value = state.isPrefilltheUserField ? "igromen1997@gmail.com" : "";
   password.value = state.isPrefilltheUserField ? "12345678" : "";
 }
+onMounted(() => {
+  state.setResetFunctions(resetInputValues);
+  console.log(state.resetFunctions);
+  resetInputValues();
+});
+onUnmounted(() => state.removeSingleResetFunction(resetInputValues));
 </script>

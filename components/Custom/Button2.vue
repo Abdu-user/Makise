@@ -48,11 +48,12 @@ const buttonClass = computed(() => {
   const base = "inline-flex items-center justify-center font-medium transition duration-150 focus:outline-none";
   const variants = {
     default: `shadow-md text-red-600 hover:bg-red-200`,
-    primary: `bg-primary hover:bg-active text-white font-semibold 
-              rounded transition-colors text-base`,
-    outlined: `border  border-1 border-red-600 text-red-600 bg-transparent hover:bg-red-50`,
+    primary: `bg-primary hover:bg-highlight text-white font-semibold 
+     focus:bg-highlight rounded transition-colors text-base`,
+    outlined: `border  border-1 box-border border-red-600 text-red-600 bg-transparent hover:bg-red-200/40`,
     tonal: `bg-red-100 text-red-800 hover:bg-red-200`,
-    text: `text-red-600 bg-transparent hover:bg-red-10 hover:text-red-800`,
+    text: `text-red-600 bg-transparent hover:bg-red-10 
+    hover:text-red-800 focus:bg-highlight/20 `,
     plain: `text-gray-500 bg-transparent hover:bg-gray-100`,
     // active: `shadow-md bg-mainBg  hover:bg-red-200`,
   };

@@ -1,21 +1,16 @@
 <template>
-  <label :class="computedClass">
-    <template v-if="error">
-      {{ error }}
-    </template>
-    <slot v-else></slot>
-  </label>
+  <a :class="computedClass"><slot></slot></a>
 </template>
 
 <script setup lang="ts">
 const props = defineProps({
   variant: { type: String, default: "default" },
-  error: { type: String, default: false },
+  error: { type: Boolean, default: false },
 });
 
 const computedClass = computed(() => {
   const variants = {
-    default: "block text-textSecondary hover:text-red-500 font-medium ",
+    default: "text-primary hover:underline",
   };
 
   return [variants[props.variant as keyof typeof variants], props.error ? "text-red-500 font-bold uppercase" : ""].join(" ");

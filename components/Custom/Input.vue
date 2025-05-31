@@ -6,6 +6,7 @@
     @input="handleInput"
     :min="min"
     :style="inputStyle"
+    class=" "
   />
 </template>
 
@@ -16,6 +17,7 @@ const props = defineProps({
   variant: { type: String, default: "default" },
   type: { type: String, default: "text" },
   maxNumber: { type: Number, default: null },
+  size: { type: String, default: "" },
   min: { type: Number, default: null },
   error: { type: Boolean, default: false },
 });
@@ -23,9 +25,27 @@ const props = defineProps({
 const inputClass = computed(() => {
   const variants = {
     default: "bg-white/30 w-full",
-    input: "w-full px-4 py-3 border border-primary rounded focus:outline-none focus:ring-2 focus:ring-active bg-white text-base",
+    input: `${props.size ? "" : " px-4 py-3"} w-full border border-textParagraph rounded focus:outline-none focus:ring-2 focus:ring-activeStrong/30 bg-white text-base`,
+    checkBox: "",
   };
-  return [variants[props.variant as keyof typeof variants], props.error ? "decoration-red-500 text-red-500" : ""].join(" ");
+  const type = {
+    text: variants.input,
+    password: variants.input,
+    email: variants.input,
+    checkBox: variants.checkBox,
+  };
+  const sizes = {
+    sm: `text-sm   px-3 py-1.5`,
+    md: `text-base   px-4 py-3`,
+    lg: `text-lg  px-5 py-3`,
+    f: "text-lg w-full h-full",
+  };
+  return [
+    props.variant === "default" ? variants.default : "",
+    type[props.type as keyof typeof type],
+    props.error ? "decoration-red-500 text-red-500" : "",
+    sizes[props.size as keyof typeof sizes],
+  ].join(" ");
 });
 const inputStyle = computed(() => {
   return [props.error ? `text-decoration: underline; text-decoration-style: wavy;` : ""];

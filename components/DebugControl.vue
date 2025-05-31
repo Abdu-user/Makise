@@ -68,13 +68,13 @@
             type="button"
             variety="secondary"
             size="md"
-            @click="toggleField"
+            @click="toggleField()"
             class="flex"
             >Prefill the user Field
-            <input
+            <CustomInput
               class="w-full pointer-events-none"
               type="checkBox"
-              :value="state.isPrefilltheUserField"
+              :checked="state.isPrefilltheUserField"
             />
             {{ state.isPrefilltheUserField }}
           </CustomButton2>
@@ -151,8 +151,10 @@ function logGlobalState() {
 }
 function toggleField() {
   state.toggleIsPrefillUserField();
-  console.log(state.isPrefilltheUserField);
+  state.callResetFunctions();
+  console.log(state.resetFunctions);
 }
+onMounted(() => {});
 </script>
 
 <style scoped>

@@ -18,8 +18,8 @@ import { refreshUserData } from "./composables/useSignUp";
 const router = useRouter();
 
 const state = useGlobalSettingStore();
-onMounted(async () => {
-  state.loadSettings();
+onMounted(() => {
+  state.initialize();
   getUser();
   quickCheck();
 });

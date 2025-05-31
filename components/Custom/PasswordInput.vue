@@ -9,16 +9,14 @@
         v-bind="$attrs"
         variant="input"
       />
-      <ClientOnly>
-        <CustomButton2
-          class="absolute right-2"
-          icon
-          size="md"
-          variant="text"
-          name="material-symbols-light:eye-tracking-outline-sharp"
-          @click="toggleShowPassword"
-        />
-      </ClientOnly>
+      <CustomButton2
+        class="absolute right-2"
+        icon
+        size="md"
+        variant="text"
+        name="material-symbols-light:eye-tracking-outline-sharp"
+        @click="toggleShowPassword"
+      />
     </template>
     <template v-else>
       <CustomInput
@@ -28,16 +26,14 @@
         v-bind="$attrs"
         variant="input"
       />
-      <ClientOnly>
-        <CustomButton2
-          class="absolute right-2"
-          icon
-          size="md"
-          variant="text"
-          name="material-symbols-light:eye-tracking-rounded"
-          @click="toggleShowPassword"
-        />
-      </ClientOnly>
+      <CustomButton2
+        class="absolute right-2"
+        icon
+        size="md"
+        variant="text"
+        name="material-symbols-light:eye-tracking-rounded"
+        @click="toggleShowPassword"
+      />
     </template>
     <!-- </template> -->
   </div>

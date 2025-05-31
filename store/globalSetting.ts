@@ -15,6 +15,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     userData: null as UserProfileType | null,
     loading: false,
     error: "",
+    resetFunctions: [] as (() => void)[],
   }),
   actions: {
     toggleIsNavOpen() {
@@ -36,6 +37,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     addConsoleMessage(message: string) {
       this.consoleMessages.unshift(message);
     },
+
     saveToLocalStorage() {
       localStorage.setItem(
         STORAGE_KEY,
@@ -46,6 +48,16 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
           isPrefilltheUserField: this.isPrefilltheUserField,
         })
       );
+    },
+    loadSettings() {
+      const data = localStorage.getItem(STORAGE_KEY);
+      if (data) {
+        const parsed = JSON.parse(data);
+        this.isDebugPanelOpen = parsed.isDebugPanelOpen ?? false;
+        this.isNavOpen = parsed.isNavOpen ?? false;
+        this.isEditingProfile = parsed.isEditingProfile ?? false;
+        this.isPrefilltheUserField = parsed.isPrefilltheUserField ?? false;
+      }
     },
     _loading(loading: boolean) {
       this.loading = loading;
@@ -58,6 +70,12 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     },
     setUserData(userData: UserProfileType | null) {
       this.userData = userData;
+    },
+    setResetFunctions(cb: () => void) {
+      this.resetFunctions.push(cb);
+    },
+    removeSingleResetFunction(cb: () => void) {
+      this.resetFunctions = this.resetFunctions.filter((oldCb) => oldCb !== cb);
     },
     clearUser() {
       this.user = null;
@@ -76,6 +94,12 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       this.loadSettings();
       // Additional initialization logic can be added here
     },
+    callResetFunctions() {
+      for (let i = 0; i < this.resetFunctions.length; i++) {
+        const cb = this.resetFunctions[i];
+        cb();
+      }
+    },
     async reset() {
       this.isDebugPanelOpen = false;
       this.isNavOpen = false;
@@ -85,17 +109,6 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       this.loading = false;
       this.error = "";
       this.saveToLocalStorage();
-    },
-
-    loadSettings() {
-      const data = localStorage.getItem(STORAGE_KEY);
-      if (data) {
-        const parsed = JSON.parse(data);
-        this.isDebugPanelOpen = parsed.isDebugPanelOpen ?? false;
-        this.isNavOpen = parsed.isNavOpen ?? false;
-        this.isEditingProfile = parsed.isEditingProfile ?? false;
-        this.isPrefilltheUserField = parsed.isPrefilltheUserField ?? false;
-      }
     },
   },
 });
