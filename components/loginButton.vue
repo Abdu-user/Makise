@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center h-12 w-12">
+  <div class="flex items-center justify-center h-12 w-12 overflow-hidden rounded-full">
     <Icon
       v-if="state.loading"
       name="material-symbols-light:forward-circle"
@@ -16,12 +16,12 @@
       <template v-else>
         <NuxtLink
           to="/profile"
-          class="//bg-blue-100 w-full h-full"
+          class="w-full h-full flex"
           v-auto-animate
         >
-          <image
+          <img
             v-if="image"
-            class="rounded-full w-full h-full object-cover"
+            class="w-full h-full object-cover"
             :src="image"
           />
           <Icon
@@ -36,9 +36,11 @@
 </template>
 
 <script setup lang="ts">
-const image = ref(false);
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
+const image = computed(() => {
+  return state.userData?.profileImage;
+});
 </script>
 
 <style scoped></style>
