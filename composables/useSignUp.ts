@@ -3,7 +3,7 @@ import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useAppwriteToRegisterUser } from "~/composables/useAppwriteDocument";
 import type { UserProfileType } from "~/types/type";
 
-export async function sendCode(email: string) {
+export async function sendCode(email: string): Promise<{ success: boolean; error: string } | string> {
   try {
     const response = await fetch("/api/send-code", {
       method: "POST",
@@ -11,6 +11,8 @@ export async function sendCode(email: string) {
       body: JSON.stringify({ email }),
     });
     if (!response.ok) {
+      const res = await response.json();
+      console.error(res);
       throw new Error("Failed to send code");
     }
     return await response.json();
@@ -118,7 +120,6 @@ export async function getUser() {
   const { current } = useAuth();
 
   const { value: user, cb } = useAsyncFunction(current, state._loading, state._error, false);
-
   await cb();
-  await refreshUserData();
+  user.value && (await refreshUserData());
 }

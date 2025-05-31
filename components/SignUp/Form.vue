@@ -1,5 +1,5 @@
 <template>
-  <ModalsAlert v-if="errorMessage || false"> </ModalsAlert>
+  <!-- <ModalsAlert v-if="errorMessage || false"> </ModalsAlert> -->
   <div class="min-h-screen flex flex-col justify-center items-center md:justify-center bg-mainBg px-4 py-6 sm:px-0">
     <div class="w-full h-full max-md:flex-1 max-w-md bg-accent rounded-lg shadow-lg p-6 sm:p-8">
       <div class="relative flex items-center justify-center">
@@ -144,19 +144,18 @@ onUnmounted(() => state.removeSingleResetFunction(resetInputRef));
 
 async function handleSubmit() {
   if (await isValidForm()) return isAnimatingN.value++;
-  if (await doesUserAlreadyExist()) {
-    return;
-  }
+  if (await doesUserAlreadyExist()) return;
 
   try {
     const res = await sendCode(email.value);
+    if (typeof res === "object" && !res.success) throw res.error;
     console.log(res);
 
     router.replace({ query: { ...route.query, "verify-email": "true" } });
     isHappy.value = true;
     errorMessage.value = "";
   } catch (err) {
-    router.replace({ query: { ...route.query, "is-sending-email-failed": "true" } });
+    router.replace({ query: { ...route.query, "verify-email": "true", "is-sending-email-failed": "true" } });
     isHappy.value = false;
     errorMessage.value = (err as string) || defErrorMessage;
   } finally {
@@ -190,7 +189,9 @@ async function doesUserAlreadyExist() {
       await $appwrite.account.deleteSession("current");
     }
     return true;
-  } catch {}
+  } catch (err) {
+    console.log(err);
+  }
 
   return false;
 }
