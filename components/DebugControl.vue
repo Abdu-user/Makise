@@ -45,9 +45,9 @@
           >
           <CustomButton2
             variant="plain"
-            :color="colors.primaryColor"
+            @click="console.log(state.fromPage)"
           >
-            button2
+            log pinia
           </CustomButton2>
           <CustomButton
             type="button"

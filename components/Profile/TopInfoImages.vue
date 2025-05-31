@@ -242,6 +242,9 @@ watch(cmpUserData, () => {
   resetInputRefs();
   wideImgUrl.value = cmpUserData.value.wideImgUrl;
 });
+onMounted(() => {
+  if (!state.user || !state.userData) refreshUserData();
+});
 
 const wideImgClass = ref();
 

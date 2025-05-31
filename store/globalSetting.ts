@@ -16,6 +16,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     loading: false,
     error: "",
     resetFunctions: [] as (() => void)[],
+    fromPage: "",
   }),
   actions: {
     toggleIsNavOpen() {
@@ -70,6 +71,9 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     },
     setUserData(userData: UserProfileType | null) {
       this.userData = userData;
+    },
+    setFromPage(fromPage: string) {
+      this.fromPage = fromPage;
     },
     setResetFunctions(cb: () => void) {
       this.resetFunctions.push(cb);

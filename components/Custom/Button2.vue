@@ -31,7 +31,6 @@ import { computed } from "vue";
 
 const props = defineProps({
   variant: { type: String, default: null },
-  color: { type: String, default: "red" },
   size: { type: String, default: "md" },
   icon: { type: Boolean, default: false },
   prependIcon: { type: String, default: null },
@@ -42,6 +41,7 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   rounded: { type: Boolean, default: false },
   block: { type: Boolean, default: false },
+  // primaryColor: { type: Boolean, default: true },
 });
 
 const buttonClass = computed(() => {
@@ -54,7 +54,7 @@ const buttonClass = computed(() => {
     tonal: `bg-red-100 text-red-800 hover:bg-red-200`,
     text: `text-red-600 bg-transparent hover:bg-red-10 
     hover:text-red-800 focus:bg-highlight/20 `,
-    plain: `text-gray-500 bg-transparent hover:bg-gray-100`,
+    plain: `text-gray-500 bg-transparent hover:bg-gray-100 focus:bg-highlight/20`,
     // active: `shadow-md bg-mainBg  hover:bg-red-200`,
   };
   const sizes = {

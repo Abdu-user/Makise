@@ -13,7 +13,7 @@
         class="absolute right-2"
         icon
         size="md"
-        variant="text"
+        variant="plain"
         name="material-symbols-light:eye-tracking-outline-sharp"
         @click="toggleShowPassword"
       />
@@ -27,10 +27,10 @@
         variant="input"
       />
       <CustomButton2
-        class="absolute right-2"
+        class="absolute right-2 text-textHeader"
         icon
         size="md"
-        variant="text"
+        variant="plain"
         name="material-symbols-light:eye-tracking-rounded"
         @click="toggleShowPassword"
       />

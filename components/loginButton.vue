@@ -9,6 +9,7 @@
       <NuxtLink
         v-if="!state.user"
         to="/sign-in"
+        @click="() => state.setFromPage($route.path)"
         class="flex items-center justify-center border border-primary bg-accent hover:bg-active/5 w-[90%] h-[90%] hover:text-secondary text-textHeader font-semibold rounded-full"
         >Login</NuxtLink
       >

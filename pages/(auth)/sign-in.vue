@@ -28,10 +28,6 @@
             autocomplete="email"
             required
             placeholder="Email"
-            :class="`w-full px-4 py-2 border border-highlight rounded focus:outline-none focus:ring-2 focus:ring-primary bg-white ${
-              emailError ? '  decoration-red-500 text-red-500' : ''
-            }`"
-            :style="emailError && `text-decoration: underline; text-decoration-style: wavy;`"
             variant="input"
           />
         </div>
@@ -97,18 +93,13 @@ function onSignIn() {
 
   login(email.value, password.value)
     .then((res) => {
-      router.push("/"); // Redirect to dashboard or home page after successful login
-      console.log("Login successful:", res);
+      const conditionalRedirect = state.fromPage ? state.fromPage : "/";
+      router.push(conditionalRedirect);
     })
     .catch((error) => {
-      // Handle login error
-      console.error("Login failed:", error);
-      if (error.message.includes("email")) {
-        emailError.value = "Email not found";
-      }
-      if (error.message.includes("password")) {
-        passwordError.value = "Incorrect password";
-      }
+      if (error.message.includes("email")) emailError.value = "Email not found";
+
+      if (error.message.includes("password")) passwordError.value = "Incorrect password";
     });
   function validateEmail(email: string): boolean {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
