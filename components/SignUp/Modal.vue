@@ -4,23 +4,33 @@
       v-if="isHappy"
       class="bg-accent rounded-lg shadow-lg p-6 sm:p-8 max-w-md w-full flex flex-col items-center"
     >
-      <template>
+      <div class="flex items-center mb-3 relative">
         <Icon
-          name="mdi:check-circle"
-          class="text-green-500 w-10 h-10"
+          name="material-symbols-light:check-circle"
+          class="text-green-500 w-10 h-10 absolute -left-16"
         />
-      </template>
 
-      <h3 class="text-2xl font-bold text-primary mb-2 text-center">Verify Your Email</h3>
+        <h3 class="text-2xl font-bold text-primary mb-2 text-center">Verify Your Email</h3>
+      </div>
       <p class="text-textParagraph text-center mb-6">
         We've sent a verification code to your email <span class="text-primary">{{ email }}</span> address.<br />
         Please check your inbox and follow the instructions to complete your registration.
       </p>
       <div class="w-full">
-        <input
+        <CustomLabel
+          :error="codeInputMessage"
+          for="verify-code"
+          :is-animating-n="btnClick"
+        >
+        </CustomLabel>
+
+        <CustomInput
+          id="verify-code"
           type="text"
+          autocomplete="one-time-code"
           v-model="codeInput"
-          class="w-full px-4 py-3 border border-primary rounded focus:outline-none focus:ring-2 focus:ring-active bg-white text-base mb-4 text-center"
+          class="mb-2 text-center"
+          placeholder="Code"
         />
 
         <div class="flex justify-center gap-x-8 items-center mt-4">
@@ -36,9 +46,9 @@
             variant="primary"
             type="button"
             size="lg"
-            @click="handleVerifyCode(codeInput)"
+            @click="(handleVerifyCode(codeInput), btnClick++)"
           >
-            Verify Code
+            Verify
           </CustomButton2>
         </div>
       </div>
@@ -71,6 +81,7 @@
 <script setup lang="ts">
 const router = useRouter();
 const route = useRoute();
+const btnClick = ref(0);
 
 const props = defineProps({
   email: { type: String, required: true },
@@ -92,7 +103,7 @@ const codeInputMessage = ref("");
 
 async function handleVerifyCode(code: string) {
   if (code.trim() === "" || code.length < 6) {
-    return (codeInputMessage.value = "Please enter a valid code.");
+    return (codeInputMessage.value = "Please enter a valid 6 digit code.");
   } else if (!/^\d+$/.test(code)) {
     return (codeInputMessage.value = "The code must contain only numbers.");
   }

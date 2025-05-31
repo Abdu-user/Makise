@@ -21,6 +21,7 @@
           <CustomLabel
             :error="emailError"
             for="email"
+            :is-animating-n="isAnimatingN"
             >Email</CustomLabel
           >
           <CustomInput
@@ -37,6 +38,7 @@
           <CustomLabel
             for="password"
             :error="passwordError"
+            :is-animating-n="isAnimatingN"
             >Password</CustomLabel
           >
 
@@ -53,6 +55,7 @@
             for="confirmPassword"
             class="mb-2"
             :error="confirmPasswordError"
+            :is-animating-n="isAnimatingN"
             >Confirm Password</CustomLabel
           >
           <CustomPasswordInput
@@ -104,7 +107,10 @@ import { useRoute, useRouter } from "vue-router";
 const defErrorMessage = "An unexpected error occurred during sign up.";
 import { ref, watch, onMounted } from "vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
+import { getUser } from "~/composables/useSignUp";
+
 const state = useGlobalSettingStore();
+const isAnimatingN = ref(0);
 
 const route = useRoute();
 const router = useRouter();
@@ -137,10 +143,15 @@ onMounted(() => (state.setResetFunctions(resetInputRef), resetInputRef()));
 onUnmounted(() => state.removeSingleResetFunction(resetInputRef));
 
 async function handleSubmit() {
-  if (await validateForm()) return;
+  if (await isValidForm()) return isAnimatingN.value++;
+  if (await doesUserAlreadyExist()) {
+    return;
+  }
+
   try {
     const res = await sendCode(email.value);
     console.log(res);
+
     router.replace({ query: { ...route.query, "verify-email": "true" } });
     isHappy.value = true;
     errorMessage.value = "";
@@ -163,7 +174,28 @@ watch(
   (newQuery, oldQuery) => updateModal(newQuery),
   { deep: true } // Important for watching deep changes within query
 );
-async function validateForm() {
+
+async function doesUserAlreadyExist() {
+  const { $appwrite } = useNuxtApp();
+  try {
+    await $appwrite.account.createEmailPasswordSession(email.value, password.value);
+
+    const didConfirm = confirm(
+      "User with the " + email.value + " email and password already exists in our databse! Do you want to log in? "
+    );
+    if (didConfirm) {
+      await getUser();
+      router.push(state.fromPage ? state.fromPage : "/");
+    } else {
+      await $appwrite.account.deleteSession("current");
+    }
+    return true;
+  } catch {}
+
+  return false;
+}
+
+async function isValidForm() {
   // Clear previous errors
   emailError.value = "";
   passwordError.value = "";

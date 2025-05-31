@@ -25,7 +25,8 @@ const props = defineProps({
 const inputClass = computed(() => {
   const variants = {
     default: "bg-white/30 w-full",
-    input: `${props.size ? "" : " px-4 py-3"} w-full border border-textParagraph rounded focus:outline-none focus:ring-2 focus:ring-activeStrong/30 bg-white text-base`,
+    input: `${props.size ? "" : " px-4 py-3"} w-full border border-textParagraph
+    focus:border-textParagraph/20 rounded focus:outline-none focus:ring-2 focus:ring-activeStrong/30 bg-white text-base`,
     checkBox: "",
   };
   const type = {

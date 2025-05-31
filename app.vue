@@ -13,7 +13,7 @@ import { useRouter } from "vue-router";
 import { useGlobalSettingStore } from "./store/globalSetting";
 import { useAsyncFunction } from "./composables/useAsyncFunction";
 import type { UserProfileType } from "./types/type";
-import { refreshUserData } from "./composables/useSignUp";
+import { getUser, refreshUserData } from "./composables/useSignUp";
 
 const router = useRouter();
 
@@ -24,14 +24,6 @@ onMounted(() => {
   quickCheck();
 });
 
-async function getUser() {
-  const { current } = useAuth();
-
-  const { value: user, cb } = useAsyncFunction(current, state._loading, state._error, false);
-
-  await cb();
-  await refreshUserData();
-}
 async function quickCheck() {
   console.log(state?.userData);
 }

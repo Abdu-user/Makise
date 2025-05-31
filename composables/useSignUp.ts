@@ -66,6 +66,7 @@ export async function verifyUpdate(userId: string, secret: string) {
 export const useAuth = () => {
   const state = useGlobalSettingStore();
   const { $appwrite } = useNuxtApp();
+
   const login = async (email: string, password: string) => {
     const res = await $appwrite.account.createEmailPasswordSession(email, password);
 
@@ -110,4 +111,14 @@ export async function refreshUserData() {
   } catch (err) {
     console.log(err);
   }
+}
+
+export async function getUser() {
+  const state = useGlobalSettingStore();
+  const { current } = useAuth();
+
+  const { value: user, cb } = useAsyncFunction(current, state._loading, state._error, false);
+
+  await cb();
+  await refreshUserData();
 }
