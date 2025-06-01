@@ -1,6 +1,9 @@
 <template>
   <!-- <ModalsAlert v-if="errorMessage || false"> </ModalsAlert> -->
-  <div class="bg-accent p-8 rounded-lg shadow-lg w-full max-w-md md:sticky top-0">
+  <div
+    class="bg-accent p-8 rounded-lg shadow-lg w-full max-w-md md:sticky top-0"
+    :class="props.class"
+  >
     <div class="relative flex items-center justify-center">
       <CustomButton2
         icon
@@ -107,6 +110,7 @@ const defErrorMessage = "An unexpected error occurred during sign up.";
 import { ref, watch, onMounted } from "vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { getUser } from "~/composables/useSignUp";
+const props = defineProps({ class: String });
 
 const state = useGlobalSettingStore();
 const isAnimatingN = ref(0);
