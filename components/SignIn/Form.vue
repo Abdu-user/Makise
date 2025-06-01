@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-accent p-8 rounded-lg shadow-lg w-full max-w-md md:sticky top-0">
+  <div class="bg-accent p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0">
     <div class="relative flex items-center justify-center">
       <CustomButton2
         icon

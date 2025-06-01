@@ -144,6 +144,6 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: "login",
+  layout: "main",
 });
 </script>

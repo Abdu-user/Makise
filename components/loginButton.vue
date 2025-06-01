@@ -9,7 +9,7 @@
       <NuxtLink
         v-if="!state.user"
         to="/sign-in"
-        @click="() => state.setFromPage($route.path)"
+        @click="setRoutePath"
         class="flex items-center justify-center border border-primary bg-accent hover:bg-active/5 w-[90%] h-[90%] hover:text-secondary text-textHeader font-semibold rounded-full"
         >Login</NuxtLink
       >
@@ -41,6 +41,12 @@ const state = useGlobalSettingStore();
 const image = computed(() => {
   return state.userData?.profileImage;
 });
+const route = useRoute();
+
+const setRoutePath = () => {
+  console.log(route.path);
+  state.setFromPage(route.path);
+};
 </script>
 
 <style scoped></style>

@@ -1,7 +1,7 @@
 <template>
   <!-- <ModalsAlert v-if="errorMessage || false"> </ModalsAlert> -->
   <div
-    class="bg-accent p-8 rounded-lg shadow-lg w-full max-w-md md:sticky top-0"
+    class="bg-accent p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0"
     :class="props.class"
   >
     <div class="relative flex items-center justify-center">

@@ -69,22 +69,26 @@
           <div class="max-md:mx-auto max-md:text-center flex basis-1/4 flex-col">
             <div class="flex overflow-hidden max-md:gap-2">
               <CustomInput
+                variant="edit"
                 class="text-textHeader font-semibold text-xl max-md:text-right"
                 v-model="nameRef"
                 :placeholder="pl.name"
               />
               <CustomInput
+                variant="edit"
                 class="text-textHeader font-semibold text-xl"
                 v-model="lastNameRef"
                 :placeholder="pl.lastName"
               />
             </div>
             <CustomInput
+              variant="edit"
               class="text-text-Paragraph text-base max-md:text-center max-md:mx-auto"
               v-model="jobRef"
               :placeholder="pl.job"
             />
             <CustomInput
+              variant="edit"
               class="text-textSecondary bg-transparent max-md:text-center max-md:mx-auto"
               v-model="addressRef"
               :placeholder="pl.address"
@@ -109,6 +113,7 @@
               </template>
               <template v-else>
                 <CustomInput
+                  variant="edit"
                   class="text-textSecondary"
                   v-model="phoneNumberRef"
                   :placeholder="pl.phoneNumber"
@@ -124,6 +129,7 @@
                 Profile Strength:
                 <template v-if="state.isEditingProfile">
                   <CustomInput
+                    variant="edit"
                     class="font-semibold text-textParagraph max-w-10 text-xl text-center"
                     v-model="profileStrengthRef"
                     type="number"
@@ -147,6 +153,7 @@
               <p class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-10">
                 <template v-if="state.isEditingProfile">
                   <CustomInput
+                    variant="edit"
                     class="font-semibold text-textParagraph text-xl text-center"
                     v-model="profileStrengthRef"
                     type="number"

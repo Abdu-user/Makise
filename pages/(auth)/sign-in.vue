@@ -1,5 +1,9 @@
 <template>
-  <div class="min-h-screen max-h-screen overflow-auto flex items-center max-md:flex-col bg-mainBg p-4 gap-8 box-border">
+  <div
+    :class="`min-h-screen max-h-screen overflow-auto
+     md:grid max-md:flex max-md:flex-col  md:grid-cols-2  items-center 
+     bg-mainBg p-4 gap-8 `"
+  >
     <SignInAdditionalInfo class="max-md:order-2" />
     <SignInForm class="" />
   </div>

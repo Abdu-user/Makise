@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     // Authenticated – let navigation continue
   } catch {
     // @ts-ignore
-    state.setFromPage(from.fullPath);
+    state.setFromPage(to.fullPath);
     return navigateTo("/sign-up");
   }
 });
