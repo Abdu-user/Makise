@@ -101,7 +101,7 @@
 const proggressPercentage = 80;
 /// @ts-ignore
 import CircleProgress from "vue3-circle-progress";
-const wideImgUrl = "/wide_angle_tetons.jpg";
+const wideImgUrl = "/images/wide_angle_tetons.jpg";
 const profileImgUrl = "/placeholder-avatar.jpg";
 import colors from "../../colors";
 import { Client } from "appwrite";

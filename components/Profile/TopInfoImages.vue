@@ -235,7 +235,7 @@ const cmpUserData = computed(() => ({
   phoneNumber: state.userData?.phoneNumber || "",
   profileStrength: state.userData?.profileStrength ? String(state.userData?.profileStrength) : "0",
   profileImgUrl: state.userData?.profileImage || "/placeholder-avatar.jpg",
-  wideImgUrl: state.userData?.wideProfileImage || "/wide_angle_tetons.jpg",
+  wideImgUrl: state.userData?.wideProfileImage || "/images/wide_angle_tetons.jpg",
   wideImageLocationSettingsJSON: state.userData?.wideImageLocationSettingsJSON || "",
 }));
 watch(cmpUserData, () => {
