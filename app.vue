@@ -36,6 +36,9 @@ body {
   /* box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); */
   /* background: #fee1ea; */
   box-shadow: 0 0 0 0 #ffe4e7;
-  box-sizing: border-box;
+}
+body {
+  /* padding: 16px 0;
+  height: 100vh; */
 }
 </style>

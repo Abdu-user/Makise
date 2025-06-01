@@ -1,89 +1,88 @@
 <template>
   <!-- <ModalsAlert v-if="errorMessage || false"> </ModalsAlert> -->
-  <div class="w-full flex flex-col items-center bg-mainBg mt-4">
-    <div class="w-full h-full max-md:flex-1 max-w-md bg-accent rounded-lg shadow-lg p-6 sm:p-8">
-      <div class="relative flex items-center justify-center">
-        <CustomButton2
-          icon
-          name="material-symbols-light:keyboard-backspace"
-          class="absolute -top-3 -left-1"
-          aria-label="back button"
-          size="lg"
-          @click="router.back"
-        />
-        <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign Up</h2>
-      </div>
-      <form
-        class="space-y-6"
-        @submit.prevent="handleSubmit"
-      >
-        <div>
-          <CustomLabel
-            :error="emailError"
-            for="email"
-            :is-animating-n="isAnimatingN"
-            >Email</CustomLabel
-          >
-          <CustomInput
-            id="email"
-            type="email"
-            autocomplete="email"
-            v-model="email"
-            variant="input"
-            placeholder="you@example.com"
-            :error="Boolean(emailError)"
-          />
-        </div>
-        <div>
-          <CustomLabel
-            for="password"
-            :error="passwordError"
-            :is-animating-n="isAnimatingN"
-            >Password</CustomLabel
-          >
-
-          <CustomPasswordInput
-            id="password"
-            autocomplete="new-password"
-            v-model="password"
-            :error="Boolean(passwordError)"
-            placeholder="••••••••"
-          />
-        </div>
-        <div>
-          <CustomLabel
-            for="confirmPassword"
-            class="mb-2"
-            :error="confirmPasswordError"
-            :is-animating-n="isAnimatingN"
-            >Confirm Password</CustomLabel
-          >
-          <CustomPasswordInput
-            id="confirmPassword"
-            autocomplete="new-password"
-            v-model="confirmPassword"
-            placeholder="••••••••"
-            :error="Boolean(confirmPasswordError)"
-          />
-        </div>
-        <CustomButton2
-          type="submit"
-          variant="primary"
-          block
-          size="lg"
-        >
-          Create Account
-        </CustomButton2>
-      </form>
-      <p class="mt-6 text-center text-textParagraph text-base">
-        Already have an account?
-        <NuxtLink
-          to="/sign-in"
-          class="text-primary hover:underline"
-          >Sign In</NuxtLink
-        >
-      </p>
+  <div class="bg-accent p-8 rounded-lg shadow-lg w-full max-w-md md:sticky top-0">
+    <div class="relative flex items-center justify-center">
+      <CustomButton2
+        icon
+        name="material-symbols-light:keyboard-backspace"
+        class="absolute -top-3 -left-1"
+        aria-label="back button"
+        size="lg"
+        @click="router.back"
+      />
+      <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign Up</h2>
     </div>
+    <form
+      class="space-y-6"
+      @submit.prevent="handleSubmit"
+    >
+      <div>
+        <CustomLabel
+          :error="emailError"
+          for="email"
+          :is-animating-n="isAnimatingN"
+          >Email</CustomLabel
+        >
+        <CustomInput
+          id="email"
+          type="email"
+          autocomplete="email"
+          v-model="email"
+          variant="input"
+          placeholder="you@example.com"
+          :error="Boolean(emailError)"
+        />
+      </div>
+      <div>
+        <CustomLabel
+          for="password"
+          :error="passwordError"
+          :is-animating-n="isAnimatingN"
+          >Password</CustomLabel
+        >
+
+        <CustomPasswordInput
+          id="password"
+          autocomplete="new-password"
+          v-model="password"
+          :error="Boolean(passwordError)"
+          placeholder="••••••••"
+        />
+      </div>
+      <div>
+        <CustomLabel
+          for="confirmPassword"
+          class="mb-2"
+          :error="confirmPasswordError"
+          :is-animating-n="isAnimatingN"
+          >Confirm Password</CustomLabel
+        >
+        <CustomPasswordInput
+          id="confirmPassword"
+          autocomplete="new-password"
+          v-model="confirmPassword"
+          placeholder="••••••••"
+          :error="Boolean(confirmPasswordError)"
+        />
+      </div>
+      <CustomButton2
+        type="submit"
+        variant="primary"
+        block
+        size="lg"
+      >
+        Create Account
+      </CustomButton2>
+    </form>
+    <p class="mt-6 text-center text-textParagraph text-base">
+      Already have an account?
+      <NuxtLink
+        to="/sign-in"
+        replace
+        class="text-primary hover:underline"
+        >Sign In</NuxtLink
+      >
+    </p>
   </div>
 
   <!-- Modal Verify Modal -->

@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full h-full mx-4">
+  <div class="w-full">
     <video
       src="/videos/MissMakimaSignIn.mp4"
       loop
       autoplay
-      class="w-full h-auto object-cover rounded-xl"
+      class="object-contain rounded-xl"
       muted
       playsinline
     >

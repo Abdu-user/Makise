@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-accent p-8 rounded-lg shadow-lg w-full max-w-md">
+  <div class="bg-accent p-8 rounded-lg shadow-lg w-full max-w-md md:sticky top-0">
     <div class="relative flex items-center justify-center">
       <CustomButton2
         icon
@@ -60,6 +60,7 @@
       Don't have an account?
       <NuxtLink
         href="/sign-up"
+        replace
         class="text-primary hover:underline"
         >Sign Up</NuxtLink
       >

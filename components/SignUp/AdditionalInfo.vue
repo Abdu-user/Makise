@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full mx-4">
+  <div class="w-full h-full">
     <video
       src="/videos/MissMakima.mp4"
       loop
