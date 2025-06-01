@@ -121,5 +121,5 @@ export async function getUser() {
 
   const { value: user, cb } = useAsyncFunction(current, state._loading, state._error, false);
   await cb();
-  user.value && (await refreshUserData());
+  user.value && state.setUser(user.value), await refreshUserData();
 }

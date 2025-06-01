@@ -17,6 +17,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     error: "",
     resetFunctions: [] as (() => void)[],
     fromPage: "",
+    route: "",
   }),
   actions: {
     toggleIsNavOpen() {

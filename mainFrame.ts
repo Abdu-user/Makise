@@ -14,3 +14,7 @@ export const profileInputPlaceholders = {
   phoneNumber: "phone number",
   profileStrength: "0",
 };
+
+const bigNames = {
+  appName: "Makise",
+};

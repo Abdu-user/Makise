@@ -4,28 +4,7 @@
       <!-- Images section -->
       <div class="w-full relative">
         <!-- Wide Image -->
-        <img
-          :src="wideImgUrl"
-          alt=""
-          class="w-full h-60 object-cover"
-          :class="wideImgClass"
-          loading="lazy"
-        />
-        <!-- Upload wide image button -->
-        <label
-          class="absolute top-3 right-3 md:top-5 md:right-10 cursor-pointer hover:bg-primary/10 border-[2px] p-[1px] border-primary/20 rounded-full flex"
-        >
-          <Icon
-            name="material-symbols-light:photo-camera"
-            class="text-primary/40 w-6 h-6"
-          />
-          <input
-            type="file"
-            accept="image/*"
-            class="hidden"
-            @change="uploadWideImage"
-          />
-        </label>
+        <ProfileWideImg />
 
         <div>
           <!-- Profile Image -->
@@ -48,7 +27,7 @@
           </label>
         </div>
       </div>
-      <!-- ToDO -->
+      <!-- ToDO todo is used just to highlight this section -->
       <!-- User Info Section -->
       <div class="relative flex max-md:flex-col mt-16 px-6 md:px-16 pb-12 justify-between gap-10">
         <template v-if="!state.isEditingProfile">
@@ -167,53 +146,55 @@
                 </template>
                 <span class="text-textSecondary text-sm -mt-2 inline-block">Realm</span>
               </p>
-              <circle-progress
-                :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
-                :viewport="true"
-                :size="90"
-                :border-width="8"
-                :border-bg-width="8"
-                :is-gradient="true"
-                :gradient="{
-                  angle: 90,
-                  startColor: colors.activeWeak || '',
-                  stopColor: colors.activeStrong || '',
-                }"
-              />
+              <ClientOnly>
+                <circle-progress
+                  :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
+                  :viewport="true"
+                  :size="90"
+                  :border-width="8"
+                  :border-bg-width="8"
+                  :is-gradient="true"
+                  :gradient="{
+                    angle: 90,
+                    startColor: colors.activeWeak || '',
+                    stopColor: colors.activeStrong || '',
+                  }"
+                >
+                  <!-- https://www.npmjs.com/package/vue3-circle-progress -->
+                </circle-progress>
+              </ClientOnly>
             </div>
           </div>
         </div>
 
         <!-- Edit / Save / Cancel Buttons -->
         <div class="absolute z-10 -top-10 right-0">
-          <ClientOnly>
+          <CustomButton2
+            v-if="!state.isEditingProfile"
+            icon
+            prepend-icon="material-symbols-light:edit-outline-sharp"
+            variant="text"
+            @click="state.toggleIsEditingProfile()"
+          />
+          <div
+            v-else
+            class="flex"
+          >
             <CustomButton2
-              v-if="!state.isEditingProfile"
               icon
-              prepend-icon="material-symbols-light:edit-outline-sharp"
+              prepend-icon="material-symbols-light:save"
+              size="md"
               variant="text"
-              @click="state.toggleIsEditingProfile()"
+              @click="(state.toggleIsEditingProfile(), updateUser())"
             />
-            <div
-              v-else
-              class="flex"
-            >
-              <CustomButton2
-                icon
-                prepend-icon="material-symbols-light:save"
-                size="md"
-                variant="text"
-                @click="(state.toggleIsEditingProfile(), updateUser())"
-              />
-              <CustomButton2
-                icon
-                size="lg"
-                prepend-icon="material-symbols-light:close"
-                variant="text"
-                @click="(state.toggleIsEditingProfile(), resetInputRefs())"
-              />
-            </div>
-          </ClientOnly>
+            <CustomButton2
+              icon
+              size="lg"
+              prepend-icon="material-symbols-light:close"
+              variant="text"
+              @click="(state.toggleIsEditingProfile(), resetInputRefs())"
+            />
+          </div>
         </div>
       </div>
     </header>
@@ -241,22 +222,15 @@ const cmpUserData = computed(() => ({
   email: state.userData?.email || "",
   phoneNumber: state.userData?.phoneNumber || "",
   profileStrength: state.userData?.profileStrength ? String(state.userData?.profileStrength) : "0",
-  profileImgUrl: state.userData?.profileImage || "/placeholder-avatar.jpg",
-  wideImgUrl: state.userData?.wideProfileImage || "/images/wide_angle_tetons.jpg",
-  wideImageLocationSettingsJSON: state.userData?.wideImageLocationSettingsJSON || "",
+  profileImgUrl: state.userData?.profileImage || "/images/placeholder-avatar.jpg",
 }));
 watch(cmpUserData, () => {
   resetInputRefs();
-  wideImgUrl.value = cmpUserData.value.wideImgUrl;
 });
-onMounted(() => {
-  if (!state.user || !state.userData) refreshUserData();
+onMounted(async () => {
+  if (!state.user || !state.userData) await getUser();
+  // console.log(cmpUserData.value.wideImageLocationSettingsJSON);
 });
-
-const wideImgClass = ref();
-
-const wideImgUrl = ref(cmpUserData.value.wideImgUrl);
-const wideImgFile = ref<File | null>(null);
 
 const profileImgFile = ref<File | null>(null);
 const profileImgUrl = ref(cmpUserData.value.profileImgUrl);
@@ -276,18 +250,6 @@ function resetInputRefs() {
   phoneNumberRef.value = cmpUserData.value.phoneNumber;
   profileStrengthRef.value = cmpUserData.value.profileStrength;
   profileImgUrl.value = cmpUserData.value.profileImgUrl;
-}
-
-function getWideImgClass() {
-  cmpUserData.value.wideImageLocationSettingsJSON;
-  // TODO:
-  // TODO:
-  // TODO:
-  // TODO:
-  // TODO: Add wideImgClass
-  // TODO:
-  // TODO:
-  return "object-top";
 }
 
 async function updateUser() {
@@ -332,24 +294,5 @@ function uploadProfileImage(event: Event) {
   reader.readAsDataURL(inputFile);
 
   profileImgFile.value = inputFile;
-}
-async function uploadWideImage(event: Event) {
-  const input = event.target as HTMLInputElement;
-  const file = input.files?.[0];
-  if (!file) return;
-  const state = useGlobalSettingStore();
-  if (!state.user?.$id) throw "state.user us undefined";
-  wideImgFile.value = file;
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    wideImgUrl.value = reader.result as string; // Base64 preview
-  };
-  reader.readAsDataURL(file);
-
-  const uploadedWideImgUrl = await uploadFileToAppwrite(wideImgFile.value);
-
-  await useAppwriteDocumentUpdate(state.user.$id, { wideProfileImage: uploadedWideImgUrl });
-  refreshUserData();
 }
 </script>

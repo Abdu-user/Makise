@@ -2,10 +2,11 @@
   <div>
     <!-- <NuxtRouteAnnouncer />
     <NuxtWelcome /> -->
-    <DebugControl />
+
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+    <DebugControl />
   </div>
 </template>
 <script setup lang="ts">
@@ -16,17 +17,18 @@ import type { UserProfileType } from "./types/type";
 import { getUser, refreshUserData } from "./composables/useSignUp";
 
 const router = useRouter();
+useHead({
+  title: "Makise",
+});
 
 const state = useGlobalSettingStore();
-onMounted(() => {
-  state.initialize();
+onMounted(async () => {
+  await state.initialize();
   getUser();
   quickCheck();
 });
 
-async function quickCheck() {
-  console.log(state?.userData);
-}
+async function quickCheck() {}
 </script>
 <style>
 body {

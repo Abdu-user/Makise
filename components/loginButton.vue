@@ -17,7 +17,6 @@
         <NuxtLink
           to="/profile"
           class="w-full h-full flex"
-          v-auto-animate
         >
           <img
             v-if="image"
