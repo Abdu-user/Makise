@@ -24,10 +24,11 @@ export default defineEventHandler(async (event) => {
 
   const emailContent = {
     companyName: "Makise",
-    logoUrl: "https://no-domain.com/logo.png",
+    logoUrl:
+      "https://fra.cloud.appwrite.io/v1/storage/buckets/6838b84f00037b1e56a3/files/683b82d100195dd3e7b5/view?project=6832cc290024832259e2&mode=admin",
     websiteUrl: "https://no-domain.com",
     supportEmail: process.env.SMTP_USER,
-    subject: "Verification Code",
+    subject: `[${code}] Verification Code`,
     header: "Your Verification Code",
     introText: "Please copy this verification code and paste it into the app or website:",
     instructions: [
@@ -44,39 +45,50 @@ export default defineEventHandler(async (event) => {
       to: email,
       subject: emailContent.subject,
       html: `
-<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 650px; margin: auto; padding: 40px; background: #ffffff; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
-  <header style="text-align: center; margin-bottom: 30px;">
-    <img src="${emailContent.logoUrl}" alt="${emailContent.companyName} Logo" style="height: 60px; margin-bottom: 15px;" />
-  </header>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="${emailContent.header}" />
+    <title>${emailContent.subject}</title>
+  </head>
+  <body style="margin: 0; padding: 0; background: #f9f9f9;">
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 650px; margin: auto; padding: 40px; background: #ffffff; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+      <header style="text-align: center; margin-bottom: 30px;">
+        <img src="${emailContent.logoUrl}" alt="${emailContent.companyName} Logo" style="height: 60px; margin-bottom: 15px;" />
+      </header>
 
-  <div style="max-width: 600px; margin: auto; padding: 20px; text-align:center">
-    <h2 style="color: #2c54c6;">${emailContent.header}</h2>
-    <p style="font-size: 16px;">${emailContent.introText}</p>
+      <div style="max-width: 600px; margin: auto; padding: 20px; text-align:center">
+        <h2 style="color: #2c54c6;">${emailContent.header}</h2>
+        <p style="font-size: 16px;">${emailContent.introText}</p>
 
-    <div style="background: #f2f6ff; padding: 18px; font-size: 1.8rem; font-weight: bold; text-align: center; border-radius: 10px; letter-spacing: 4px; color: #2c54c6; user-select: all;">
-      ${code}
+        <div style="background: #f2f6ff; padding: 18px; font-size: 1.8rem; font-weight: bold; text-align: center; border-radius: 10px; letter-spacing: 4px; color: #2c54c6; user-select: all;">
+          ${code}
+        </div>
+
+        <p style="text-align: center; font-size: 14px; color: #666; margin-top: 25px;">📋 ${emailContent.instructions[0]}</p>
+        <p style="text-align: center; font-size: 14px; color: #999;">This code will expire in 5 minutes.</p>
+      </div>
+
+      <section style="font-size: 0.9rem; color: #555; line-height: 1.5; border-top: 1px solid #ddd; padding-top: 25px;">
+        <h3 style="color: #333; margin-bottom: 10px;">Need Help?</h3>
+        <ul style="list-style: disc inside; margin-top: 10px; color: #666;">
+          ${emailContent.instructions
+            .slice(1)
+            .map((item) => `<li>${item}</li>`)
+            .join("")}
+        </ul>
+      </section>
+
+      <footer style="margin-top: 40px; font-size: 0.8rem; color: #aaa; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
+        <p>This email was sent by <strong>${emailContent.companyName}</strong> (<a href="${emailContent.websiteUrl}" style="color: #666; text-decoration: none;">${emailContent.websiteUrl}</a>)</p>
+        <p>If you have questions or concerns, contact us at <a href="mailto:${emailContent.supportEmail}" style="color: #2c54c6; text-decoration: none;">${emailContent.supportEmail}</a></p>
+        <p style="margin-top: 15px; color: #ccc;">${emailContent.footerNote}</p>
+      </footer>
     </div>
-
-    <p style="text-align: center; font-size: 14px; color: #666; margin-top: 25px;">📋 ${emailContent.instructions[0]}</p>
-    <p style="text-align: center; font-size: 14px; color: #999;">This code will expire in 5 minutes.</p>
-  </div>
-
-  <section style="font-size: 0.9rem; color: #555; line-height: 1.5; border-top: 1px solid #ddd; padding-top: 25px;">
-    <h3 style="color: #333; margin-bottom: 10px;">Need Help?</h3>
-    <ul style="list-style: disc inside; margin-top: 10px; color: #666;">
-      ${emailContent.instructions
-        .slice(1)
-        .map((item) => `<li>${item}</li>`)
-        .join("")}
-    </ul>
-  </section>
-
-  <footer style="margin-top: 40px; font-size: 0.8rem; color: #aaa; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
-    <p>This email was sent by <strong>${emailContent.companyName}</strong> (<a href="${emailContent.websiteUrl}" style="color: #666; text-decoration: none;">${emailContent.websiteUrl}</a>)</p>
-    <p>If you have questions or concerns, contact us at <a href="mailto:${emailContent.supportEmail}" style="color: #2c54c6; text-decoration: none;">${emailContent.supportEmail}</a></p>
-    <p style="margin-top: 15px; color: #ccc;">${emailContent.footerNote}</p>
-  </footer>
-</div>`,
+  </body>
+</html>`,
     });
 
     codeStore.set(email, { code, createdAt: Date.now() });

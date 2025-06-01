@@ -36,5 +36,6 @@ body {
   /* box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); */
   /* background: #fee1ea; */
   box-shadow: 0 0 0 0 #ffe4e7;
+  box-sizing: border-box;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <!-- <ModalsAlert v-if="errorMessage || false"> </ModalsAlert> -->
-  <div class="min-h-screen flex flex-col justify-center items-center md:justify-center bg-mainBg px-4 py-6 sm:px-0">
+  <div class="w-full flex flex-col items-center bg-mainBg px-4 py-6 sm:px-0">
     <div class="w-full h-full max-md:flex-1 max-w-md bg-accent rounded-lg shadow-lg p-6 sm:p-8">
       <div class="relative flex items-center justify-center">
         <CustomButton2
