@@ -174,34 +174,14 @@
         <!-- </div> -->
 
         <!-- Edit / Save / Cancel Buttons -->
-        <div class="absolute z-10 -top-10 right-5">
-          <CustomButton2
-            v-if="!state.isEditingProfile"
-            icon
-            prepend-icon="material-symbols-light:edit-outline-sharp"
-            variant="text"
-            @click="state.toggleIsEditingProfile()"
-          />
-          <div
-            v-else
-            class="flex"
-          >
-            <CustomButton2
-              icon
-              prepend-icon="material-symbols-light:save"
-              size="md"
-              variant="text"
-              @click="(state.toggleIsEditingProfile(), updateUser())"
-            />
-            <CustomButton2
-              icon
-              size="lg"
-              prepend-icon="material-symbols-light:close"
-              variant="text"
-              @click="(state.toggleIsEditingProfile(), resetInputRefs())"
-            />
-          </div>
-        </div>
+        <EditButtons
+          class="absolute z-10 -top-10 right-5"
+          :is-editing="state.isEditingProfile"
+          @toggle="state.toggleIsEditingProfile"
+          @cancel="resetInputRefs"
+          @save="updateUser"
+        >
+        </EditButtons>
       </div>
     </header>
   </div>
