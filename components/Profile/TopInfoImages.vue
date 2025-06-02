@@ -30,10 +30,15 @@
       </div>
       <!-- ToDO todo is used just to highlight this section -->
       <!-- User Info Section -->
-      <div class="relative flex max-md:flex-col mt-16 px-6 md:px-16 pb-12 justify-between gap-10">
+      <div
+        :class="`relative grid   md:grid-cols-3 max-md:grid-rows-2 max-md:grid-cols-2
+       mt-16 px-6 md:px-16 pb-12 justify-center gap-10
+        max-md:text-xl
+       `"
+      >
         <template v-if="!state.isEditingProfile">
           <!-- Not Editing: Name + Job + Address -->
-          <div class="max-md:mx-auto max-md:text-center">
+          <div class="max-md:mx-auto max-md:text-center max-md:col-span-2">
             <p class="text-textHeader font-semibold text-xl">{{ cmpUserData.name || pl.name }} {{ cmpUserData.lastName || pl.lastName }}</p>
             <p class="text-text-Paragraph text-base">
               {{ cmpUserData.job || pl.job }}
@@ -46,7 +51,7 @@
 
         <template v-else>
           <!-- Editing: Name + Job + Address -->
-          <div class="max-md:mx-auto max-md:text-center flex basis-1/4 flex-col">
+          <div class="max-md:mx-auto max-md:text-center flex basis-1/4 flex-col max-md:col-span-2">
             <div class="flex overflow-hidden max-md:gap-2">
               <CustomInput
                 variant="edit"
@@ -76,97 +81,97 @@
           </div>
         </template>
 
-        <div class="flex basis-2/3 justify-between max-md:w-full">
-          <!-- Contact Info -->
-          <div>
-            <div class="flex items-center gap-4">
-              <Icon
-                name="material-symbols-light:stacked-email-rounded"
-                class="w-4 h-4"
-              />
-              <p class="text-textSecondary">{{ cmpUserData.email }}</p>
-            </div>
-            <div class="flex items-center gap-4">
-              <Icon name="material-symbols-light:settings-phone-sharp" />
-              <template v-if="!state.isEditingProfile">
-                <p class="text-textSecondary">{{ cmpUserData.phoneNumber || pl.phoneNumber }}</p>
-              </template>
-              <template v-else>
-                <CustomInput
-                  variant="edit"
-                  class="text-textSecondary"
-                  v-model="phoneNumberRef"
-                  :placeholder="pl.phoneNumber"
-                />
-              </template>
-            </div>
+        <!-- <div class="flex basis-2/3 justify-between max-md:w-full"> -->
+        <!-- Contact Info -->
+        <div class="max-md:mt-3">
+          <div class="flex items-center gap-4">
+            <Icon
+              name="material-symbols-light:stacked-email-rounded"
+              class="w-4 h-4"
+            />
+            <p class="text-textSecondary">{{ cmpUserData.email }}</p>
           </div>
-
-          <!-- Profile Strength -->
-          <div class="flex flex-col items-start">
-            <div class="max-md:hidden">
-              <p class="text-textSecondary flex justify-between">
-                Profile Strength:
-                <template v-if="state.isEditingProfile">
-                  <CustomInput
-                    variant="edit"
-                    class="font-semibold text-textParagraph max-w-10 text-xl text-center"
-                    v-model="profileStrengthRef"
-                    type="number"
-                    :maxNumber="100"
-                    :placeholder="pl.profileStrength"
-                  />
-                </template>
-              </p>
-              <LinearProggress
-                class="w-52 mb-2"
-                :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
-                :show-percent="true"
-                :startColor="colors.activeWeak"
-                :stopColor="colors.activeStrong"
-                percentColor="text-white"
+          <div class="flex items-center gap-4">
+            <Icon name="material-symbols-light:settings-phone-sharp" />
+            <template v-if="!state.isEditingProfile">
+              <p class="text-textSecondary">{{ cmpUserData.phoneNumber || pl.phoneNumber }}</p>
+            </template>
+            <template v-else>
+              <CustomInput
+                variant="edit"
+                class="text-textSecondary"
+                v-model="phoneNumberRef"
+                :placeholder="pl.phoneNumber"
               />
-            </div>
-
-            <!-- Mobile Profile Progress -->
-            <div class="md:hidden relative">
-              <p class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-10">
-                <template v-if="state.isEditingProfile">
-                  <CustomInput
-                    variant="edit"
-                    class="font-semibold text-textParagraph text-xl text-center"
-                    v-model="profileStrengthRef"
-                    type="number"
-                    :maxNumber="100"
-                    :min="0"
-                    :placeholder="pl.profileStrength"
-                  />
-                </template>
-                <template v-else>
-                  <span class="font-semibold text-textParagraph text-xl"> {{ cmpUserData.profileStrength || pl.profileStrength }}% </span>
-                </template>
-                <span class="text-textSecondary text-sm -mt-2 inline-block">Realm</span>
-              </p>
-              <ClientOnly>
-                <circle-progress
-                  :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
-                  :viewport="true"
-                  :size="90"
-                  :border-width="8"
-                  :border-bg-width="8"
-                  :is-gradient="true"
-                  :gradient="{
-                    angle: 90,
-                    startColor: colors.activeWeak || '',
-                    stopColor: colors.activeStrong || '',
-                  }"
-                >
-                  <!-- https://www.npmjs.com/package/vue3-circle-progress -->
-                </circle-progress>
-              </ClientOnly>
-            </div>
+            </template>
           </div>
         </div>
+
+        <!-- Profile Strength -->
+        <div class="flex flex-col items-start">
+          <div class="max-md:hidden">
+            <p class="text-textSecondary flex justify-between">
+              Profile Strength:
+              <template v-if="state.isEditingProfile">
+                <CustomInput
+                  variant="edit"
+                  class="font-semibold text-textParagraph max-w-10 text-xl text-center"
+                  v-model="profileStrengthRef"
+                  type="number"
+                  :maxNumber="100"
+                  :placeholder="pl.profileStrength"
+                />
+              </template>
+            </p>
+            <LinearProggress
+              class="w-52 mb-2"
+              :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
+              :show-percent="true"
+              :startColor="colors.activeWeak"
+              :stopColor="colors.activeStrong"
+              percentColor="text-white"
+            />
+          </div>
+
+          <!-- Mobile Profile Progress -->
+          <div class="md:hidden relative ml-auto">
+            <p class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-10">
+              <template v-if="state.isEditingProfile">
+                <CustomInput
+                  variant="edit"
+                  class="font-semibold text-textParagraph text-xl text-center"
+                  v-model="profileStrengthRef"
+                  type="number"
+                  :maxNumber="100"
+                  :min="0"
+                  :placeholder="pl.profileStrength"
+                />
+              </template>
+              <template v-else>
+                <span class="font-semibold text-textParagraph text-xl"> {{ cmpUserData.profileStrength || pl.profileStrength }}% </span>
+              </template>
+              <span class="text-textSecondary text-sm -mt-2 inline-block">Realm</span>
+            </p>
+            <ClientOnly>
+              <circle-progress
+                :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
+                :viewport="true"
+                :size="90"
+                :border-width="8"
+                :border-bg-width="8"
+                :is-gradient="true"
+                :gradient="{
+                  angle: 90,
+                  startColor: colors.activeWeak || '',
+                  stopColor: colors.activeStrong || '',
+                }"
+              >
+                <!-- https://www.npmjs.com/package/vue3-circle-progress -->
+              </circle-progress>
+            </ClientOnly>
+          </div>
+        </div>
+        <!-- </div> -->
 
         <!-- Edit / Save / Cancel Buttons -->
         <div class="absolute z-10 -top-10 right-5">
