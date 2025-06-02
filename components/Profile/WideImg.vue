@@ -46,11 +46,17 @@ import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { ImgLocation, WideImageLocationSettingsType } from "~/types/type";
 
 const state = useGlobalSettingStore();
+const defaultIgmUrl = () => {
+  if (state.disabledExpensiveUrlFetch) {
+    return state.userData?.wideProfileImage ? "/images/wide_angle_tetons.jpg" : "";
+  }
+  return state.userData?.wideProfileImage || "";
+};
 
 const wideImgStyle = ref("");
 const selectedImgPosition = ref<ImgLocation>("center");
 const imgPositionSettings = ref<Partial<WideImageLocationSettingsType>>({});
-const wideImgUrl = ref(state.userData?.wideProfileImage || "/images/wide_angle_tetons.jpg");
+const wideImgUrl = ref(defaultIgmUrl());
 const wideImgFile = ref<File | null>(null);
 
 const positionOptions: ImgLocation[] = ["top", "center", "bottom", "left", "left-top", "left-bottom", "right", "right-top", "right-bottom"];
@@ -84,8 +90,9 @@ watch(selectedImgPosition, (newVal) => {
 
 watch([() => state.userData?.wideProfileImage, () => state.userData?.wideImageLocationSettingsJSON], refreshValues);
 onMounted(refreshValues);
+
 function refreshValues() {
-  wideImgUrl.value = state.userData?.wideProfileImage || "/images/wide_angle_tetons.jpg";
+  wideImgUrl.value = defaultIgmUrl();
   resetImgPosition();
 }
 async function uploadWideImage(event: Event) {

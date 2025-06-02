@@ -209,6 +209,12 @@ import colors from "../../colors";
 import { Client } from "appwrite";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
+const defaultIgmUrl = () => {
+  if (state.disabledExpensiveUrlFetch) {
+    return state.userData?.profileImage ? "" : "/images/placeholder-avatar.jpg";
+  }
+  return state.userData?.profileImage || "/images/placeholder-avatar.jpg";
+};
 
 import { ref, watch, computed } from "vue";
 import type { UserProfileType } from "~/types/type";
@@ -223,7 +229,7 @@ const cmpUserData = computed(() => ({
   email: state.userData?.email || "",
   phoneNumber: state.userData?.phoneNumber || "",
   profileStrength: state.userData?.profileStrength ? String(state.userData?.profileStrength) : "0",
-  profileImgUrl: state.userData?.profileImage || "/images/placeholder-avatar.jpg",
+  profileImgUrl: defaultIgmUrl,
 }));
 watch(cmpUserData, () => {
   resetInputRefs();
@@ -234,7 +240,7 @@ onMounted(async () => {
 });
 
 const profileImgFile = ref<File | null>(null);
-const profileImgUrl = ref(cmpUserData.value.profileImgUrl);
+const profileImgUrl = ref<string>(defaultIgmUrl());
 
 const nameRef = ref(cmpUserData.value.name);
 const lastNameRef = ref(cmpUserData.value.lastName);
@@ -250,7 +256,7 @@ function resetInputRefs() {
   addressRef.value = cmpUserData.value.address;
   phoneNumberRef.value = cmpUserData.value.phoneNumber;
   profileStrengthRef.value = cmpUserData.value.profileStrength;
-  profileImgUrl.value = cmpUserData.value.profileImgUrl;
+  profileImgUrl.value = defaultIgmUrl();
 }
 
 async function updateUser() {

@@ -18,6 +18,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     resetFunctions: [] as (() => void)[],
     fromPage: "",
     routeName: "",
+    disabledExpensiveUrlFetch: true,
   }),
   actions: {
     toggleIsNavOpen() {
@@ -48,6 +49,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
           isNavOpen: this.isNavOpen,
           isEditingProfile: this.isEditingProfile,
           isPrefilltheUserField: this.isPrefilltheUserField,
+          disabledExpensiveUrlFetch: this.disabledExpensiveUrlFetch,
         })
       );
     },
@@ -59,6 +61,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
         this.isNavOpen = parsed.isNavOpen ?? false;
         this.isEditingProfile = parsed.isEditingProfile ?? false;
         this.isPrefilltheUserField = parsed.isPrefilltheUserField ?? false;
+        this.disabledExpensiveUrlFetch = parsed.disabledExpensiveUrlFetch ?? true;
       }
     },
     _loading(loading: boolean) {
