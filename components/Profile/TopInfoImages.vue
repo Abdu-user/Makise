@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-mainBg shadow-md mt-3 md:mt-6">
+  <div class="bg-mainBg shadow-md">
     <header class="flex flex-col">
       <!-- Images section -->
       <div class="w-full relative">
@@ -169,7 +169,7 @@
         </div>
 
         <!-- Edit / Save / Cancel Buttons -->
-        <div class="absolute z-10 -top-10 right-0">
+        <div class="absolute z-10 -top-10 right-5">
           <CustomButton2
             v-if="!state.isEditingProfile"
             icon

@@ -2,6 +2,7 @@ export const navLinks = [
   { name: "home", icon: "material-symbols-light:home-rounded" },
   { name: "about", icon: "material-symbols-light:info" },
   { name: "contact", icon: "material-symbols-light:contacts-rounded" },
+  { name: "documantation", icon: "material-symbols:docs-outline-sharp" },
   { name: "profile", icon: "material-symbols-light:account-circle" },
 ];
 

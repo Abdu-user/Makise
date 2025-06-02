@@ -2,6 +2,7 @@ export default {
   primaryColor: "red",
   primary: "#ff223c", // red-500
   textColor: "#212427", // gray-800
+  textWhite: "#F1F5F9",
 
   accent: "#F1F5F9", // slate-100
 

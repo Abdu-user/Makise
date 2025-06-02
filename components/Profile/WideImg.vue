@@ -2,7 +2,8 @@
   <img
     :src="wideImgUrl"
     alt="Profile wide image"
-    class="w-full h-60 object-cover"
+    class="w-full h-60"
+    :class="state.userData?.wideProfileImage ? 'object-cover' : 'object-contain'"
     :style="wideImgStyle"
     loading="lazy"
   />
@@ -48,9 +49,9 @@ import type { ImgLocation, WideImageLocationSettingsType } from "~/types/type";
 const state = useGlobalSettingStore();
 const defaultIgmUrl = () => {
   if (state.disabledExpensiveUrlFetch) {
-    return state.userData?.wideProfileImage ? "/images/wide_angle_tetons.jpg" : "";
+    return state.userData?.wideProfileImage ? "/images/wide_angle_tetons.jpg" : "/images/PlaceholderWide.svg";
   }
-  return state.userData?.wideProfileImage || "";
+  return state.userData?.wideProfileImage || "/images/PlaceholderWide.svg";
 };
 
 const wideImgStyle = ref("");

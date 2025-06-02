@@ -65,6 +65,13 @@
         >Sign Up</NuxtLink
       >
     </p>
+    <ModalsNotification
+      @handleOk="notifyError = ''"
+      :isOpen="Boolean(notifyError)"
+      ok
+    >
+      {{ notifyError }}
+    </ModalsNotification>
   </div>
 </template>
 
@@ -75,15 +82,14 @@ import { useGlobalSettingStore } from "~/store/globalSetting";
 const { login } = useAuth();
 const router = useRouter();
 const state = useGlobalSettingStore();
+const notifyError = ref("");
 
 const email = ref("");
 const password = ref("");
 const emailError = ref("");
 const passwordError = ref("");
 
-// Example validation logic (replace with your own as needed)
 function onSignIn() {
-  console.log("coco");
   emailError.value = "";
   passwordError.value = "";
 
@@ -98,9 +104,12 @@ function onSignIn() {
     })
     .catch((error) => {
       if (error.message.includes("email")) emailError.value = "Email not found";
-
-      if (error.message.includes("password")) passwordError.value = "Incorrect password";
+      else if (error.message.includes("password")) passwordError.value = "Incorrect password";
+      else {
+        notifyError.value = error.message;
+      }
     });
+
   function validateEmail(email: string): boolean {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
@@ -111,9 +120,11 @@ function resetInputValues() {
   email.value = state.isPrefilltheUserField ? "igromen1997@gmail.com" : "";
   password.value = state.isPrefilltheUserField ? "12345678" : "";
 }
+
 onMounted(() => {
   state.setResetFunctions(resetInputValues);
   resetInputValues();
 });
+
 onUnmounted(() => state.removeSingleResetFunction(resetInputValues));
 </script>

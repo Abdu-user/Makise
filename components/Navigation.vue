@@ -58,7 +58,7 @@
       </div>
     </div>
   </nav>
-  <div class="pt-10 max-w-7xl mx-auto">
+  <div class="pt-16 max-w-7xl mx-auto">
     <slot></slot>
   </div>
 </template>

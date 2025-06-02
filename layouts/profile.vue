@@ -1,6 +1,6 @@
 <template>
   <MainLayout>
-    <ProfileTopInfoImages />
+    <ProfileTopInfoImages class="mt-3 md:mt-6" />
     <ProfileNavLinks />
     <slot />
   </MainLayout>

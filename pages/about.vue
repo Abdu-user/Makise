@@ -8,6 +8,9 @@
 </template>
 
 <script setup lang="ts">
+import { useGlobalSettingStore } from "~/store/globalSetting";
+const state = useGlobalSettingStore();
+state.routeName = "About";
 useHead({
   title: "About Makise ",
 });
