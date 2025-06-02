@@ -1,13 +1,11 @@
 <template>
-  <!-- <MainLayout> -->
-  <ProfileTopInfoImages />
-  <ProfileNavLinks />
-  <slot />
-  <!-- </MainLayout> -->
+  <MainLayout>
+    <ProfileTopInfoImages />
+    <ProfileNavLinks />
+    <slot />
+  </MainLayout>
 </template>
 <script lang="ts" setup>
-// import MainLayout from "./main.vue"; // or '~/layouts/main.vue'
-
 import { useGlobalSettingStore } from "~/store/globalSetting";
 
 const state = useGlobalSettingStore();

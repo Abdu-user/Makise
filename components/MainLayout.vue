@@ -1,7 +1,7 @@
 <template>
-  <MainLayout>
+  <Navigation>
     <slot></slot>
-  </MainLayout>
+  </Navigation>
 </template>
 
 <script setup lang="ts"></script>
