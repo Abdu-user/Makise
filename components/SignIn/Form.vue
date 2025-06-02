@@ -83,6 +83,7 @@ const passwordError = ref("");
 
 // Example validation logic (replace with your own as needed)
 function onSignIn() {
+  console.log("coco");
   emailError.value = "";
   passwordError.value = "";
 
@@ -112,7 +113,6 @@ function resetInputValues() {
 }
 onMounted(() => {
   state.setResetFunctions(resetInputValues);
-  console.log(state.resetFunctions);
   resetInputValues();
 });
 onUnmounted(() => state.removeSingleResetFunction(resetInputValues));

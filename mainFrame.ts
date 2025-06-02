@@ -18,3 +18,5 @@ export const profileInputPlaceholders = {
 const bigNames = {
   appName: "Makise",
 };
+
+export const ProfileRoutes = ["personal", "contact", "education", "skills", "family", "work"];

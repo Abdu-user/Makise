@@ -12,8 +12,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useGlobalSettingStore } from "./store/globalSetting";
-import { useAsyncFunction } from "./composables/useAsyncFunction";
-import type { UserProfileType } from "./types/type";
 import { getUser, refreshUserData } from "./composables/useSignUp";
 
 const router = useRouter();

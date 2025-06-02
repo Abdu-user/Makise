@@ -143,6 +143,9 @@
 </template>
 
 <script setup lang="ts">
+useHead({
+  title: "Make contact with Makise",
+});
 definePageMeta({
   layout: "main",
 });

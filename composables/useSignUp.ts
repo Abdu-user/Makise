@@ -117,9 +117,10 @@ export async function refreshUserData() {
 
 export async function getUser() {
   const state = useGlobalSettingStore();
-  const { current } = useAuth();
+  const { current, logout } = useAuth();
 
-  const { value: user, cb } = useAsyncFunction(current, state._loading, state._error, false);
+  const { value: user, error, cb } = useAsyncFunction(current, state._loading, state._error, false);
   await cb();
-  user.value && state.setUser(user.value), await refreshUserData();
+  if (error.value) logout();
+  if (user.value) state.setUser(user.value), await refreshUserData();
 }

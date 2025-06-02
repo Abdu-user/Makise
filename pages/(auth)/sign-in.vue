@@ -9,6 +9,10 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useHead({
+  title: "Sign in to Makise",
+});
+</script>
 
 <style scoped></style>

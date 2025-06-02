@@ -52,7 +52,7 @@
             </Transition>
           </div>
         </div>
-        <span class="font-bold text-xl capitalize">{{ state.route }}</span>
+        <span class="font-bold text-xl capitalize">{{ state.routeName }}</span>
 
         <LoginButton :is-signed-in="false" />
       </div>

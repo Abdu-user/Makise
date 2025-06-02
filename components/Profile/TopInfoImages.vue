@@ -14,6 +14,7 @@
             :class="`${state.isEditingProfile ? 'cursor-pointer' : ''}`"
           >
             <input
+              v-if="state.isEditingProfile"
               type="file"
               accept="image/*"
               class="hidden"

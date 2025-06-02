@@ -8,7 +8,9 @@
 </template>
 
 <script setup lang="ts">
-// No script logic needed for this simple page
+useHead({
+  title: "About Makise ",
+});
 definePageMeta({
   layout: "main",
 });

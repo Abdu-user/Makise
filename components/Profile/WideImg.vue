@@ -82,11 +82,12 @@ watch(selectedImgPosition, (newVal) => {
     });
 });
 
-watch([() => state.userData?.wideProfileImage, () => state.userData?.wideImageLocationSettingsJSON], () => {
+watch([() => state.userData?.wideProfileImage, () => state.userData?.wideImageLocationSettingsJSON], refreshValues);
+onMounted(refreshValues);
+function refreshValues() {
   wideImgUrl.value = state.userData?.wideProfileImage || "/images/wide_angle_tetons.jpg";
   resetImgPosition();
-});
-
+}
 async function uploadWideImage(event: Event) {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
@@ -107,5 +108,3 @@ async function uploadWideImage(event: Event) {
   refreshUserData();
 }
 </script>
-
-<style scoped></style>

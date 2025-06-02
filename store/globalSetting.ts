@@ -17,7 +17,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     error: "",
     resetFunctions: [] as (() => void)[],
     fromPage: "",
-    route: "",
+    routeName: "",
   }),
   actions: {
     toggleIsNavOpen() {
@@ -78,6 +78,9 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     },
     setResetFunctions(cb: () => void) {
       this.resetFunctions.push(cb);
+    },
+    setRouteName(routeName: string) {
+      this.routeName = routeName;
     },
     removeSingleResetFunction(cb: () => void) {
       this.resetFunctions = this.resetFunctions.filter((oldCb) => oldCb !== cb);
