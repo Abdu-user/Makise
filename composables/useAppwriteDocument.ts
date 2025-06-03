@@ -3,17 +3,13 @@ import { ID, Storage } from "appwrite";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { UserProfileType } from "~/types/type";
 
-export function useAppwriteToRegisterUser(data: UserProfileType, documentId?: string) {
+export async function useAppwriteToRegisterUser(data: UserProfileType) {
   const { $appwrite } = useNuxtApp();
   const databases = $appwrite.databases;
   const config = useRuntimeConfig();
-
-  return databases.createDocument(
-    config.public.appwriteDatabaseId,
-    config.public.appwriteCollectionId,
-    documentId ? documentId : ID.unique(),
-    data
-  );
+  const userId = (await $appwrite.account.get()).$id;
+  if (!userId) throw "There is no user";
+  return await databases.createDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, userId, data);
 }
 
 export function useAppwriteDocumentUpdate(documentId: string, data: Partial<UserProfileType>) {

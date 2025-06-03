@@ -24,10 +24,16 @@ const state = useGlobalSettingStore();
 onMounted(async () => {
   await state.initialize();
   getUser();
-  quickCheck();
+  // quickCheck();
 });
 
-async function quickCheck() {}
+async function quickCheck() {
+  const config = useRuntimeConfig();
+  const { $appwrite } = useNuxtApp();
+  return $appwrite.databases.createDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, "documentId", {
+    email: "agawg@gmail.com",
+  });
+}
 </script>
 <style>
 body {

@@ -25,7 +25,7 @@
             >
               <div
                 v-show="state.isNavOpen"
-                :class="`pr-2 pb-3 space-y-1 absolute left-0 top-16 w-full min-h-[calc(100vh-64px)]  shadow-lg ease-in
+                :class="`pr-2 pb-3 space-y-1 absolute left-0 top-16 w-full min-h-[calc(100vh-64px)]  shadow-lg ease-in bg-mainBg/10 backdrop-blur-lg
                 flex `"
                 @click.self="state.toggleIsNavOpen"
               >

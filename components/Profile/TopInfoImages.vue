@@ -196,7 +196,7 @@ import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 const defaultIgmUrl = () => {
   if (state.disabledExpensiveUrlFetch) {
-    return state.userData?.profileImage ? "" : "/images/placeholder-avatar.jpg";
+    return state.userData?.profileImage ? "/images/profileImage.png" : "/images/placeholder-avatar.jpg";
   }
   return state.userData?.profileImage || "/images/placeholder-avatar.jpg";
 };

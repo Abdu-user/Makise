@@ -39,7 +39,7 @@ export async function createAppwriteUser(email: string, password: string) {
     const res = await useAuth().login(email, password);
     state.setUser(user);
 
-    await useAppwriteToRegisterUser({ email }, res.$id);
+    await useAppwriteToRegisterUser({ email });
   } catch (error) {
     console.error(error);
     throw error;

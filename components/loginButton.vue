@@ -38,6 +38,10 @@
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 const image = computed(() => {
+  if (state.disabledExpensiveUrlFetch) {
+    return "/images/profileImage.png";
+  }
+
   return state.userData?.profileImage;
 });
 const route = useRoute();

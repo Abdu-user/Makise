@@ -16,7 +16,4 @@ useHead({
   title: "Profile",
   meta: [{ name: "description", content: "User profile page for authenticated users." }],
 });
-definePageMeta({
-  middleware: "auth",
-});
 </script>

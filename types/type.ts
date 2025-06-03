@@ -11,8 +11,8 @@ export type UserProfileType = {
   wideProfileImage?: string;
   previousProfileImageUrls?: string[];
   wideImageLocationSettingsJSON?: string;
-  personalInformation: string;
-  IDProof: string;
+  personalInformation?: string;
+  IDProof?: string;
 };
 
 export type ImgLocation = "top" | "center" | "bottom" | "left" | "left-top" | "left-bottom" | "right" | "right-top" | "right-bottom";

@@ -32,6 +32,7 @@
           v-for="idproof in IDProofs"
           :is-editing="isEditingIDProof"
           :value="IDProof[idproof.variableName as keyof typeof IDProof]"
+          v-model="IDProof[idproof.variableName as keyof typeof IDProof]"
           :subtitle="idproof.subtitle"
           :placeholder="idproof.placeholder"
         />
@@ -46,6 +47,7 @@ import type { IDProofType, PersonalInfoType } from "~/types/type";
 
 definePageMeta({
   layout: "profile",
+  middleware: "auth",
 });
 const state = useGlobalSettingStore();
 // Personal Information
@@ -64,7 +66,6 @@ const isEditingPersonal = ref(false);
 const updatePersonalInfo = async () => {
   if (!state.user?.$id) return;
   const updateUserPerInf = await useAppwriteDocumentUpdate(state.user?.$id, { personalInformation: JSON.stringify(personalInfo.value) });
-  console.log(updateUserPerInf);
 };
 const resetPersonalInfo = () => {
   const parsed = JSON.parse(state.userData?.personalInformation || "{}");
@@ -72,10 +73,9 @@ const resetPersonalInfo = () => {
 };
 watch(
   () => state.userData?.personalInformation,
-  () => {
-    resetPersonalInfo();
-  }
+  () => resetPersonalInfo()
 );
+onMounted(() => resetPersonalInfo());
 
 // ID Proof
 const IDProof = ref<IDProofType>({
@@ -88,7 +88,6 @@ const isEditingIDProof = ref(false);
 const updateIDProof = async () => {
   if (!state.user?.$id) return;
   const updateUserPerInf = await useAppwriteDocumentUpdate(state.user?.$id, { IDProof: JSON.stringify(IDProof.value) });
-  console.log(updateUserPerInf);
 };
 const resetIDProof = () => {
   const parsed = JSON.parse(state.userData?.IDProof || "{}");
@@ -96,8 +95,8 @@ const resetIDProof = () => {
 };
 watch(
   () => state.userData?.IDProof,
-  () => {
-    resetIDProof();
-  }
+  () => resetIDProof()
 );
+
+onMounted(() => resetIDProof());
 </script>

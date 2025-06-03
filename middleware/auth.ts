@@ -13,6 +13,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   } catch {
     // @ts-ignore
     state.setFromPage(to.fullPath);
-    // return navigateTo("/sign-up");
+    return navigateTo("/sign-up");
   }
 });
