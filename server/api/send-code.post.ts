@@ -24,8 +24,7 @@ export default defineEventHandler(async (event) => {
 
   const emailContent = {
     companyName: "Makise",
-    logoUrl:
-      "https://fra.cloud.appwrite.io/v1/storage/buckets/6838b84f00037b1e56a3/files/683b82d100195dd3e7b5/view?project=6832cc290024832259e2&mode=admin",
+    logoUrl: "https://images.app.goo.gl/oCkpw4jVQDWki6P46",
     websiteUrl: "https://no-domain.com",
     supportEmail: process.env.SMTP_USER,
     subject: `[${code}] Verification Code`,

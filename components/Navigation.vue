@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-mainBg text-textHeader fixed top-0 left-0 w-full z-50">
+  <nav class="bg-mainBg/20 backdrop-blur-md text-textHeader fixed top-0 left-0 w-full z-50">
     <div class="max-w-7xl mx-auto">
       <div class="relative flex items-center justify-between gap-4 h-16 px-4 sm:px-6 lg:px-8 shadow-sm">
         <div class="flex items-center no-auto-pos">
