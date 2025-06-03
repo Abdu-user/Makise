@@ -1,5 +1,11 @@
 <template>
-  <div class="mt-8 mx-4 flex gap-5 md:border-b-2 md:border-b-gray-300 overflow-auto">
+  <div
+    :class="`mt-8 flex gap-5 relative md:after:bg-gray-300 overflow-auto
+  md:after:content-[''] md:after:block md:after:absolute 
+md:after:bottom-[0px] md:after:left-0 md:after:w-full md:after:h-[2px]  z-10
+      
+  `"
+  >
     <CustomNuxtLink
       variant="underline"
       v-for="route in normalizedRoutes"

@@ -1,8 +1,10 @@
 <template>
   <MainLayout>
     <ProfileTopInfoImages class="mt-3 md:mt-6" />
-    <ProfileNavLinks />
-    <slot />
+    <div class="mx-4">
+      <ProfileNavLinks />
+      <slot />
+    </div>
   </MainLayout>
 </template>
 <script lang="ts" setup>
@@ -13,5 +15,8 @@ state.setRouteName("My Profile");
 useHead({
   title: "Profile",
   meta: [{ name: "description", content: "User profile page for authenticated users." }],
+});
+definePageMeta({
+  middleware: "auth",
 });
 </script>

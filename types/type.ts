@@ -11,9 +11,29 @@ export type UserProfileType = {
   wideProfileImage?: string;
   previousProfileImageUrls?: string[];
   wideImageLocationSettingsJSON?: string;
+  personalInformation: string;
+  IDProof: string;
 };
 
 export type ImgLocation = "top" | "center" | "bottom" | "left" | "left-top" | "left-bottom" | "right" | "right-top" | "right-bottom";
 export type WideImageLocationSettingsType = {
   wideImage: ImgLocation;
+};
+
+export type PersonalInfoType = {
+  fullname: string;
+  birthdayDate: string;
+  age: string;
+  bloodGroup: string;
+  mariageStatus: string;
+  gender: string;
+  languages: string;
+  region: string;
+  nationality: string;
+};
+export type IDProofType = {
+  atomics: string;
+  pin: string;
+  passport: string;
+  drivingLicense: string;
 };
