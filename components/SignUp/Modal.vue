@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed flex justify-center items-center bg-black bg-opacity-50 inset-0 z-50 top-0 left-0 right-0 bottom-0 backdrop-blur-sm">
+  <div class="fixed flex justify-center items-center bg-black bg-opacity-50 inset-0 z-50 top-0 left-0 right-0 bottom-0 backdrop-blur-md">
     <div
       v-if="isHappy"
       class="bg-accent rounded-lg shadow-lg p-6 sm:p-8 max-w-md w-full flex flex-col items-center"

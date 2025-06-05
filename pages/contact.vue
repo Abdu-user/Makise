@@ -145,7 +145,7 @@
 <script setup lang="ts">
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
-state.routeName = "Contact";
+onMounted(() => state.setRouteName("Contact"));
 useHead({
   title: "Make contact with Makise",
 });

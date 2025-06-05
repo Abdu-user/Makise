@@ -19,10 +19,15 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     fromPage: "",
     routeName: "",
     disabledExpensiveUrlFetch: true,
+    isScrollLinksExist: false,
   }),
   actions: {
-    toggleIsNavOpen() {
-      this.isNavOpen = !this.isNavOpen;
+    toggleIsNavOpen(isNavOpen: boolean | undefined = undefined) {
+      if (isNavOpen !== undefined) {
+        this.isNavOpen = isNavOpen;
+      } else {
+        this.isNavOpen = !this.isNavOpen;
+      }
       this.saveToLocalStorage();
     },
     toggleIsEditingProfile() {
@@ -84,6 +89,9 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     },
     setRouteName(routeName: string) {
       this.routeName = routeName;
+    },
+    setIsScrollLinksExist(bool: boolean) {
+      this.isScrollLinksExist = bool;
     },
     removeSingleResetFunction(cb: () => void) {
       this.resetFunctions = this.resetFunctions.filter((oldCb) => oldCb !== cb);

@@ -10,7 +10,8 @@
 <script setup lang="ts">
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
-state.routeName = "About";
+
+onMounted(() => state.setRouteName("About"));
 useHead({
   title: "About Makise ",
 });

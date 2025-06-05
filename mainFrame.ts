@@ -1,10 +1,16 @@
-export const navLinks = [
-  { name: "home", icon: "material-symbols-light:home-rounded" },
-  { name: "about", icon: "material-symbols-light:info" },
-  { name: "contact", icon: "material-symbols-light:contacts-rounded" },
-  { name: "documentation", icon: "material-symbols:docs-outline-sharp" },
-  { name: "profile", icon: "material-symbols-light:account-circle" },
-];
+export const navLinks = {
+  main: [
+    { name: "home", icon: "material-symbols-light:home-rounded" },
+    { name: "about", icon: "material-symbols-light:info" },
+    { name: "contact", icon: "material-symbols-light:contacts-rounded" },
+    { name: "profile", icon: "material-symbols-light:account-circle" },
+  ],
+  separator1: "Documentation",
+  docs: [
+    { name: "components", icon: "material-symbols:docs-outline-sharp" },
+    { name: "tutorials", icon: "material-symbols:docs-outline-sharp" },
+  ],
+};
 
 export const profileInputPlaceholders = {
   name: "Name",
@@ -16,8 +22,9 @@ export const profileInputPlaceholders = {
   profileStrength: "0",
 };
 
-const bigNames = {
+export const bigNames = {
   appName: "Makise",
+  mainLogPath: "/logos/m-logo.png",
 };
 
 export const ProfileRoutes = ["personal", "contact", "education", "skills", "family", "work"];
@@ -39,3 +46,5 @@ export const IDProofs = [
   { subtitle: "Passport", placeholder: "Your Passport Number", variableName: "passport" },
   { subtitle: "Driving License", placeholder: "Your Driving License Number", variableName: "drivingLicense" },
 ];
+
+export const componentsLinks = [{ to: "/custom" }];

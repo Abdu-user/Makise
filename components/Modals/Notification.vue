@@ -23,7 +23,7 @@
         <CustomButton2
           v-if="ok"
           :class="`absolute -bottom-5 
-          text-textWhite  backdrop-blur-sm  right-2  shadow-lg border `"
+          text-textWhite  backdrop-blur-md  right-2  shadow-lg border `"
           variant="tonal"
           @click="emit('handleOk')"
         >

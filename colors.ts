@@ -9,12 +9,20 @@ export default {
   activeWeak: "#ffe4e7",
   activeStrong: "#ff223c", // stronger shade for active state
 
+  mainBg: "#FFF5EE",
+  mainT2Bg: "#f5f5f7",
+  hoverBg: "#eeeeee",
+  darkBg: "#e5e5e7",
+
+  T1TextColor: "#1a1a1a", // Primary text — near black
+  T2TextColor: "#2d2d2f", // Secondary text
+  T3TextColor: "#5c5c60", // Tertiary/Muted text
+  T4TextColor: "#7a7f85", // Hint/subtle labels or disabled text
+
   secondary: "#F8FAFC", // secondary
   secondaryLight: "#F8FAFC", // lighter shade for secondary
   secondaryDark: "#E2E8F0", // darker shade for secondary
   secondaryMuted: "#CBD5E1", // muted shade for secondary
-
-  mainBg: "#FFF5EE",
 
   highlight: "#DC2626", // red-600 "#991B1B",
 
@@ -24,20 +32,34 @@ export default {
 
   textLink: "#EF4444", // primary color for links
   textLinkHover: "#991B1B", // highlight color for link hover
-};
 
-// colors: {
-//   primary: "#3B82F6", // blue-500
-//   accent: "#F1F5F9", // slate-100
-//   mainBg: "#1D4ED8", // blue-700
-//   highlight: "#1E3A8A", // blue-750 (closest Tailwind blue shade)
-//   active: "#1E40AF", // blue-800
-// },
-// create sign in with tail wind, tailwind has these classes, "    extend: {
-//       colors: {
-//         primary: "#EF4444", // red-500
-//         accent: "#F1F5F9", // slate-100
-//         mainBg: "#B91C1C", // red-700
-//         highlight: "#991B1B", // red-800 (closest Tailwind red shade)
-//         active: "#7F1D1D", // red-900
-//       }," don't use hesh values, use the variable names
+  darkPrimaryColor: "#ff4545",
+  darkPrimary: "#ff6b81",
+
+  darkTextColor: "#F1F5F9",
+  darkTextWhite: "#ffffff",
+
+  darkAccent: "#1E293B",
+
+  darkActiveWeak: "#211717",
+  darkActiveStrong: "#ff6b81",
+
+  darkMainBg: "#1d1d21",
+  darkMainT2Bg: "#222223",
+  darkHoverBg: "#242527",
+  darkDarkBg: "#131315",
+
+  darkHighlight: "#f87171",
+
+  darkT1TextColor: "#ededf0",
+  darkT2TextColor: "#d5d5db",
+  darkT3TextColor: "#acacaf",
+  darkT4TextColor: "#989da0",
+
+  darkTextParagraph: "#CBD5E1",
+  darkTextHeader: "#F8FAFC",
+  darkTextSecondary: "#94A3B8",
+
+  darkTextLink: "#fb7185",
+  darkTextLinkHover: "#f43f5e",
+};

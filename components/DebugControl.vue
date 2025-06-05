@@ -30,7 +30,7 @@
           <!-- <slot> Debug info goes here. </slot> -->
           <CustomButton
             type="button"
-            variety="primary"
+            :variety="'primary'"
             size="md"
             @click="logout"
           >
@@ -78,6 +78,7 @@
             />
             {{ state.isPrefilltheUserField }}
           </CustomButton2>
+          <ThemeToggleButton />
         </div>
         <!-- Tail -->
         <div class="w-6 h-6 absolute right-4 -bottom-3">

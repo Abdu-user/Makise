@@ -1,75 +1,75 @@
 <script setup lang="ts">
-/**
- * A fully featured Vue button component inspired by Vuetify's <v-btn>.
- *
- * Supports variants, sizes, loading state, icons, stacking, full width, and rounded styles.
- *
- * @component AppButton
- *
- * @props
- * @prop {string} variant - The button style. One of: "default", "outlined", "tonal", "text", "plain". Default: "default".
- * @prop {string} color - The Tailwind color name (e.g. "blue", "red", "green"). Default: "blue".
- * @prop {string} size - The button size. One of: "sm", "md", "lg". Default: "md".
- * @prop {boolean} icon - If true, makes the button icon-only (no label). Default: false.
- * @prop {string|object|null} prependIcon - A component to render before the label (e.g. an icon). Default: null.
- * @prop {string|object|null} appendIcon - A component to render after the label (e.g. an icon). Default: null.
- * @prop {boolean} stacked - If true, stacks icon and label vertically. Default: false.
- * @prop {boolean} loading - Shows a loading spinner and disables the button. Default: false.
- * @prop {boolean} disabled - Disables the button. Default: false.
- * @prop {boolean} rounded - Uses fully rounded (pill-shaped) button style. Default: true.
- * @prop {boolean} block - Makes the button take full width of its container. Default: false.
- *
- * @slots
- * @slot default - The button label/content.
- *
- * @example
- * <AppButton color="green" variant="outlined" :loading="isLoading">
- *   Save
- * </AppButton>
- */
 import { computed } from "vue";
+const variants = {
+  default: `shadow-md `,
+  primary: `bg-primary hover:bg-highlight text-white font-semibold
+     focus:bg-highlight rounded transition-colors text-base`,
+  outlined: `border  border-1 box-border border-red-600 text-red-600 bg-transparent hover:bg-red-200/40`,
+  tonal: `bg-red-200 text-textWhite hover:bg-red-300`,
+  text: `text-red-600 bg-transparent hover:bg-red-10
+    hover:text-red-800 focus:bg-highlight/20 `,
+  icon: "",
+  plain: `text-gray-500 bg-transparent hover:bg-gray-100 focus:bg-highlight/20`,
+};
+const base = `inline-flex items-center justify-center font-medium transition duration-150 focus:outline-none`;
+const iconPositions = {
+  left: `flex-col`,
+  right: `flex-col-reverse`,
+  top: "flex-row",
+};
 
 const props = defineProps({
-  variant: { type: String, default: null },
+  variant: { type: String as PropType<keyof typeof variants>, default: null },
   size: { type: String, default: "md" },
   icon: { type: Boolean, default: false },
-  prependIcon: { type: String, default: null },
-  appendIcon: { type: String, default: null },
+  iconPosition: { type: String as PropType<keyof typeof iconPositions>, default: "left" },
+  isPrimaryColor: { type: String as PropType<"primary" | "theme">, default: "theme" },
   name: { type: String, default: null },
-  stacked: { type: Boolean, default: false },
   loading: { type: Boolean, default: false },
   disabled: { type: Boolean, default: false },
   rounded: { type: Boolean, default: false },
   block: { type: Boolean, default: false },
   // primaryColor: { type: Boolean, default: true },
 });
+const colors: { primary: typeof variants; theme: typeof variants } = {
+  primary: {
+    default: "text-red-600 hover:bg-red-200",
+    outlined: "",
+    primary: "",
+    tonal: "",
+    text: "",
+    icon: `text-red-600 hover:bg-red-10 
+    hover:text-red-800 focus:bg-highlight/20`,
+    plain: "",
+  },
+  theme: {
+    default: "",
+    outlined: "",
+    primary: "",
+    tonal: "",
+    text: "",
+    icon: `
+      text-T2TextColor hover:bg-hoverBg hover:text-T1TextColor focus:bg-hoverBg
+      dark:text-darkT2TextColor dark:hover:bg-darkHoverBg 
+    dark:hover:text-darkT1TextColor focus:bg-darkHoverBg/20`,
+    plain: "",
+  },
+};
 
+const sizes = {
+  sm: `md:text-sm text-md ${props.icon ? "p-0" : "px-3 py-1.5"}`,
+  md: `md:text-base text-lg ${props.icon ? "p-0" : "px-4 py-2"}`,
+  lg: `md:text-lg  text-xl ${props.icon ? " p-0" : "px-5 py-3"}`,
+};
 const buttonClass = computed(() => {
-  const base = "inline-flex items-center justify-center font-medium transition duration-150 focus:outline-none";
-  const variants = {
-    default: `shadow-md text-red-600 hover:bg-red-200`,
-    primary: `bg-primary hover:bg-highlight text-white font-semibold 
-     focus:bg-highlight rounded transition-colors text-base`,
-    outlined: `border  border-1 box-border border-red-600 text-red-600 bg-transparent hover:bg-red-200/40`,
-    tonal: `bg-red-200 text-textWhite hover:bg-red-300`,
-    text: `text-red-600 bg-transparent hover:bg-red-10 
-    hover:text-red-800 focus:bg-highlight/20 `,
-    plain: `text-gray-500 bg-transparent hover:bg-gray-100 focus:bg-highlight/20`,
-    // active: `shadow-md bg-mainBg  hover:bg-red-200`,
-  };
-  const sizes = {
-    sm: `text-sm ${props.icon ? "p-0" : "px-3 py-1.5"}`,
-    md: `text-base ${props.icon ? "p-0" : "px-4 py-2"}`,
-    lg: `text-lg ${props.icon ? " p-0" : "px-5 py-3"}`,
-  };
-
   return [
     base,
-    variants[props.variant as keyof typeof variants] || (props.icon ? variants.text : variants.default),
+    variants[props.variant],
     sizes[props.size as keyof typeof sizes] || sizes.md,
+    props.icon ? colors[props.isPrimaryColor][props.variant] : "",
     props.rounded ? "rounded-full" : "rounded-md",
     props.icon ? "w-10 h-10 p-0" : "",
-    props.stacked ? "flex-col" : "",
+    iconPositions[props.iconPosition],
     props.block ? "w-full" : "",
     props.disabled ? "opacity-50 cursor-not-allowed" : "",
   ].join(" ");
@@ -102,9 +102,9 @@ const iconSizeClass = computed(() => {
 
     <!-- Prepend Icon -->
     <Icon
-      v-if="(!loading && prependIcon) || (icon && name)"
-      :name="prependIcon || name"
-      :class="[iconSizeClass, stacked ? 'mb-1' : icon ? '' : 'mr-2']"
+      v-if="!loading && name"
+      :name="name"
+      :class="[iconSizeClass, iconPosition === 'top' ? 'mb-1' : icon ? '' : 'mr-2']"
     />
 
     <!-- Button Label -->
@@ -112,20 +112,7 @@ const iconSizeClass = computed(() => {
       v-if="!icon"
       class="inline-flex items-center"
     >
-      <slot>
-        {{
-          appendIcon || (prependIcon && !icon)
-            ? 'Want to display only Icon?, you have to pass "icon" prop. This is adefault slot message'
-            : ""
-        }}
-      </slot>
+      <slot> </slot>
     </span>
-
-    <!-- Append Icon -->
-    <Icon
-      v-if="!loading && appendIcon && !stacked && !name"
-      :name="appendIcon"
-      :class="[iconSizeClass, stacked ? 'mt-1' : icon ? '' : 'ml-2']"
-    />
   </button>
 </template>

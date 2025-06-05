@@ -24,15 +24,18 @@ const state = useGlobalSettingStore();
 onMounted(async () => {
   await state.initialize();
   getUser();
-  // quickCheck();
+  getPreferenceData();
 });
 
-async function quickCheck() {
-  const config = useRuntimeConfig();
-  const { $appwrite } = useNuxtApp();
-  return $appwrite.databases.createDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, "documentId", {
-    email: "agawg@gmail.com",
-  });
+async function getPreferenceData() {
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const saved = localStorage.getItem("theme");
+
+  if (saved === "dark" || (!saved && prefersDark)) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
 }
 </script>
 <style>
@@ -47,5 +50,6 @@ body {
 body {
   /* padding: 16px 0;
   height: 100vh; */
+  border-color: #2d2d2f;
 }
 </style>

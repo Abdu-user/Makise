@@ -99,4 +99,6 @@ watch(
 );
 
 onMounted(() => resetIDProof());
+
+onMounted(() => state.setRouteName("Profile"));
 </script>

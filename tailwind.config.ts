@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss";
 import colors from "./colors";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./src/**/*.{js,ts,jsx,tsx,vue}", // Adjust this glob pattern to match your project structure
   ],

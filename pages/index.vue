@@ -7,7 +7,7 @@
         alt=""
       />
 
-      <div class="backdrop-blur-sm bg-white/30 p-4 rounded-lg absolute top-0">
+      <div class="backdrop-blur-md bg-white/30 p-4 rounded-lg absolute top-0">
         <p class="text-black">This has a blurry background.</p>
       </div>
       <p class="text-gray-600 text-center">Your Vue + Tailwind starter template.</p>
@@ -15,6 +15,9 @@
   </div>
 </template>
 <script setup lang="ts">
+import { useGlobalSettingStore } from "~/store/globalSetting";
+const state = useGlobalSettingStore();
+onMounted(() => state.setRouteName("home"));
 definePageMeta({
   layout: "main",
 });

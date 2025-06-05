@@ -24,7 +24,7 @@ const props = defineProps({
 
 const inputClass = computed(() => {
   const variants = {
-    edit: "border-b-2 border-b-gray-300 focus:border-b-red-500 block w-full focus:outline-none backdrop-blur-lg bg-transparent",
+    edit: "border-b-2 border-b-gray-300 focus:border-b-red-500 block w-full focus:outline-none backdrop-blur-md bg-transparent",
     input: `${props.size ? "" : " px-4 py-3"} w-full border border-textParagraph
     focus:border-textParagraph/20 rounded focus:outline-none focus:ring-2 focus:ring-activeStrong/30 bg-white text-base`,
     checkBox: "",
