@@ -44,6 +44,7 @@
             >GetUser</CustomButton
           >
           <CustomButton2
+            :is-primary-color="'theme'"
             variant="plain"
             @click="console.log(state.fromPage)"
           >
@@ -57,16 +58,18 @@
             >Login</CustomButton
           >
           <CustomButton2
+            :is-primary-color="'theme'"
             type="button"
-            variety="secondary"
+            :variant="'primary'"
             size="md"
             @click="logout"
             >Logout</CustomButton2
           >
 
           <CustomButton2
+            :variant="'primary'"
+            :is-primary-color="'theme'"
             type="button"
-            variety="secondary"
             size="md"
             @click="toggleField()"
             class="flex"

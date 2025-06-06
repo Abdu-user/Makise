@@ -50,6 +50,6 @@ body {
 body {
   /* padding: 16px 0;
   height: 100vh; */
-  border-color: #2d2d2f;
+  border-color: #f1ecec;
 }
 </style>

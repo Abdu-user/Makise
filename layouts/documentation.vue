@@ -21,15 +21,21 @@
           >
         </div>
 
-        <CustomButton2
-          :variant="'primary'"
+        <NuxtLink
           class="ml-auto"
+          to="/"
         >
-          <NuxtLink to="/">Get Started</NuxtLink>
-        </CustomButton2>
+          <CustomButton2
+            :variant="'primary'"
+            :is-primary-color="'primary'"
+            tabindex="-1"
+          >
+            Get Started
+          </CustomButton2>
+        </NuxtLink>
 
         <MenuOpenButton
-          class="md:hidden"
+          class="md:hidden md:pointer-events-none"
           :toggle="state.toggleIsNavOpen"
           :is-menu-open="state.isNavOpen"
         />

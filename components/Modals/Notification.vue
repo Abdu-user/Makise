@@ -24,7 +24,8 @@
           v-if="ok"
           :class="`absolute -bottom-5 
           text-textWhite  backdrop-blur-md  right-2  shadow-lg border `"
-          variant="tonal"
+          :variant="'tonal'"
+          :is-primary-color="'primary'"
           @click="emit('handleOk')"
         >
           OK

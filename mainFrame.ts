@@ -46,5 +46,14 @@ export const IDProofs = [
   { subtitle: "Passport", placeholder: "Your Passport Number", variableName: "passport" },
   { subtitle: "Driving License", placeholder: "Your Driving License Number", variableName: "drivingLicense" },
 ];
-
-export const componentsLinks = [{ to: "/custom" }];
+export const componentsLinks = [
+  { to: "/custom-button", name: "Button2" },
+  { to: "/custom-heads", name: "Heads" },
+  { to: "/custom-container", name: "Container" },
+  { to: "/custom-input", name: "Input" },
+  { to: "/custom-label", name: "Label" },
+  { to: "/custom-nuxt-link", name: "NuxtLink" },
+  { to: "/custom-paragraph", name: "Paragraph" },
+  { to: "/custom-password-input", name: "PasswordInput" },
+  { to: "/custom-transition", name: "Transition" },
+];

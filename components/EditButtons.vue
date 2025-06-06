@@ -7,6 +7,7 @@
       variant="text"
       @click="edit"
       :class="className"
+      :is-primary-color="'primary'"
     />
     <div
       v-else
@@ -19,6 +20,7 @@
         variant="text"
         @click="save"
         :class="className"
+        :is-primary-color="'primary'"
       />
       <CustomButton2
         icon
@@ -27,6 +29,7 @@
         variant="text"
         @click="cancel"
         :class="className"
+        :is-primary-color="'primary'"
       />
     </div>
   </div>

@@ -2,6 +2,8 @@
   <div class="bg-accent p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0">
     <div class="relative flex items-center justify-center">
       <CustomButton2
+        :variant="'text'"
+        :is-primary-color="'theme'"
         icon
         name="material-symbols-light:keyboard-backspace"
         class="absolute -top-3 -left-1"
@@ -48,6 +50,7 @@
         />
       </div>
       <CustomButton2
+        :is-primary-color="'primary'"
         type="submit"
         variant="primary"
         block

@@ -35,6 +35,7 @@
 
         <div class="flex justify-center gap-x-8 items-center mt-4">
           <CustomButton2
+            :is-primary-color="'primary'"
             @click="closeVerifyEmailModal"
             variant="outlined"
             type="button"
@@ -43,6 +44,7 @@
             Close
           </CustomButton2>
           <CustomButton2
+            :is-primary-color="'primary'"
             variant="primary"
             type="button"
             size="lg"

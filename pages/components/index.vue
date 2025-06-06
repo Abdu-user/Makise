@@ -11,24 +11,21 @@
       :variant="'h2'"
       >Custom
     </CustomHeads>
-    <main class="mt-4 flex flex-wrap gap-4">
+    <main class="mt-4 grid md:grid-cols-4 gap-4">
       <CustomNuxtLink
-        :to="$route.fullPath + '/custom-button'"
+        v-for="component in componentsLinks"
+        :to="$route.fullPath + component.to"
         :variant="'ghostButton'"
+        block
       >
-        Button2
-      </CustomNuxtLink>
-      <CustomNuxtLink
-        :to="$route.fullPath + '/custom-heads'"
-        :variant="'ghostButton'"
-      >
-        Heads
+        {{ component.name }}
       </CustomNuxtLink>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
+import { componentsLinks } from "~/mainFrame";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 onMounted(() => {

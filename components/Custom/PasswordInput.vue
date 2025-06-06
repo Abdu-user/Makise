@@ -10,6 +10,7 @@
         variant="input"
       />
       <CustomButton2
+        :is-primary-color="'theme'"
         class="absolute right-2"
         icon
         size="md"
@@ -27,6 +28,7 @@
         variant="input"
       />
       <CustomButton2
+        :is-primary-color="'theme'"
         class="absolute right-2 text-textHeader"
         icon
         size="md"

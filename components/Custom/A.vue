@@ -85,7 +85,7 @@ const iconSizeClass = computed(() => {
     :disabled="disabled || loading"
     type="button"
   >
-    <!-- Loading Spinner -->
+    <!-- Loading Spinner 
     <span
       v-if="loading"
       class="animate-spin mr-2"
@@ -93,14 +93,14 @@ const iconSizeClass = computed(() => {
       >⏳</span
     >
 
-    <!-- Prepend Icon -->
+    <!-- Prepend Icon 
     <Icon
       v-if="!loading || name"
       :name="name"
       :class="[iconSizeClass, stacked ? 'mb-1' : name ? '' : 'mr-2']"
     />
 
-    <!-- Button Label -->
+    <!-- Button Label 
     <span
       v-if="!icon"
       class="inline-flex items-center"

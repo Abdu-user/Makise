@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-mainBg shadow-md">
+  <div class="bg-mainBg dark:bg-darkMainT2Bg shadow-md">
     <header class="flex flex-col">
       <!-- Images section -->
       <div class="w-full relative">

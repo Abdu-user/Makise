@@ -1,5 +1,6 @@
 <template>
   <CustomButton2
+    :is-primary-color="'theme'"
     variant="text"
     icon
     class=" "

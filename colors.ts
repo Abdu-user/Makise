@@ -10,9 +10,9 @@ export default {
   activeStrong: "#ff223c", // stronger shade for active state
 
   mainBg: "#FFF5EE",
-  mainT2Bg: "#f5f5f7",
-  hoverBg: "#eeeeee",
-  darkBg: "#e5e5e7",
+  mainT2Bg: "#f1ecec",
+  mainT3Bg: "#eeeeee",
+  hoverBg: "#e5e5e7",
 
   T1TextColor: "#1a1a1a", // Primary text — near black
   T2TextColor: "#2d2d2f", // Secondary text
