@@ -1,12 +1,11 @@
 <template>
   <!-- <ModalsAlert v-if="errorMessage || false"> </ModalsAlert> -->
-  <div
-    class="bg-accent p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0"
-    :class="props.class"
-  >
+  <div :class="`bg-accent dark:bg-darkMainT2Bg p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0  ${props.class}`">
     <div class="relative flex items-center justify-center">
       <CustomButton2
         icon
+        :is-primary-color="'theme'"
+        :variant="'text'"
         name="material-symbols-light:keyboard-backspace"
         class="absolute -top-3 -left-1"
         aria-label="back button"
@@ -69,6 +68,7 @@
         />
       </div>
       <CustomButton2
+        :is-primary-color="'primary'"
         type="submit"
         variant="primary"
         block

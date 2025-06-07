@@ -46,14 +46,14 @@
     <div
       :class="`${state.isScrollLinksExist ? `xl:grid-cols-[14rem,1fr]` : 'md:grid-cols-[14rem,1fr]'}
      md:grid max-w-7xl mx-auto
-     min-h-screen pt-20 items-start `"
+     min-h-screen pt-20  items-start `"
     >
       <CustomTransitions :variant="'drop-down'">
         <nav
           :class="`
-            fixed z-10 md:sticky top-20
+            fixed z-10 md:sticky top-20 bottom-0
             max-md:left-0 max-md:right-0
-            min-h-[calc(100vh-5rem)] p-4
+            max-h-[calc(100vh-5rem)] p-4
             overflow-auto
             border-r-[1px] border-r-gray-400/50
             dark:bg-darkMainBg/90 bg-mainBg/70 backdrop-blur-sm

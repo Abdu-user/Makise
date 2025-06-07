@@ -1,5 +1,5 @@
 <template>
-  <div class="grid md:grid-cols-[1fr,14rem] pb-10">
+  <div class="grid md:grid-cols-[1fr,14rem]">
     <div class="p-6">
       <CustomHeads
         :heads="'h1'"
@@ -19,12 +19,12 @@
           />
         </NuxtLink>
 
-        CustomButton2
+        CustomInput
       </CustomHeads>
 
-      <CustomButtonEndProduct />
+      <CustomInputEndProduct />
 
-      <CustomButtonLearnHowToUse class="mt-10" />
+      <!-- <CustomButtonLearnHowToUse class="mt-10" /> -->
     </div>
     <CustomButtonScrollLinks class="max-md:hidden" />
   </div>

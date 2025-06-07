@@ -23,7 +23,8 @@
         <CustomButton2
           v-if="ok"
           :class="`absolute -bottom-5 
-          text-textWhite  backdrop-blur-md  right-2  shadow-lg border `"
+          text-textWhite  backdrop-blur-md  right-2  shadow-lg border
+           focus:bg-mainT3Bg  `"
           :variant="'tonal'"
           :is-primary-color="'primary'"
           @click="emit('handleOk')"

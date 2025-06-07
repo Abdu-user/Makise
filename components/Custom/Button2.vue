@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import type { CustomButtonVaraintsType } from "~/types/customButtonType";
 const variants = {
   default: `shadow-md `,
   primary: `font-semibold rounded transition-colors `,
   outlined: `border  border-1 box-border bg-transparent `,
   tonal: ``,
   text: `bg-transparent `,
-
   plain: `text-gray-500 bg-transparent hover:bg-gray-100 focus:bg-highlight/20`,
 };
-const base = `inline-flex items-center justify-center font-medium transition duration-150 focus:outline-none`;
+const base = `inline-flex gap-3 items-center justify-center font-medium transition duration-150 focus:outline-none `;
 const iconPositions = {
-  left: `flex-col`,
-  right: `flex-col-reverse`,
-  top: "flex-row",
+  left: `flex-row`,
+  right: `flex-row-reverse`,
+  top: "flex-col",
 };
 
 const props = defineProps({
-  variant: { type: String as PropType<keyof typeof variants>, required: true },
+  variant: { type: String as PropType<CustomButtonVaraintsType>, required: true },
   size: { type: String, default: "md" },
   icon: { type: Boolean, default: false },
   iconPosition: { type: String as PropType<keyof typeof iconPositions>, default: "left" },
@@ -31,14 +31,14 @@ const props = defineProps({
 });
 const colors: { primary: typeof variants; theme: typeof variants } = {
   primary: {
-    default: "text-red-600 hover:bg-red-200",
-    primary: `bg-primary hover:bg-highlight/20 text-white 
-     focus:bg-highlight  `,
-    outlined: ` border-red-600 text-red-600 hover:bg-red-200/40`,
-    tonal: "bg-red-200 text-textWhite hover:bg-red-300",
-    text: `text-red-600 hover:bg-red-10 
+    default: "text-red-600 hover:bg-red-200 focus:bg-red-200",
+    primary: `bg-primary hover:bg-hoverPrimary focus:bg-hoverPrimary  text-white 
+       focus:bg-hoverPrimary focus:outline-1 focus:outline-white focus:outline  `,
+    outlined: ` border-red-600 text-red-600 hover:bg-red-200/40 focus:bg-red-200/40`,
+    tonal: "bg-red-200 text-textWhite hover:bg-red-300 focus:bg-red-300",
+    text: `text-red-600 hover:bg-red-10 focus:bg-red-10 
     hover:text-red-800 focus:bg-highlight/20`,
-    plain: "",
+    plain: `focus:outline-1 focus:outline-white focus:outline  `,
   },
   theme: {
     default: `text-T2TextColor hover:bg-hoverBg focus:bg-hoverBg
@@ -65,6 +65,7 @@ const sizes = {
   md: `md:text-base text-lg ${props.icon ? "p-0" : "px-4 py-2"}`,
   lg: `md:text-lg  text-xl ${props.icon ? " p-0" : "px-5 py-3"}`,
 };
+
 const buttonClass = computed(() => {
   return [
     base,
@@ -75,7 +76,7 @@ const buttonClass = computed(() => {
     props.icon ? "w-10 h-10 p-0" : "",
     iconPositions[props.iconPosition],
     props.block ? "w-full" : "",
-    props.disabled ? "opacity-50 cursor-not-allowed" : "",
+    props.disabled ? " opacity-50 cursor-not-allowed" : "",
   ].join(" ");
 });
 
@@ -95,6 +96,7 @@ const iconSizeClass = computed(() => {
     :class="buttonClass"
     :disabled="disabled || loading"
     type="button"
+    class=""
   >
     <!-- Loading Spinner -->
     <span
@@ -108,7 +110,7 @@ const iconSizeClass = computed(() => {
     <Icon
       v-if="!loading && name"
       :name="name"
-      :class="[iconSizeClass, iconPosition === 'top' ? 'mb-1' : icon ? '' : 'mr-2']"
+      :class="[iconSizeClass]"
     />
 
     <!-- Button Label -->
