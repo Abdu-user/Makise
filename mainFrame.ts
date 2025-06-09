@@ -47,7 +47,7 @@ export const IDProofs = [
   { subtitle: "Driving License", placeholder: "Your Driving License Number", variableName: "drivingLicense" },
 ];
 export const componentsLinks = [
-  { to: "/custom-button", name: "Button2" },
+  { to: "/custom-button", name: "Button" },
   { to: "/custom-heads", name: "Heads" },
   { to: "/custom-container", name: "Container" },
   { to: "/custom-input", name: "Input" },

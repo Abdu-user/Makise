@@ -1,7 +1,8 @@
 <template>
-  <div class="grid md:grid-cols-[1fr,14rem] pb-10">
+  <div class="pb-10">
     <div class="p-6">
       <CustomHeads
+        id="top"
         :heads="'h1'"
         :variant="'h1'"
         class="flex"
@@ -10,31 +11,48 @@
           to="/components"
           class="mr-1"
         >
-          <CustomButton2
+          <CustomButton
             name="material-symbols:arrow-back-ios-new"
-            tabindex="-1"
             icon
+            tabindex="-1"
             :variant="'text'"
             :is-primary-color="'theme'"
-          />
+            ><
+          </CustomButton>
         </NuxtLink>
 
-        CustomButton2
+        CustomButton
       </CustomHeads>
 
-      <CustomButtonEndProduct />
+      <CustomButtonEndProduct :id="navLinks[0].href.slice(1)" />
 
-      <CustomButtonLearnHowToUse class="mt-10" />
+      <CustomButtonLearnHowToUse
+        class="mt-7"
+        :id="navLinks[1].href.slice(1)"
+      />
+      <CustomButtonAllVariants :id="navLinks[2].href.slice(1)" />
     </div>
-    <CustomButtonScrollLinks class="max-md:hidden" />
   </div>
+  <ScrollLinks
+    class="max-md:hidden"
+    :nav-links="navLinks"
+    :nav-links-title="'On this pages'"
+  />
 </template>
 
 <script setup lang="ts">
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
+
+const navLinks = [
+  { href: "#command", label: "command" },
+  { href: "#default", label: "default" },
+  { href: "#allVariants", label: "allVariants" },
+];
+
 onMounted(() => state.setIsScrollLinksExist(true));
 onUnmounted(() => state.setIsScrollLinksExist(false));
+
 const focusin = () => {
   document.activeElement;
 };

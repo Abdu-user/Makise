@@ -2,7 +2,7 @@
   <div class="mt-8">
     <CustomContainer
       :variant="'section'"
-      id="command"
+      :id="id"
     >
       <div>
         <CustomContainer
@@ -22,36 +22,37 @@
           Command the component
         </CustomHeads>
         <CustomParagraph class="mt-0">
-          Try out the <span class="dark:text-darkT2TextColor text-T2TextColor">CustomButton2</span> component
+          Try out the <span class="dark:text-darkT2TextColor text-T2TextColor">CustomButton</span> component
         </CustomParagraph>
 
         <div :class="`grid  bg-mainT2Bg dark:bg-darkMainT2Bg pb-2`">
-          <div class="shadow-lg flex bg-mainBg dark:bg-darkMainBg mx-2 mt-0">
+          <div
+            :class="`
+           grid grid-cols-3 md:grid-cols-[7rem,repeat(7,1fr)]
+          shadow-lg pb-5
+           bg-mainBg dark:bg-darkMainBg mx-2 mt-0`"
+          >
             <div class="mx-4 w-20 flex items-center justify-center text-4xl text-T2TextColor dark:text-darkT2TextColor">
               {{ counter }}
             </div>
-            <div class="p-4 flex items-end justify-center w-full gap-3 bg-mainBg dark:bg-darkMainBg">
-              <div class="grid grid-cols-7">
-                <CustomLabel
-                  class="grid"
-                  v-for="prop in propsArray"
-                >
-                  <span class="capitalize text-center">
-                    {{ prop }}
-                  </span>
-                  <CustomInput
-                    id="isPrimaryColor"
-                    :type="'checkbox'"
-                    :variant="'checkbox'"
-                    class="!w-10 !h-10 mx-auto"
-                    v-model="props[prop as keyof typeof props]"
-                  />
-                </CustomLabel>
-              </div>
-            </div>
+            <CustomLabel
+              class="grid"
+              v-for="prop in propsArray"
+            >
+              <span class="capitalize text-center">
+                {{ prop }}
+              </span>
+              <CustomInput
+                id="isPrimaryColor"
+                :type="'checkbox'"
+                :variant="'checkbox'"
+                class="!w-10 !h-10 mx-auto"
+                v-model="props[prop as keyof typeof props]"
+              />
+            </CustomLabel>
           </div>
-          <div class="grid grid-cols-[9rem,1fr]">
-            <div class="mx-2 pb-4 bg-mainBg dark:bg-darkMainBg grid justify-center items-center gap-3">
+          <div class="grid md:grid-cols-[9rem,1fr] gap-y-6">
+            <div class="mx-2 px-2 pb-4 bg-mainBg dark:bg-darkMainBg grid max-md:grid-cols-3 justify-center items-center gap-3">
               <select
                 name=""
                 id=""
@@ -95,8 +96,8 @@
                 </option>
               </select>
             </div>
-            <div class="p-10 flex items-center justify-center">
-              <CustomButton2
+            <div class="flex items-center justify-center">
+              <CustomButton
                 :variant="variants[variant]"
                 :is-primary-color="props.color ? 'primary' : 'theme'"
                 @click="counter++"
@@ -108,7 +109,7 @@
                 :icon="props.only"
                 :icon-position="iconPosition"
                 :size="size"
-                >CustomButton2</CustomButton2
+                >CustomButton</CustomButton
               >
             </div>
           </div>
@@ -151,6 +152,9 @@
 
 <script setup lang="ts">
 import type { CustomButtonVaraintsType } from "~/types/customButtonType";
+defineProps({
+  id: { type: String, required: true },
+});
 const variants: CustomButtonVaraintsType[] = ["default", "outlined", "plain", "primary", "text", "tonal"];
 const iconPositions = ["left", "right", "top"];
 const iconPosition = ref<"left" | "right" | "top">("left");
@@ -187,7 +191,7 @@ const codeLines = computed(() => {
   // Opening tag
   lines.push([
     { text: "<", color: "text-gray-400" },
-    { text: "CustomButton2", color: "text-pink-500" },
+    { text: "CustomButton", color: "text-pink-500" },
   ]);
 
   // Required props
@@ -233,7 +237,7 @@ const codeLines = computed(() => {
 
   lines.push([
     { text: "</", color: "text-gray-400" },
-    { text: "CustomButton2", color: "text-pink-500" },
+    { text: "CustomButton", color: "text-pink-500" },
     { text: ">", color: "text-gray-400" },
   ]);
 

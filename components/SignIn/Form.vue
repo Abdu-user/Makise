@@ -1,7 +1,7 @@
 <template>
   <div class="bg-accent dark:bg-darkMainT2Bg p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0">
     <div class="relative flex items-center justify-center">
-      <CustomButton2
+      <CustomButton
         :variant="'text'"
         :is-primary-color="'theme'"
         icon
@@ -49,7 +49,7 @@
           autocomplete="current-password"
         />
       </div>
-      <CustomButton2
+      <CustomButton
         :is-primary-color="'primary'"
         type="submit"
         variant="primary"
@@ -57,7 +57,7 @@
         size="lg"
       >
         Sign In
-      </CustomButton2>
+      </CustomButton>
     </form>
     <p class="mt-4 text-center text-sm text-textParagraph">
       Don't have an account?

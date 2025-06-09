@@ -1,5 +1,5 @@
 <template>
-  <CustomButton2
+  <CustomButton
     :is-primary-color="'theme'"
     variant="text"
     icon
@@ -7,7 +7,7 @@
     @click="toggleTheme"
     name="material-symbols:blur-circular-outline"
   >
-  </CustomButton2>
+  </CustomButton>
 </template>
 
 <script setup lang="ts">

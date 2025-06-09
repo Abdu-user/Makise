@@ -10,7 +10,7 @@
           to="/components"
           class="mr-1"
         >
-          <CustomButton2
+          <CustomButton
             name="material-symbols:arrow-back-ios-new"
             tabindex="-1"
             icon
@@ -26,13 +26,20 @@
 
       <!-- <CustomButtonLearnHowToUse class="mt-10" /> -->
     </div>
-    <CustomButtonScrollLinks class="max-md:hidden" />
+    <ScrollLinks
+      class="max-md:hidden"
+      :nav-links="navLinks"
+      :nav-links-title="'on those pages1'"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
+
+const navLinks = [{ href: "command", label: "commando" }];
+
 onMounted(() => state.setIsScrollLinksExist(true));
 onUnmounted(() => state.setIsScrollLinksExist(false));
 const focusin = () => {

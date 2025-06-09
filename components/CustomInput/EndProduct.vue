@@ -1,144 +1,154 @@
 <template>
-  <div class="p-6 space-y-6 bg-mainT2Bg dark:bg-darkMainT2Bg text-T2TextColor dark:text-darkT2TextColor">
-    <div class="space-y-4">
-      <!-- Controls -->
-      <div class="grid grid-cols-3 gap-x-10 gap-y-2">
-        <CustomLabel
-          >Type
+  <CustomContainer
+    :variant="'sectionWithLines'"
+    :section-number="'1'"
+    class="mt-8"
+  >
+    <div class="rounded-sm p-6 space-y-6 bg-mainT2Bg dark:bg-darkMainT2Bg text-T2TextColor dark:text-darkT2TextColor">
+      <div class="space-y-4">
+        <!-- Controls -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-x-10 gap-y-2">
+          <CustomLabel
+            >Type
 
-          <select
-            v-model="type"
-            class="border dark:border-T2TextColor p-2 rounded bg-mainT2Bg dark:bg-darkMainT2Bg text-T2TextColor dark:text-darkT2TextColor"
-          >
-            <option value="text">Text</option>
-            <option value="password">Password</option>
-            <option value="email">Email</option>
-            <option value="number">Number</option>
-            <option value="checkbox">Checkbox</option>
-          </select>
-        </CustomLabel>
+            <select
+              v-model="type"
+              class="border dark:border-T2TextColor p-2 rounded bg-mainT2Bg dark:bg-darkMainT2Bg text-T2TextColor dark:text-darkT2TextColor"
+            >
+              <option value="text">Text</option>
+              <option value="password">Password</option>
+              <option value="email">Email</option>
+              <option value="number">Number</option>
+              <option value="checkbox">Checkbox</option>
+            </select>
+          </CustomLabel>
 
-        <CustomLabel
-          >Variant
+          <CustomLabel
+            >Variant
 
-          <select
-            v-model="variant"
-            class="border dark:border-T2TextColor p-2 rounded bg-mainT2Bg dark:bg-darkMainT2Bg text-T2TextColor dark:text-darkT2TextColor"
-          >
-            <option value="input">Input</option>
-            <option value="edit">Edit</option>
-            <option value="checkbox">Checkbox</option>
-          </select>
-        </CustomLabel>
+            <select
+              v-model="variant"
+              class="border dark:border-T2TextColor p-2 rounded bg-mainT2Bg dark:bg-darkMainT2Bg text-T2TextColor dark:text-darkT2TextColor"
+            >
+              <option value="input">Input</option>
+              <option value="edit">Edit</option>
+              <option value="checkbox">Checkbox</option>
+            </select>
+          </CustomLabel>
 
-        <CustomLabel
-          >Size
+          <CustomLabel
+            >Size
 
-          <select
-            v-model="size"
-            class="border dark:border-T2TextColor p-2 rounded bg-mainT2Bg dark:bg-darkMainT2Bg text-T2TextColor dark:text-darkT2TextColor"
-          >
-            <option :value="null">None</option>
-            <option value="sm">Small</option>
-            <option value="md">Medium</option>
-            <option value="lg">Large</option>
-            <option value="f">Full</option>
-          </select>
-        </CustomLabel>
-        <CustomLabel
-          >Min number
+            <select
+              v-model="size"
+              class="border dark:border-T2TextColor p-2 rounded bg-mainT2Bg dark:bg-darkMainT2Bg text-T2TextColor dark:text-darkT2TextColor"
+            >
+              <option :value="null">None</option>
+              <option value="sm">Small</option>
+              <option value="md">Medium</option>
+              <option value="lg">Large</option>
+              <option value="f">Full</option>
+            </select>
+          </CustomLabel>
+          <CustomLabel
+            >Min number
 
-          <CustomInput
-            v-model.number="min"
-            type="number"
-            class="border p-2 rounded"
-            :disabled="type !== 'number'"
-          />
-        </CustomLabel>
+            <CustomInput
+              v-model.number="min"
+              type="number"
+              :variant="'input'"
+              class="border p-2 rounded"
+              :disabled="type !== 'number'"
+            />
+          </CustomLabel>
 
-        <CustomLabel
-          >Max number
-          <CustomInput
-            v-model.number="maxNumber"
-            type="number"
-            class="border p-2 rounded"
-            :disabled="type !== 'number'"
-          />
-        </CustomLabel>
+          <CustomLabel
+            >Max number
+            <CustomInput
+              v-model.number="maxNumber"
+              type="number"
+              :variant="'input'"
+              class="border p-2 rounded"
+              :disabled="type !== 'number'"
+            />
+          </CustomLabel>
 
-        <CustomLabel class="inline-flex items-center gap-2">
-          Error State
-          <CustomInput
-            type="checkbox"
-            :disabled="type === 'checkbox' || type === 'number'"
-            v-model="error"
-          />
-        </CustomLabel>
-      </div>
-
-      <!-- Bound value display -->
-      <div>
-        <CustomLabel>Model Value</CustomLabel>
-        <div class="px-4 py-2 bg-gray-100 dark:bg-neutral-800 rounded">
-          {{ inputValue }}
+          <CustomLabel class="inline-flex items-center gap-2">
+            Error State
+            <CustomInput
+              type="checkbox"
+              :disabled="type === 'checkbox' || type === 'number'"
+              v-model="error"
+            />
+          </CustomLabel>
         </div>
-      </div>
-      <!-- Live preview -->
-      <CustomLabel>
-        Preview
-        <CustomInput
-          v-model="inputValue"
-          :type="type"
-          :variant="variant"
-          :size="size"
-          :min="min || 0"
-          :max-number="maxNumber"
-          :error="error"
-        />
-      </CustomLabel>
-    </div>
-    <div class="relative bg-gray-100 dark:bg-neutral-800 rounded p-4">
-      <button
-        class="absolute top-2 right-2 text-sm px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
-        @click="copyToClipboard"
-      >
-        {{ copied ? "Copied!" : "Copy" }}
-      </button>
 
-      <p class="grid font-mono text-sm space-y-1">
-        <span><span class="text-pink-500">&lt;CustomInput</span></span>
-        <span>
-          <span class="text-blue-600">v-model</span>=
-          <span class="text-amber-600">"inputValue"</span>
-        </span>
-        <span>
-          <span class="text-blue-600">:type</span>=
-          <span class="text-amber-600">"{{ type }}"</span>
-        </span>
-        <span>
-          <span class="text-blue-600">:variant</span>=
-          <span class="text-amber-600">"{{ variant }}"</span>
-        </span>
-        <span v-if="size">
-          <span class="text-blue-600">:size</span>=
-          <span class="text-amber-600">"{{ size }}"</span>
-        </span>
-        <span v-if="min">
-          <span class="text-blue-600">:min</span>=
-          <span class="text-amber-600">"{{ min }}"</span>
-        </span>
-        <span v-if="maxNumber">
-          <span class="text-blue-600">:max-number</span>=
-          <span class="text-amber-600">"{{ maxNumber }}"</span>
-        </span>
-        <span v-if="error">
-          <span class="text-blue-600">:error</span>=
-          <span class="text-amber-600">"true"</span>
-        </span>
-        <span><span class="text-pink-500">/&gt;</span></span>
-      </p>
+        <!-- Bound value display -->
+        <div>
+          <CustomLabel>Model Value</CustomLabel>
+          <div class="px-4 py-2 bg-gray-100 dark:bg-neutral-800 rounded">
+            {{ inputValue }}
+          </div>
+        </div>
+        <!-- Live preview -->
+        <CustomLabel>
+          Preview
+          <CustomInput
+            v-model="inputValue"
+            :type="type"
+            :variant="variant"
+            :size="size"
+            :min="min || 0"
+            :max-number="maxNumber"
+            :error="error"
+          />
+        </CustomLabel>
+      </div>
+      <div class="relative bg-gray-100 dark:bg-neutral-800 rounded p-4">
+        <CustomButton
+          :is-primary-color="'theme'"
+          :variant="'outlined'"
+          class="absolute top-2 right-2 text-sm px-3 py-1 rounded transition"
+          @click="copyToClipboard"
+        >
+          {{ copied ? "Copied!" : "Copy" }}
+        </CustomButton>
+
+        <p class="grid font-mono text-sm space-y-1">
+          <span><span class="text-pink-500">&lt;CustomInput</span></span>
+          <span>
+            <span class="text-blue-600">v-model</span>=
+            <span class="text-amber-600">"inputValue"</span>
+          </span>
+          <span>
+            <span class="text-blue-600">:type</span>=
+            <span class="text-amber-600">"{{ type }}"</span>
+          </span>
+          <span>
+            <span class="text-blue-600">:variant</span>=
+            <span class="text-amber-600">"{{ variant }}"</span>
+          </span>
+          <span v-if="size">
+            <span class="text-blue-600">:size</span>=
+            <span class="text-amber-600">"{{ size }}"</span>
+          </span>
+          <span v-if="min">
+            <span class="text-blue-600">:min</span>=
+            <span class="text-amber-600">"{{ min }}"</span>
+          </span>
+          <span v-if="maxNumber">
+            <span class="text-blue-600">:max-number</span>=
+            <span class="text-amber-600">"{{ maxNumber }}"</span>
+          </span>
+          <span v-if="error">
+            <span class="text-blue-600">:error</span>=
+            <span class="text-amber-600">"true"</span>
+          </span>
+          <span><span class="text-pink-500">/&gt;</span></span>
+        </p>
+      </div>
     </div>
-  </div>
+  </CustomContainer>
 </template>
 
 <script setup lang="ts">

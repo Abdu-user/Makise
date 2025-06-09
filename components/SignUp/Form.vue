@@ -2,7 +2,7 @@
   <!-- <ModalsAlert v-if="errorMessage || false"> </ModalsAlert> -->
   <div :class="`bg-accent dark:bg-darkMainT2Bg p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0  ${props.class}`">
     <div class="relative flex items-center justify-center">
-      <CustomButton2
+      <CustomButton
         icon
         :is-primary-color="'theme'"
         :variant="'text'"
@@ -67,7 +67,7 @@
           :error="Boolean(confirmPasswordError)"
         />
       </div>
-      <CustomButton2
+      <CustomButton
         :is-primary-color="'primary'"
         type="submit"
         variant="primary"
@@ -75,7 +75,7 @@
         size="lg"
       >
         Create Account
-      </CustomButton2>
+      </CustomButton>
     </form>
     <p class="mt-6 text-center text-textParagraph text-base">
       Already have an account?

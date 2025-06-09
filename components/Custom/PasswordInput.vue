@@ -9,7 +9,7 @@
         v-bind="$attrs"
         variant="input"
       />
-      <CustomButton2
+      <CustomButton
         :is-primary-color="'theme'"
         class="absolute right-2"
         icon
@@ -27,7 +27,7 @@
         v-bind="$attrs"
         variant="input"
       />
-      <CustomButton2
+      <CustomButton
         :is-primary-color="'theme'"
         class="absolute right-2 text-textHeader"
         icon

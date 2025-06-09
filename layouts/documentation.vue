@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-7xl mx-auto dark:bg-darkMainBg bg-mainBg">
     <header
-      class="fixed px-6 h-20 top-0 right-0 bg-mainBg/30 dark:bg-darkMainBg/30 backdrop-blur-sm border-b-[1px] border-gray-400/50 w-full"
+      class="fixed z-10 px-6 h-20 top-0 right-0 bg-mainBg/30 dark:bg-darkMainBg/30 backdrop-blur-sm border-b-[1px] border-gray-400/50 w-full"
     >
       <div class="max-w-7xl mx-auto h-full flex justify-center items-center gap-6">
         <!-- Project Logo -->
@@ -25,13 +25,13 @@
           class="ml-auto"
           to="/"
         >
-          <CustomButton2
+          <CustomButton
             :variant="'primary'"
             :is-primary-color="'primary'"
             tabindex="-1"
           >
             Get Started
-          </CustomButton2>
+          </CustomButton>
         </NuxtLink>
 
         <MenuOpenButton
@@ -44,8 +44,8 @@
   </div>
   <div class="dark:bg-darkMainBg bg-mainBg">
     <div
-      :class="`${state.isScrollLinksExist ? `xl:grid-cols-[14rem,1fr]` : 'md:grid-cols-[14rem,1fr]'}
-     md:grid max-w-7xl mx-auto
+      :class="`${state.isScrollLinksExist ? `md:grid-cols-[1fr,14rem]` : 'md:grid-cols-[14rem,1fr]'}
+     md:grid max-w-7xl mx-auto xl:grid-cols-[14rem,1fr,14rem]
      min-h-screen pt-20  items-start `"
     >
       <CustomTransitions :variant="'drop-down'">

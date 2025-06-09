@@ -30,43 +30,48 @@
           <!-- <slot> Debug info goes here. </slot> -->
           <CustomButton
             type="button"
-            :variety="'primary'"
+            :variant="'primary'"
+            :is-primary-color="'primary'"
             size="md"
             @click="logout"
           >
             Clear Auth
           </CustomButton>
           <CustomButton
+            :variant="'primary'"
+            :is-primary-color="'primary'"
             type="button"
             variety="secondary"
             size="md"
             @click="getUser"
             >GetUser</CustomButton
           >
-          <CustomButton2
+          <CustomButton
             :is-primary-color="'theme'"
             variant="plain"
             @click="console.log(state.fromPage)"
           >
             log pinia
-          </CustomButton2>
+          </CustomButton>
           <CustomButton
+            :variant="'primary'"
+            :is-primary-color="'primary'"
             type="button"
             variety="secondary"
             size="md"
             @click="tryToLogin"
             >Login</CustomButton
           >
-          <CustomButton2
+          <CustomButton
             :is-primary-color="'theme'"
             type="button"
             :variant="'primary'"
             size="md"
             @click="logout"
-            >Logout</CustomButton2
+            >Logout</CustomButton
           >
 
-          <CustomButton2
+          <CustomButton
             :variant="'primary'"
             :is-primary-color="'theme'"
             type="button"
@@ -80,7 +85,7 @@
               :checked="state.isPrefilltheUserField"
             />
             {{ state.isPrefilltheUserField }}
-          </CustomButton2>
+          </CustomButton>
           <ThemeToggleButton />
         </div>
         <!-- Tail -->
@@ -124,8 +129,6 @@
 <script setup lang="ts">
 // @ts-ignore
 import colors from "~/colors.ts";
-import CustomButton from "./Custom/Button.vue";
-import CustomButton2 from "./Custom/Button2.vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useAuth } from "~/composables/useSignUp";
 import { cons } from "~/utils";

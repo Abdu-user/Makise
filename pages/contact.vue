@@ -3,201 +3,201 @@
     <!-- Default -->
     <client-only>
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'theme'"
           :variant="'default'"
-          >Default</CustomButton2
+          >Default</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           :variant="'default'"
           color="red"
-          >Red</CustomButton2
+          >Red</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           :variant="'default'"
           color="green"
-          >Green</CustomButton2
+          >Green</CustomButton
         >
       </div>
 
       <!-- Outlined -->
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'theme'"
           variant="outlined"
-          >Outlined</CustomButton2
+          >Outlined</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           variant="outlined"
           color="red"
-          >Red Outlined</CustomButton2
+          >Red Outlined</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           variant="outlined"
           color="green"
-          >Green Outlined</CustomButton2
+          >Green Outlined</CustomButton
         >
       </div>
 
       <!-- Tonal -->
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'theme'"
           variant="tonal"
-          >Tonal</CustomButton2
+          >Tonal</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           variant="tonal"
           color="red"
-          >Red Tonal</CustomButton2
+          >Red Tonal</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           variant="tonal"
           color="green"
-          >Green Tonal</CustomButton2
+          >Green Tonal</CustomButton
         >
       </div>
 
       <!-- Text -->
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'theme'"
           variant="text"
-          >Text</CustomButton2
+          >Text</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           variant="text"
           color="red"
-          >Red Text</CustomButton2
+          >Red Text</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           variant="text"
           color="green"
-          >Green Text</CustomButton2
+          >Green Text</CustomButton
         >
       </div>
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           block
           class="mb-2"
           variant="primary"
-          >Primary</CustomButton2
+          >Primary</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'theme'"
           variant="primary"
           size="md"
-          >Red Primary</CustomButton2
+          >Red Primary</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           variant="primary"
           size="lg"
-          >Green Primary</CustomButton2
+          >Green Primary</CustomButton
         >
       </div>
 
       <!-- Plain -->
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           variant="plain"
-          >Plain</CustomButton2
+          >Plain</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           variant="plain"
           disabled
-          >Disabled</CustomButton2
+          >Disabled</CustomButton
         >
       </div>
 
       <!-- Sizes -->
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :variant="'default'"
           :isPrimaryColor="'primary'"
           size="sm"
-          >Small</CustomButton2
+          >Small</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :variant="'default'"
           :isPrimaryColor="'primary'"
           size="md"
-          >Medium</CustomButton2
+          >Medium</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :variant="'default'"
           :isPrimaryColor="'primary'"
           size="lg"
-          >Large</CustomButton2
+          >Large</CustomButton
         >
       </div>
 
       <!-- Loading -->
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :variant="'default'"
           :isPrimaryColor="'primary'"
           loading
-          >Loading</CustomButton2
+          >Loading</CustomButton
         >
-        <CustomButton2
+        <CustomButton
           :variant="'default'"
           :isPrimaryColor="'primary'"
           loading
-          >Loading Outlined</CustomButton2
+          >Loading Outlined</CustomButton
         >
       </div>
 
       <!-- Icons -->
-      <CustomButton2
+      <CustomButton
         :variant="'default'"
         :isPrimaryColor="'primary'"
         :prependIcon="'heroicons-outline:check'"
-        >Prepend</CustomButton2
+        >Prepend</CustomButton
       >
-      <CustomButton2
+      <CustomButton
         :variant="'default'"
         :isPrimaryColor="'primary'"
         appendIcon="material-symbols-light:attach-email-rounded"
-        >Append</CustomButton2
+        >Append</CustomButton
       >
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :variant="'default'"
           :isPrimaryColor="'primary'"
           prependIcon="material-symbols-light:news"
           icon
         />
-        <CustomButton2
+        <CustomButton
           :variant="'default'"
           :isPrimaryColor="'primary'"
           appendIcon="material-symbols-light:news"
           icon
         />
-        <CustomButton2
+        <CustomButton
           :isPrimaryColor="'primary'"
           prependIcon="material-symbols-light:news"
           icon
           variant="text"
         />
-        <CustomButton2
+        <CustomButton
           :variant="'primary'"
           :isPrimaryColor="'primary'"
           icon
           name="material-symbols-light:keyboard-backspace"
-        ></CustomButton2>
-        <CustomButton2
+        ></CustomButton>
+        <CustomButton
           :variant="'primary'"
           :isPrimaryColor="'primary'"
           appendIcon="material-symbols-light:news"
@@ -206,7 +206,7 @@
 
       Stacked
       <div class="space-x-2">
-        <CustomButton2
+        <CustomButton
           :variant="'primary'"
           :isPrimaryColor="'primary'"
           stacked
@@ -214,16 +214,16 @@
           appendIcon="material-symbols-light:network-wifi-rounded"
         >
           Stacked
-        </CustomButton2>
+        </CustomButton>
       </div>
 
       <!-- Block -->
       <div class="w-64">
-        <CustomButton2
+        <CustomButton
           :variant="'primary'"
           :isPrimaryColor="'primary'"
           block
-          >Block Button</CustomButton2
+          >Block Button</CustomButton
         >
       </div>
       <!--  -->

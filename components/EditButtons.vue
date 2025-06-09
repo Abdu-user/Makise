@@ -1,9 +1,9 @@
 <template>
   <div>
-    <CustomButton2
+    <CustomButton
       v-if="!isEditingRef"
       icon
-      prepend-icon="material-symbols-light:edit-outline-sharp"
+      name="material-symbols-light:edit-outline-sharp"
       variant="text"
       @click="edit"
       :class="className"
@@ -13,19 +13,19 @@
       v-else
       :class="`flex ${reversedButtons ? ' flex-row-reverse' : ''}`"
     >
-      <CustomButton2
+      <CustomButton
         icon
-        prepend-icon="material-symbols-light:save"
+        name="material-symbols-light:save"
         size="md"
         variant="text"
         @click="save"
         :class="className"
         :is-primary-color="'primary'"
       />
-      <CustomButton2
+      <CustomButton
         icon
         size="lg"
-        prepend-icon="material-symbols-light:close"
+        name="material-symbols-light:close"
         variant="text"
         @click="cancel"
         :class="className"
