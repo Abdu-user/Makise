@@ -163,31 +163,31 @@
       <CustomButton
         :variant="'default'"
         :isPrimaryColor="'primary'"
-        :prependIcon="'heroicons-outline:check'"
+        :name="'heroicons-outline:check'"
         >Prepend</CustomButton
       >
       <CustomButton
         :variant="'default'"
         :isPrimaryColor="'primary'"
-        appendIcon="material-symbols-light:attach-email-rounded"
+        name="material-symbols-light:attach-email-rounded"
         >Append</CustomButton
       >
       <div class="space-x-2">
         <CustomButton
           :variant="'default'"
           :isPrimaryColor="'primary'"
-          prependIcon="material-symbols-light:news"
+          name="material-symbols-light:news"
           icon
         />
         <CustomButton
           :variant="'default'"
           :isPrimaryColor="'primary'"
-          appendIcon="material-symbols-light:news"
+          name="material-symbols-light:news"
           icon
         />
         <CustomButton
           :isPrimaryColor="'primary'"
-          prependIcon="material-symbols-light:news"
+          name="material-symbols-light:news"
           icon
           variant="text"
         />
@@ -200,7 +200,7 @@
         <CustomButton
           :variant="'primary'"
           :isPrimaryColor="'primary'"
-          appendIcon="material-symbols-light:news"
+          name="material-symbols-light:news"
         />
       </div>
 
@@ -210,8 +210,7 @@
           :variant="'primary'"
           :isPrimaryColor="'primary'"
           stacked
-          prependIcon="material-symbols-light:network-wifi-rounded"
-          appendIcon="material-symbols-light:network-wifi-rounded"
+          name="material-symbols-light:network-wifi-rounded"
         >
           Stacked
         </CustomButton>

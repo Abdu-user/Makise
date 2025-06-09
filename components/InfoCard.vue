@@ -1,10 +1,10 @@
 <template>
-  <div class="p-6 mt-4 shadow-md bg-mainBg">
-    <p class="flex text-textHeader font-bold">
+  <div class="p-6 mt-4 shadow-md bg-mainBg dark:bg-darkMainBg">
+    <p class="flex text-T3TextColor dark:text-darkT3TextColor font-bold">
       {{ title }}
       <EditButtons
         :reversed-buttons="true"
-        class-name="text-textHeader"
+        class-name="text-textHeader dark:text-darkT3TextColor"
         class="-mt-2 ml-2"
         :is-editing="isEditing"
         @cancel="emit('cancel')"

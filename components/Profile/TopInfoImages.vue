@@ -39,7 +39,7 @@
         <template v-if="!state.isEditingProfile">
           <!-- Not Editing: Name + Job + Address -->
           <div class="max-md:mx-auto max-md:text-center max-md:col-span-2">
-            <p class="text-textHeader font-semibold text-xl">{{ cmpUserData.name || pl.name }} {{ cmpUserData.lastName || pl.lastName }}</p>
+            <CustomParagraph :variant="'edit'">{{ cmpUserData.name || pl.name }} {{ cmpUserData.lastName || pl.lastName }}</CustomParagraph>
             <p class="text-text-Paragraph text-base">
               {{ cmpUserData.job || pl.job }}
             </p>
@@ -55,13 +55,11 @@
             <div class="flex overflow-hidden max-md:gap-2">
               <CustomInput
                 variant="edit"
-                class="text-textHeader font-semibold text-xl max-md:text-right"
                 v-model="nameRef"
                 :placeholder="pl.name"
               />
               <CustomInput
                 variant="edit"
-                class="text-textHeader font-semibold text-xl"
                 v-model="lastNameRef"
                 :placeholder="pl.lastName"
               />

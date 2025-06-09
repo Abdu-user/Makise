@@ -48,6 +48,7 @@ export default {
 
   darkMainBg: "#1d1d21",
   darkMainT2Bg: "#222223",
+  darkMainT3Bg: "#202021",
   darkHoverBg: "#242527",
   darkDarkBg: "#131315",
 

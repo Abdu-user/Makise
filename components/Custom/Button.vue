@@ -54,7 +54,7 @@ const colors: { primary: typeof variants; theme: typeof variants } = {
     primary: ` bg-darkMainBg  hover:bg-darkHoverBg focus:bg-darkHoverBg text-darkT2TextColor hover:text-darkT1TextColor
     dark:bg-mainBg dark:hover:bg-hoverBg dark:focus:bg-hoverBg dark:text-T2TextColor dark:hover:text-T1TextColor
      `,
-    outlined: `border-T2TextColor  text-T2TextColor  hover:bg-hoverBg focus:bg-hoverBg
+    outlined: `border-T2TextColor  text-T2TextColor  hover:bg-hoverBg focus:bg-hoverBg/20
     dark:border-darkT2TextColor dark:text-darkT2TextColor  dark:hover:bg-darkHoverBg`,
     tonal: `bg-mainT2Bg  text-T3TextColor hover:bg-hoverBg focus:bg-hoverBg
       dark:bg-darkMainT2Bg dark:text-darkT3TextColor dark:hover:text-darkT2TextColor  hover:bg-darkHoverBg focus:bg-darkHoverBg 

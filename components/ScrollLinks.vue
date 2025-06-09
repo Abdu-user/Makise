@@ -11,7 +11,8 @@
         <li
           v-for="link in navLinks"
           :key="link.href"
-          @click.prevent="scrollToSection(link.href)"
+          @click.self.prevent="scrollToSection(link.href)"
+          class="cursor-pointer"
         >
           <CustomA
             :variant="'navigation'"

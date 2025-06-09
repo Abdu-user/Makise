@@ -9,7 +9,7 @@
     :class="computedClass"
     v-else-if="variant === 'sectionWithLines'"
   >
-    <div>
+    <div class="flex flex-col">
       <CustomContainer
         :variant="'numbered'"
         class="mx-auto"
@@ -37,7 +37,7 @@ const variants = {
   sectionWithLines: `grid grid-cols-[2.5rem,1fr]`,
   numbered: `border border-1 border-primary/40 rounded-md w-7 h-7 flex items-center justify-center
   text-T3TextColor dark:text-darkT3TextColor `,
-  line: `w-[1px] bg-T4TextColor/50 dark:bg-darkT4TextColor/50 h-full mx-auto`,
+  line: `w-[1px] bg-T4TextColor/50 dark:bg-darkT4TextColor/50 h-full max-h-full mx-auto`,
 };
 const props = defineProps({
   variant: { type: String as PropType<keyof typeof variants>, required: true },

@@ -3,9 +3,8 @@
     :id="id"
     :variant="'sectionWithLines'"
     :section-number="'3'"
-    class="mt-7"
   >
-    <div class="space-y-6">
+    <div class="space-y-6 pb-5">
       <h2 class="text-xl font-bold text-gray-800 dark:text-white">CustomButton2 Props Showcase</h2>
 
       <div class="flex flex-wrap gap-4 items-start">

@@ -175,7 +175,13 @@ const propsArray = ["color", "disabled", "block", "rounded", "loading", "only", 
 watch(
   () => props.value.only,
   () => {
-    if (!props.value.icon) props.value.icon = true;
+    if (props.value.only && !props.value.icon) props.value.icon = true;
+  }
+);
+watch(
+  () => props.value.icon,
+  () => {
+    if (!props.value.icon && props.value.only) props.value.only = false;
   }
 );
 

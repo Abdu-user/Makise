@@ -19,16 +19,17 @@
         />
       </NuxtLink>
 
-      CustomInput
+      CustomLabel
     </CustomHeads>
 
-    <CustomInputEndProduct :id="navLinks[0].href.slice(1)" />
+    <CustomLabelEndProduct :id="navLinks[0].href.slice(1)" />
 
-    <CustomInputHowToUse
+    <CustomLabelHowToUse
       :id="navLinks[1].href.slice(1)"
       class=""
     />
-    <CustomInputAllVariants :id="navLinks[2].href.slice(1)" />
+    <CustomLabelAllVariants :id="navLinks[2].href.slice(1)" />
+    <CustomLabelExplanation :id="navLinks[3].href.slice(1)" />
   </div>
   <ScrollLinks
     class="max-md:hidden"
@@ -45,6 +46,7 @@ const navLinks = [
   { href: "#command", label: "Command " },
   { href: "#howToUse", label: "How to use" },
   { href: "#allVariants", label: "All varints" },
+  { href: "#explanation", label: "explanation" },
 ];
 
 onMounted(() => state.setIsScrollLinksExist(true));

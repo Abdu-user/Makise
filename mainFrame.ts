@@ -48,12 +48,12 @@ export const IDProofs = [
 ];
 export const componentsLinks = [
   { to: "/custom-button", name: "Button" },
-  { to: "/custom-heads", name: "Heads" },
-  { to: "/custom-container", name: "Container" },
   { to: "/custom-input", name: "Input" },
   { to: "/custom-label", name: "Label" },
-  { to: "/custom-nuxt-link", name: "NuxtLink" },
-  { to: "/custom-paragraph", name: "Paragraph" },
-  { to: "/custom-password-input", name: "PasswordInput" },
-  { to: "/custom-transition", name: "Transition" },
+  // { to: "/custom-heads", name: "Heads" },
+  // { to: "/custom-container", name: "Container" },
+  // { to: "/custom-nuxt-link", name: "NuxtLink" },
+  // { to: "/custom-paragraph", name: "Paragraph" },
+  // { to: "/custom-password-input", name: "PasswordInput" },
+  // { to: "/custom-transition", name: "Transition" },
 ];

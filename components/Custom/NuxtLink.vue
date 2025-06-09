@@ -44,7 +44,7 @@ const linkClass = computed(() => {
 
 const activeClass = computed(() => {
   const variants = {
-    underline: `text-primaryColor border-b-primary border-b-[2px] rounded-b-none`,
+    underline: `text-primaryColor dark:text-primaryColor border-b-primary border-b-[2px] rounded-b-none`,
     navigation: `bg-activeWeak/70 !text-activeStrong
     dark:bg-darkActiveWeak/30 dark:text-darkPrimaryColor 
     `,

@@ -5,7 +5,7 @@
       :id="id"
       :section-number="'2'"
     >
-      <div>
+      <div class="pb-5">
         <CustomHeads
           :heads="'h2'"
           :variant="'h2'"

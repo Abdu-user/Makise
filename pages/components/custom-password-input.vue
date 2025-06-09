@@ -21,14 +21,7 @@
 
       CustomInput
     </CustomHeads>
-
-    <CustomInputEndProduct :id="navLinks[0].href.slice(1)" />
-
-    <CustomInputHowToUse
-      :id="navLinks[1].href.slice(1)"
-      class=""
-    />
-    <CustomInputAllVariants :id="navLinks[2].href.slice(1)" />
+    <CustomPasswordInputAll />
   </div>
   <ScrollLinks
     class="max-md:hidden"

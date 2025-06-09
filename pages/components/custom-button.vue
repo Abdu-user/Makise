@@ -31,6 +31,7 @@
         :id="navLinks[1].href.slice(1)"
       />
       <CustomButtonAllVariants :id="navLinks[2].href.slice(1)" />
+      <CustomButtonExplanation :id="navLinks[3].href.slice(1)" />
     </div>
   </div>
   <ScrollLinks
@@ -48,6 +49,7 @@ const navLinks = [
   { href: "#command", label: "command" },
   { href: "#default", label: "default" },
   { href: "#allVariants", label: "allVariants" },
+  { href: "#explanation", label: "explanation" },
 ];
 
 onMounted(() => state.setIsScrollLinksExist(true));

@@ -22,12 +22,12 @@ const props = defineProps({
 const computedClass = computed(() => {
   return [
     variants[props.variant as keyof typeof variants],
-    props.error ? "text-red-500 font-bold uppercase " : "text-textSecondary",
+    props.error ? "text-red-500 dark:text-red-500 font-bold uppercase " : "text-textSecondary",
     ,
   ].join(" ");
 });
 const finalClass = computed(() => {
-  return (props.error && isAnimating.value ? "animate-shake" : "") + computedClass.value;
+  return (props.error && isAnimating.value ? "animate-shake " : "") + computedClass.value;
 });
 const timerId = ref<null | NodeJS.Timeout>();
 watch(

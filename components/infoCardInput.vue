@@ -5,7 +5,7 @@
     </p>
     <p
       v-if="!isEditing"
-      class="text-textColor font-semibold"
+      class="text-textColor dark:text-darkT3TextColor font-semibold"
     >
       {{ value ? value : placeholder }}
     </p>
