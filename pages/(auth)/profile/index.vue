@@ -1,6 +1,6 @@
 <template>
   <!-- <InfoCard -->
-  <div class="grid md:grid-cols-2 gap-7 items-start">
+  <div class="grid md:grid-cols-2 gap-7 pb-10 items-start">
     <InfoCard
       :title="'Personal Information'"
       :is-editing="isEditingPersonal"
