@@ -1,4 +1,3 @@
-import { Resend } from "resend";
 import { codeStore } from "~/server/lib/codes";
 import nodemailer from "nodemailer";
 

@@ -23,6 +23,7 @@
           Email
         </CustomLabel>
         <CustomInput
+          :size="'lg'"
           id="email"
           v-model="email"
           type="email"
@@ -41,6 +42,7 @@
           Password</CustomLabel
         >
         <CustomPasswordInput
+          :size="'lg'"
           id="password"
           v-model="password"
           required

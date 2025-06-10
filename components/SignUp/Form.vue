@@ -26,6 +26,7 @@
           >Email</CustomLabel
         >
         <CustomInput
+          :size="'lg'"
           id="email"
           type="email"
           autocomplete="email"
@@ -44,6 +45,7 @@
         >
 
         <CustomPasswordInput
+          :size="'lg'"
           id="password"
           autocomplete="new-password"
           v-model="password"
@@ -60,6 +62,7 @@
           >Confirm Password</CustomLabel
         >
         <CustomPasswordInput
+          :size="'lg'"
           id="confirmPassword"
           autocomplete="new-password"
           v-model="confirmPassword"
