@@ -20,9 +20,11 @@
       </div>
     </div>
   </nav>
-  <div class="pt-20 max-w-7xl mx-auto dark:bg-darkMainBg">
-    <!-- Add a test gradient background -->
-    <slot></slot>
+  <div class="dark:bg-darkMainBg w-full">
+    <div class="pt-20 max-w-7xl mx-auto">
+      <!-- Add a test gradient background -->
+      <slot></slot>
+    </div>
   </div>
   <CustomTransitions :variant="'drop-down'">
     <div
