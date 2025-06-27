@@ -4,6 +4,11 @@
       class="fixed z-10 px-6 h-20 top-0 right-0 bg-mainBg/30 dark:bg-darkMainBg/30 backdrop-blur-sm border-b-[1px] border-gray-400/50 w-full"
     >
       <div class="max-w-7xl mx-auto h-full flex justify-center items-center gap-6">
+        <MenuOpenButton
+          class="md:hidden md:pointer-events-none"
+          :toggle="state.toggleIsNavOpen"
+          :is-menu-open="state.isNavOpen"
+        />
         <!-- Project Logo -->
         <div class="flex items-center">
           <img
@@ -33,12 +38,6 @@
             Get Started
           </CustomButton>
         </NuxtLink>
-
-        <MenuOpenButton
-          class="md:hidden md:pointer-events-none"
-          :toggle="state.toggleIsNavOpen"
-          :is-menu-open="state.isNavOpen"
-        />
       </div>
     </header>
   </div>
@@ -82,10 +81,10 @@ const responsive = (isRouteChanged: boolean = false) => {
   } else isRouteChanged || (state.isNavOpen && state.toggleIsNavOpen(false));
 };
 onMounted(() => {
-  window.addEventListener("resize", () => responsive());
+  window.addEventListener("resize", responsive);
 });
 onUnmounted(() => {
-  window.removeEventListener("resize", () => responsive());
+  window.removeEventListener("resize", responsive);
 });
 watch(
   () => route.fullPath,

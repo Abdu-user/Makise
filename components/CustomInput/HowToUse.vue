@@ -3,7 +3,7 @@
     <CustomContainer
       :variant="'sectionWithLines'"
       :id="id"
-      :section-number="'3'"
+      :section-number="sectionNumber"
     >
       <div class="pb-5">
         <CustomHeads
@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps({ id: { type: String, required: true } });
+defineProps({ id: { type: String, required: true }, sectionNumber: { type: [String, Number], required: true } });
 
 interface InputProp {
   name: string;

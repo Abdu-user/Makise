@@ -1,3 +1,5 @@
+import type { ImgLocation } from "./types/type";
+
 export const navLinks = {
   main: [
     { name: "home", icon: "material-symbols-light:home-rounded" },
@@ -27,13 +29,13 @@ export const bigNames = {
   mainLogPath: "/logos/m-logo.png",
 };
 
-export const ProfileRoutes = ["personal", "contact", "education", "skills", "family", "work"];
+export const ProfileRoutes = ["personal", "contact", "education", "skills", "account", "work"];
 export const personalInformations = [
   { subtitle: "Name", placeholder: "Your Name", variableName: "fullname" },
   { subtitle: "Birthday", placeholder: "Your Birthday", variableName: "birthdayDate" },
   { subtitle: "Age", placeholder: "Your Age", variableName: "age" },
   { subtitle: "Blood Group", placeholder: "Your Blood Group", variableName: "bloodGroup" },
-  { subtitle: "Marital Status", placeholder: "Your Marital Status", variableName: "mariageStatus" },
+  { subtitle: "Marital Status", placeholder: "Your Marital Status", variableName: "marriageStatus" },
   { subtitle: "Gender", placeholder: "Your Gender", variableName: "gender" },
   { subtitle: "Languages", placeholder: "Languages You Speak", variableName: "languages" },
   { subtitle: "Region", placeholder: "Your Region", variableName: "region" },
@@ -57,3 +59,5 @@ export const componentsLinks = [
   // { to: "/custom-password-input", name: "PasswordInput" },
   // { to: "/custom-transition", name: "Transition" },
 ];
+
+export const positionOptions: ImgLocation[] = ["top", "center", "bottom"];

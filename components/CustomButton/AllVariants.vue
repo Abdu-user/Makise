@@ -2,7 +2,7 @@
   <CustomContainer
     :id="id"
     :variant="'sectionWithLines'"
-    :section-number="'3'"
+    :section-number="sectionNumber"
   >
     <div class="space-y-6 pb-5">
       <h2 class="text-xl font-bold text-gray-800 dark:text-white">CustomButton2 Props Showcase</h2>
@@ -56,7 +56,7 @@
 import { ref } from "vue";
 import { buttonVariants } from "~/buttonVariantsData";
 
-defineProps({ id: { type: String, required: true } });
+defineProps({ id: { type: String, required: true }, sectionNumber: { type: [String, Number], required: true } });
 
 const activeIndexes = ref<number[]>([]);
 

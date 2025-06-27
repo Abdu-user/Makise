@@ -141,9 +141,9 @@ const passwordError = ref("");
 const confirmPasswordError = ref("");
 
 const resetInputRef = () => {
-  email.value = state.isPrefilltheUserField ? "idfdwjoshv@gmail.com" : "";
-  password.value = state.isPrefilltheUserField ? "12345678" : "";
-  confirmPassword.value = state.isPrefilltheUserField ? "12345678" : "";
+  email.value = state.isPrefillTheUserField ? "idfdwjoshv@gmail.com" : "";
+  password.value = state.isPrefillTheUserField ? "12345678" : "";
+  confirmPassword.value = state.isPrefillTheUserField ? "12345678" : "";
 };
 onMounted(() => (state.setResetFunctions(resetInputRef), resetInputRef()));
 onUnmounted(() => state.removeSingleResetFunction(resetInputRef));

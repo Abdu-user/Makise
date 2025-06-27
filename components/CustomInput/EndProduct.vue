@@ -1,7 +1,7 @@
 <template>
   <CustomContainer
     :variant="'sectionWithLines'"
-    :section-number="'1'"
+    :section-number="sectionNumber"
     class="mt-8"
     :id="id"
   >
@@ -166,6 +166,7 @@ import { ref } from "vue";
 
 defineProps({
   id: { type: String, required: true },
+  sectionNumber: { type: [String, Number], required: true },
 });
 
 type InputType = "text" | "password" | "email" | "number" | "checkbox";

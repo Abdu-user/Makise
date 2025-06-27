@@ -1,9 +1,10 @@
 <template>
-  <img
-    :src="wideImgUrl"
+  <CustomImg
+    :src="wideImgUrl || state.userData?.wideProfileImage || ''"
     alt="Profile wide image"
-    class="w-full h-60"
+    class="w-full h-full"
     :class="state.userData?.wideProfileImage ? 'object-cover' : 'object-contain'"
+    :default-img-src="'/images/PlaceholderWide.svg'"
     :style="wideImgStyle"
     loading="lazy"
   />
@@ -27,7 +28,7 @@
   <!-- Image Position Controls -->
   <select
     id="wideImgLocationSelect"
-    class="absolute top-14 right-3 md:top-15 md:right-10 cursor-pointer hover:bg-primary/10 border-2 border-primary/20 rounded-full w-9 h-9 focus:border-primary/20"
+    class="absolute top-14 right-3 bg-transparent md:top-15 md:right-10 cursor-pointer hover:bg-primary/10 border-2 border-primary/20 rounded-full w-9 h-9 focus:border-primary/20"
     v-model="selectedImgPosition"
   >
     <option
@@ -43,24 +44,17 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { positionOptions } from "~/mainFrame";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { ImgLocation, WideImageLocationSettingsType } from "~/types/type";
 
 const state = useGlobalSettingStore();
-const defaultIgmUrl = () => {
-  if (state.disabledExpensiveUrlFetch) {
-    return state.userData?.wideProfileImage ? "/images/wide_angle_tetons.jpg" : "/images/PlaceholderWide.svg";
-  }
-  return state.userData?.wideProfileImage || "/images/PlaceholderWide.svg";
-};
 
 const wideImgStyle = ref("");
 const selectedImgPosition = ref<ImgLocation>("center");
 const imgPositionSettings = ref<Partial<WideImageLocationSettingsType>>({});
-const wideImgUrl = ref(defaultIgmUrl());
+const wideImgUrl = ref("");
 const wideImgFile = ref<File | null>(null);
-
-const positionOptions: ImgLocation[] = ["top", "center", "bottom", "left", "left-top", "left-bottom", "right", "right-top", "right-bottom"];
 
 function updateImgStyle(position: ImgLocation) {
   wideImgStyle.value = `object-position: ${position}`;
@@ -93,7 +87,7 @@ watch([() => state.userData?.wideProfileImage, () => state.userData?.wideImageLo
 onMounted(refreshValues);
 
 function refreshValues() {
-  wideImgUrl.value = defaultIgmUrl();
+  wideImgUrl.value = "";
   resetImgPosition();
 }
 async function uploadWideImage(event: Event) {

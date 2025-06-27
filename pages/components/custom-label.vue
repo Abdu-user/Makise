@@ -22,14 +22,23 @@
       CustomLabel
     </CustomHeads>
 
-    <CustomLabelEndProduct :id="navLinks[0].href.slice(1)" />
+    <CustomLabelEndProduct
+      :id="navLinks[0].href.slice(1)"
+      :section-number="1"
+    />
 
     <CustomLabelHowToUse
       :id="navLinks[1].href.slice(1)"
-      class=""
+      :section-number="2"
     />
-    <CustomLabelAllVariants :id="navLinks[2].href.slice(1)" />
-    <CustomLabelExplanation :id="navLinks[3].href.slice(1)" />
+    <CustomLabelAllVariants
+      :id="navLinks[2].href.slice(1)"
+      :section-number="3"
+    />
+    <CustomLabelExplanation
+      :id="navLinks[3].href.slice(1)"
+      :section-number="4"
+    />
   </div>
   <ScrollLinks
     class="max-md:hidden"
@@ -45,7 +54,7 @@ const state = useGlobalSettingStore();
 const navLinks = [
   { href: "#command", label: "Command " },
   { href: "#howToUse", label: "How to use" },
-  { href: "#allVariants", label: "All varints" },
+  { href: "#allVariants", label: "All variants" },
   { href: "#explanation", label: "explanation" },
 ];
 

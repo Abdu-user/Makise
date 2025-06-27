@@ -2,7 +2,7 @@
   <CustomContainer
     :id="id"
     variant="sectionWithLines"
-    section-number="4"
+    :section-number="sectionNumber"
   >
     <div class="space-y-6 pb-6">
       <h2 class="text-xl font-bold text-gray-800 dark:text-white">What does <code>CustomLabel</code> do?</h2>
@@ -49,5 +49,5 @@
 </template>
 
 <script setup lang="ts">
-defineProps({ id: { type: String, required: true } });
+defineProps({ id: { type: String, required: true }, sectionNumber: { type: [String, Number], required: true } });
 </script>

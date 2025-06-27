@@ -9,17 +9,18 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     isDebugPanelOpen: false, // Default only
     isNavOpen: false,
     isEditingProfile: false,
-    isPrefilltheUserField: false,
+    isPrefillTheUserField: false,
+    disabledExpensiveUrlFetch: false,
+    isScrollLinksExist: false,
+    loading: false,
+    isLoginButtonDropdownOpen: false,
     consoleMessages: [] as string[],
     user: null as Models.User<Models.Preferences> | null,
     userData: null as UserProfileType | null,
-    loading: false,
     error: "",
     resetFunctions: [] as (() => void)[],
     fromPage: "",
     routeName: "",
-    disabledExpensiveUrlFetch: true,
-    isScrollLinksExist: false,
   }),
   actions: {
     toggleIsNavOpen(isNavOpen: boolean | undefined = undefined) {
@@ -39,7 +40,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       this.saveToLocalStorage();
     },
     toggleIsPrefillUserField() {
-      this.isPrefilltheUserField = !this.isPrefilltheUserField;
+      this.isPrefillTheUserField = !this.isPrefillTheUserField;
       this.saveToLocalStorage();
     },
     addConsoleMessage(message: string) {
@@ -53,8 +54,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
           isDebugPanelOpen: this.isDebugPanelOpen,
           isNavOpen: this.isNavOpen,
           isEditingProfile: this.isEditingProfile,
-          isPrefilltheUserField: this.isPrefilltheUserField,
-          disabledExpensiveUrlFetch: this.disabledExpensiveUrlFetch,
+          isPrefillTheUserField: this.isPrefillTheUserField,
         })
       );
     },
@@ -65,8 +65,17 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
         this.isDebugPanelOpen = parsed.isDebugPanelOpen ?? false;
         this.isNavOpen = parsed.isNavOpen ?? false;
         this.isEditingProfile = parsed.isEditingProfile ?? false;
-        this.isPrefilltheUserField = parsed.isPrefilltheUserField ?? false;
-        this.disabledExpensiveUrlFetch = parsed.disabledExpensiveUrlFetch ?? true;
+        this.isPrefillTheUserField = parsed.isPrefillTheUserField ?? false;
+      }
+    },
+
+    async getPreferenceData() {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+      if (prefersDark) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
       }
     },
     _loading(loading: boolean) {
@@ -82,15 +91,18 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       this.userData = userData;
     },
     setFromPage(fromPage: string) {
+      console.warn("setFromPage could be replaced with direct state assignment: store.fromPage = ...");
       this.fromPage = fromPage;
     },
     setResetFunctions(cb: () => void) {
       this.resetFunctions.push(cb);
     },
     setRouteName(routeName: string) {
+      console.warn("setRouteName could be replaced with direct state assignment: store.routeName = ...");
       this.routeName = routeName;
     },
     setIsScrollLinksExist(bool: boolean) {
+      console.warn("setIsScrollLinksExist could be replaced with direct state assignment: store.isScrollLinksExist = ...");
       this.isScrollLinksExist = bool;
     },
     removeSingleResetFunction(cb: () => void) {

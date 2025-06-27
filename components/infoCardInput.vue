@@ -5,7 +5,13 @@
     </p>
     <p
       v-if="!isEditing"
-      class="text-textColor dark:text-darkT3TextColor font-semibold"
+      class="font-semibold"
+      :class="
+        value
+          ? 'text-T3TextColor dark:text-darkT3TextColor'
+          : `
+      underline decoration-wavy text-T4TextColor dark:text-darkT4TextColor`
+      "
     >
       {{ value ? value : placeholder }}
     </p>

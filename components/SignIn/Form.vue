@@ -122,8 +122,8 @@ function onSignIn() {
 }
 
 function resetInputValues() {
-  email.value = state.isPrefilltheUserField ? "igromen1997@gmail.com" : "";
-  password.value = state.isPrefilltheUserField ? "12345678" : "";
+  email.value = state.isPrefillTheUserField ? "igromen1997@gmail.com" : "";
+  password.value = state.isPrefillTheUserField ? "12345678" : "";
 }
 
 onMounted(() => {

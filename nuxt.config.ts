@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/icon"],
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/icon", "@nuxt/image"],
   runtimeConfig: {
     resendApiKey: process.env.RESEND_API_KEY,
     public: {
@@ -17,5 +17,10 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     preset: "netlify",
+  },
+  app: {
+    head: {
+      link: [{ rel: "icon", type: "image/x-icon", href: "/images/favicon.png" }],
+    },
   },
 });

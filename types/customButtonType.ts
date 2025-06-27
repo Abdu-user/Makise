@@ -1,1 +1,1 @@
-export type CustomButtonVaraintsType = "default" | "primary" | "outlined" | "tonal" | "text" | "plain";
+export type CustomButtonVariantsType = "default" | "primary" | "outlined" | "tonal" | "text" | "navigation" | "plain";

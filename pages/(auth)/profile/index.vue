@@ -1,6 +1,10 @@
 <template>
   <!-- <InfoCard -->
-  <div class="grid md:grid-cols-2 gap-7 pb-10 items-start">
+  <div
+    class="grid md:grid-cols-2 gap-7 pb-10 items-start"
+    v-if="state.userData?.personalInformation"
+  >
+    <!-- <ClientOnly> -->
     <InfoCard
       :title="'Personal Information'"
       :is-editing="isEditingPersonal"
@@ -9,6 +13,7 @@
       @cancel="resetPersonalInfo"
     >
       <div class="mt-4 grid gap-3">
+        <!-- <ClientOnly> -->
         <InfoCardInput
           :is-editing="isEditingPersonal"
           v-for="personal in personalInformations"
@@ -18,6 +23,7 @@
           :subtitle="personal.subtitle"
           :placeholder="personal.placeholder"
         />
+        <!-- </ClientOnly> -->
       </div>
     </InfoCard>
     <InfoCard
@@ -29,15 +35,16 @@
     >
       <div class="mt-4 grid gap-3">
         <InfoCardInput
-          v-for="idproof in IDProofs"
+          v-for="idProof in IDProofs"
           :is-editing="isEditingIDProof"
-          :value="IDProof[idproof.variableName as keyof typeof IDProof]"
-          v-model="IDProof[idproof.variableName as keyof typeof IDProof]"
-          :subtitle="idproof.subtitle"
-          :placeholder="idproof.placeholder"
+          :value="IDProof[idProof.variableName as keyof typeof IDProof]"
+          v-model="IDProof[idProof.variableName as keyof typeof IDProof]"
+          :subtitle="idProof.subtitle"
+          :placeholder="idProof.placeholder"
         />
       </div>
     </InfoCard>
+    <!-- </ClientOnly> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -56,7 +63,7 @@ const personalInfo = ref<PersonalInfoType>({
   birthdayDate: "",
   age: "",
   bloodGroup: "",
-  mariageStatus: "",
+  marriageStatus: "",
   gender: "",
   languages: "",
   region: "",

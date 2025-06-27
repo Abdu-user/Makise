@@ -1,24 +1,61 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="p-8 bg-white rounded shadow-md w-full max-w-md relative">
-      <img
-        class="w-full h-full"
-        src="data:image/jpeg;base64,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"
-        alt=""
-      />
-
-      <div class="backdrop-blur-md bg-white/30 p-4 rounded-lg absolute top-0">
-        <p class="text-black">This has a blurry background.</p>
+  <section
+    ref="hero"
+    class="flex flex-col items-center justify-center min-h-screen px-6 text-center bg-gradient-to-b from-white to-gray-100 dark:from-darkMainBg dark:to-darkMainT3Bg"
+  >
+    <div class="max-w-3xl space-y-6">
+      <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+        Welcome to <span class="text-primary-600 dark:text-primary-400">Your Nuxt App</span>
+      </h1>
+      <p class="text-lg text-gray-700 dark:text-gray-300">Build fast, modern web experiences using Nuxt 3, Appwrite, and Tailwind CSS.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <NuxtLink
+          to="/get-started"
+          class="btn-primary"
+        >
+          Get Started
+        </NuxtLink>
+        <NuxtLink
+          to="/about"
+          class="btn-outline"
+        >
+          Learn More
+        </NuxtLink>
       </div>
-      <p class="text-gray-600 text-center">Your Vue + Tailwind starter template.</p>
     </div>
-  </div>
+
+    <NuxtImg
+      src="/illustration.svg"
+      alt="Hero Illustration"
+      width="500"
+      height="350"
+      class="mt-12"
+    />
+  </section>
 </template>
+
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
+
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 onMounted(() => state.setRouteName("home"));
 definePageMeta({
   layout: "main",
 });
+
+// const hero = ref(null)
+// onMounted(() => {
+//   if (hero.value) autoAnimate(hero.value)
+// })
 </script>
+
+<style scoped>
+.btn-primary {
+  @apply inline-block px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition;
+}
+
+.btn-outline {
+  @apply inline-block px-6 py-3 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition;
+}
+</style>

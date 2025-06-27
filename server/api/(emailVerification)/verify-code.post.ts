@@ -1,4 +1,4 @@
-import { codeStore } from "../lib/codes";
+import { codeStore } from "../../lib/codes";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);

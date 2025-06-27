@@ -2,50 +2,49 @@
   <div class="bg-mainBg dark:bg-darkMainT2Bg shadow-md">
     <header class="flex flex-col">
       <!-- Images section -->
-      <div class="w-full relative">
+      <div class="w-full relative px-6 h-60 md:h-72 lg:h-96">
         <!-- Wide Image -->
         <ProfileWideImg />
 
-        <div>
-          <!-- Profile Image -->
+        <!-- Profile Image -->
 
-          <label
-            class="absolute top-[60%] md:left-[15%] left-1/2 -translate-x-1/2 w-36 h-36 border-4 border-mainBg !p-0 overflow-hidden bg-mainBg rounded-full"
-            :class="`${state.isEditingProfile ? 'cursor-pointer' : ''}`"
-          >
-            <input
-              v-if="state.isEditingProfile"
-              type="file"
-              accept="image/*"
-              class="hidden"
-              @change="state.isEditingProfile && uploadProfileImage($event)"
-            />
-            <img
-              :src="profileImgUrl"
-              alt="Profile Image"
-              class="w-full h-full object-cover"
-            />
-          </label>
-        </div>
+        <label
+          class="absolute -translate-y-3/4 md:left-[15%] left-1/2 -translate-x-1/2 w-36 h-36 border-4 border-mainBg !p-0 overflow-hidden bg-mainBg rounded-full"
+          :class="`${state.isEditingProfile ? 'cursor-pointer' : ''}`"
+        >
+          <input
+            v-if="state.isEditingProfile"
+            type="file"
+            accept="image/*"
+            class="hidden"
+            @change="state.isEditingProfile && uploadProfileImage($event)"
+          />
+          <CustomImg
+            :src="profileImgUrl || state.userData?.profileImage || ''"
+            :defaultImgSrc="'/images/placeholder-avatar.jpg'"
+            alt="Profile Image"
+            class="w-full h-full object-cover"
+          />
+        </label>
       </div>
       <!-- ToDO todo is used just to highlight this section -->
       <!-- User Info Section -->
       <div
         :class="`relative grid   md:grid-cols-3 max-md:grid-rows-2 max-md:grid-cols-2
-       mt-16 px-6 md:px-16 pb-12 justify-center gap-10
+      mt-16 px-6 md:px-16 pb-12 justify-center gap-10
         max-md:text-xl
-       `"
+      `"
       >
         <template v-if="!state.isEditingProfile">
           <!-- Not Editing: Name + Job + Address -->
           <div class="max-md:mx-auto max-md:text-center max-md:col-span-2">
             <CustomParagraph :variant="'edit'">{{ cmpUserData.name || pl.name }} {{ cmpUserData.lastName || pl.lastName }}</CustomParagraph>
-            <p class="text-text-Paragraph text-base">
+            <CustomParagraph :variant="'editSecondary'">
               {{ cmpUserData.job || pl.job }}
-            </p>
-            <p class="text-textSecondary">
+            </CustomParagraph>
+            <CustomParagraph :variant="'editSecondary'">
               {{ cmpUserData.address || pl.address }}
-            </p>
+            </CustomParagraph>
           </div>
         </template>
 
@@ -82,17 +81,14 @@
         <!-- <div class="flex basis-2/3 justify-between max-md:w-full"> -->
         <!-- Contact Info -->
         <div class="max-md:mt-3">
-          <div class="flex items-center gap-4">
-            <Icon
-              name="material-symbols-light:stacked-email-rounded"
-              class="w-4 h-4"
-            />
-            <p class="text-textSecondary">{{ cmpUserData.email }}</p>
+          <div class="grid grid-flow-col justify-start items-center gap-4">
+            <CustomIcon name="material-symbols-light:stacked-email-rounded" />
+            <CustomParagraph :variant="'editSecondary'">{{ cmpUserData.email }}</CustomParagraph>
           </div>
-          <div class="flex items-center gap-4">
-            <Icon name="material-symbols-light:settings-phone-sharp" />
+          <div class="grid grid-flow-col justify-start items-center gap-4">
+            <CustomIcon name="material-symbols-light:settings-phone-sharp" />
             <template v-if="!state.isEditingProfile">
-              <p class="text-textSecondary">{{ cmpUserData.phoneNumber || pl.phoneNumber }}</p>
+              <CustomParagraph :variant="'editSecondary'">{{ cmpUserData.phoneNumber || pl.phoneNumber }}</CustomParagraph>
             </template>
             <template v-else>
               <CustomInput
@@ -108,7 +104,10 @@
         <!-- Profile Strength -->
         <div class="flex flex-col items-start">
           <div class="max-md:hidden">
-            <p class="text-textSecondary flex justify-between">
+            <CustomParagraph
+              :variant="'editSecondary'"
+              class="text-textSecondary flex justify-between"
+            >
               Profile Strength:
               <template v-if="state.isEditingProfile">
                 <CustomInput
@@ -120,20 +119,22 @@
                   :placeholder="pl.profileStrength"
                 />
               </template>
-            </p>
-            <LinearProggress
+            </CustomParagraph>
+            <LinearProgress
               class="w-52 mb-2"
               :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
               :show-percent="true"
               :startColor="colors.activeWeak"
               :stopColor="colors.activeStrong"
-              percentColor="text-white"
             />
           </div>
 
           <!-- Mobile Profile Progress -->
           <div class="md:hidden relative ml-auto">
-            <p class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-10">
+            <CustomParagraph
+              :variant="'editSecondary'"
+              class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-10"
+            >
               <template v-if="state.isEditingProfile">
                 <CustomInput
                   variant="edit"
@@ -149,7 +150,7 @@
                 <span class="font-semibold text-textParagraph text-xl"> {{ cmpUserData.profileStrength || pl.profileStrength }}% </span>
               </template>
               <span class="text-textSecondary text-sm -mt-2 inline-block">Realm</span>
-            </p>
+            </CustomParagraph>
             <ClientOnly>
               <circle-progress
                 :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
@@ -189,21 +190,15 @@
 import CircleProgress from "vue3-circle-progress";
 
 import colors from "../../colors";
-import { Client } from "appwrite";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
-const defaultIgmUrl = () => {
-  if (state.disabledExpensiveUrlFetch) {
-    return state.userData?.profileImage ? "/images/profileImage.png" : "/images/placeholder-avatar.jpg";
-  }
-  return state.userData?.profileImage || "/images/placeholder-avatar.jpg";
-};
 
 import { ref, watch, computed } from "vue";
 import type { UserProfileType } from "~/types/type";
 import { profileInputPlaceholders } from "~/mainFrame";
 import { refreshUserData } from "~/composables/useSignUp";
-const pl = computed(() => profileInputPlaceholders);
+
+const pl = computed(() => profileInputPlaceholders); // pl means placeholder-text
 const cmpUserData = computed(() => ({
   name: state.userData?.name || "",
   lastName: state.userData?.lastName || "",
@@ -212,18 +207,19 @@ const cmpUserData = computed(() => ({
   email: state.userData?.email || "",
   phoneNumber: state.userData?.phoneNumber || "",
   profileStrength: state.userData?.profileStrength ? String(state.userData?.profileStrength) : "0",
-  profileImgUrl: defaultIgmUrl,
+  profileImgUrl: "/images/placeholder-avatar.jpg",
 }));
+
 watch(cmpUserData, () => {
   resetInputRefs();
 });
+
 onMounted(async () => {
   if (!state.user || !state.userData) await getUser();
-  // console.log(cmpUserData.value.wideImageLocationSettingsJSON);
 });
 
 const profileImgFile = ref<File | null>(null);
-const profileImgUrl = ref<string>(defaultIgmUrl());
+const profileImgUrl = ref<string>("");
 
 const nameRef = ref(cmpUserData.value.name);
 const lastNameRef = ref(cmpUserData.value.lastName);
@@ -239,7 +235,7 @@ function resetInputRefs() {
   addressRef.value = cmpUserData.value.address;
   phoneNumberRef.value = cmpUserData.value.phoneNumber;
   profileStrengthRef.value = cmpUserData.value.profileStrength;
-  profileImgUrl.value = defaultIgmUrl();
+  profileImgUrl.value = "";
 }
 
 async function updateUser() {
@@ -254,7 +250,7 @@ async function updateUser() {
         profileStrength: Number(profileStrengthRef.value),
       });
       state.setUserData(res as unknown as UserProfileType);
-      if (!profileImgFile.value) throw "image profileImgFile doesn't exist. when tring to upload to Appwrite";
+      if (!profileImgFile.value) throw "image profileImgFile doesn't exist. when string to upload to Appwrite";
 
       const imgUrl = await uploadFileToAppwrite(profileImgFile.value);
       const res3 = (await useAppwriteDocumentGet(state.user.$id)) as unknown as UserProfileType;

@@ -21,7 +21,7 @@
     </div>
   </nav>
   <div class="dark:bg-darkMainBg w-full">
-    <div class="pt-20 max-w-7xl mx-auto">
+    <div class="pt-16 max-w-7xl mx-auto">
       <!-- Add a test gradient background -->
       <slot></slot>
     </div>

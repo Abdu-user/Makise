@@ -1,6 +1,10 @@
 import { defineNuxtPlugin } from "#app";
-import { vAutoAnimate } from "@formkit/auto-animate/vue";
+import autoAnimate from "@formkit/auto-animate";
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.directive("auto-animate", vAutoAnimate);
+  nuxtApp.vueApp.directive("auto-animate", {
+    mounted(el, binding) {
+      autoAnimate(el, binding.value);
+    },
+  });
 });

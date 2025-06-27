@@ -3,11 +3,11 @@
     <div
       ref="barRef"
       class="h-4 rounded-full overflow-hidden relative"
-      :style="{ backgroundColor: bgColor || '#e5e7eb' }"
+      :style="{ backgroundColor: bgColor || '#e5e7ebce' }"
     >
       <div
         v-if="showPercent"
-        class="mb-1 text-sm font-medium text-gray-700 text-right absolute top-0 left-1/2 -translate-x-1/2 pr-2"
+        class="mb-1 text-sm font-medium text-black text-right absolute top-0 left-1/2 -translate-x-1/2 pr-2"
         :class="percentColor"
       >
         {{ percent }}%

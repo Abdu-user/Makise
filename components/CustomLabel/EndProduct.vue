@@ -2,7 +2,7 @@
   <div class="mt-8">
     <CustomContainer
       :variant="'sectionWithLines'"
-      :section-number="'1'"
+      :section-number="sectionNumber"
       :id="id"
     >
       <div class="pb-5">
@@ -108,7 +108,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 
-defineProps({ id: { type: String, required: true } });
+defineProps({ id: { type: String, required: true }, sectionNumber: { type: [String, Number], required: true } });
 
 const labelContent = ref("Label Content");
 const error = ref("");

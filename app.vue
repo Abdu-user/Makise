@@ -7,15 +7,13 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-    <DebugControl />
+    <DebugControl v-if="inDev" />
   </div>
 </template>
 <script setup lang="ts">
-import { useRouter } from "vue-router";
 import { useGlobalSettingStore } from "./store/globalSetting";
 import { getUser, refreshUserData } from "./composables/useSignUp";
 
-const router = useRouter();
 useHead({
   title: "Makise",
 });
@@ -24,19 +22,15 @@ const state = useGlobalSettingStore();
 onMounted(async () => {
   await state.initialize();
   getUser();
-  getPreferenceData();
+  state.getPreferenceData();
 });
 
-async function getPreferenceData() {
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const saved = localStorage.getItem("theme");
-
-  if (saved === "dark" || (!saved && prefersDark)) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-}
+const inDev = ref(false);
+onMounted(() => {
+  const { hostname } = window.location;
+  const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1";
+  if (isLocalhost) inDev.value = true;
+});
 </script>
 <style>
 body {
@@ -50,6 +44,6 @@ body {
 body {
   /* padding: 16px 0;
   height: 100vh; */
-  border-color: #fd495e;
+  border-color: #848484;
 }
 </style>

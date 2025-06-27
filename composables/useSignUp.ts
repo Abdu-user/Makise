@@ -81,6 +81,7 @@ export const useAuth = () => {
     try {
       const res = await $appwrite.account.deleteSession("current");
       state.setUser(null);
+      state.setUserData(null);
       return res;
     } catch (error) {
       console.error("Logout failed:", error);

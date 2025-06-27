@@ -1,5 +1,8 @@
 <template>
-  <div class="p-6 mt-4 shadow-md bg-mainBg dark:bg-darkMainBg">
+  <CustomContainer
+    :variant="'UIContainer'"
+    class="p-6 mt-4"
+  >
     <p class="flex text-T3TextColor dark:text-darkT3TextColor font-bold">
       {{ title }}
       <EditButtons
@@ -14,7 +17,7 @@
       />
     </p>
     <slot></slot>
-  </div>
+  </CustomContainer>
 </template>
 
 <script setup lang="ts">

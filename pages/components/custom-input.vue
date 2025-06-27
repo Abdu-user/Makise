@@ -22,13 +22,19 @@
       CustomInput
     </CustomHeads>
 
-    <CustomInputEndProduct :id="navLinks[0].href.slice(1)" />
+    <CustomInputEndProduct
+      :id="navLinks[0].href.slice(1)"
+      :section-number="1"
+    />
 
     <CustomInputHowToUse
       :id="navLinks[1].href.slice(1)"
-      class=""
+      :section-number="2"
     />
-    <CustomInputAllVariants :id="navLinks[2].href.slice(1)" />
+    <CustomInputAllVariants
+      :id="navLinks[2].href.slice(1)"
+      :section-number="3"
+    />
   </div>
   <ScrollLinks
     class="max-md:hidden"

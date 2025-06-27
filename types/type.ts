@@ -2,7 +2,7 @@ export type UserProfileType = {
   name?: string;
   email: string;
   lastName?: string;
-  isVerifyed?: boolean;
+  isVerified?: boolean;
   phoneNumber?: string;
   job?: string;
   address?: string;
@@ -25,7 +25,7 @@ export type PersonalInfoType = {
   birthdayDate: string;
   age: string;
   bloodGroup: string;
-  mariageStatus: string;
+  marriageStatus: string;
   gender: string;
   languages: string;
   region: string;

@@ -82,9 +82,9 @@
             <CustomInput
               class="w-full pointer-events-none"
               type="checkBox"
-              :checked="state.isPrefilltheUserField"
+              :checked="state.isPrefillTheUserField"
             />
-            {{ state.isPrefilltheUserField }}
+            {{ state.isPrefillTheUserField }}
           </CustomButton>
           <ThemeToggleButton />
         </div>

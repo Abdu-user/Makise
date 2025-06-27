@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { CustomButtonVaraintsType } from "~/types/customButtonType";
+import type { CustomButtonVariantsType } from "~/types/customButtonType";
 const variants = {
   default: `shadow-md `,
   primary: `font-semibold rounded transition-colors `,
@@ -8,6 +8,12 @@ const variants = {
   tonal: ``,
   text: `bg-transparent `,
   plain: `text-gray-500 bg-transparent hover:bg-gray-100 focus:bg-highlight/20`,
+  navigation: `px-5 py-3 md:px-3 md:py-2 gap-2 rounded 
+  flex items-center  
+  text-T3TextColor dark:text-darkT3TextColor 
+  transition-colors duration-200
+  `,
+  active: ``,
 };
 const base = `inline-flex gap-3 items-center justify-center font-medium transition duration-150 focus:outline-none `;
 const iconPositions = {
@@ -17,7 +23,7 @@ const iconPositions = {
 };
 
 const props = defineProps({
-  variant: { type: String as PropType<CustomButtonVaraintsType>, required: true },
+  variant: { type: String as PropType<keyof typeof variants>, required: true },
   size: { type: String, default: "md" },
   icon: { type: Boolean, default: false },
   iconPosition: { type: String as PropType<keyof typeof iconPositions>, default: "left" },
@@ -27,7 +33,6 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   rounded: { type: Boolean, default: false },
   block: { type: Boolean, default: false },
-  // primaryColor: { type: Boolean, default: true },
   prependIcon: { type: Object, default: null },
   appendIcon: { type: Object, default: null },
 });
@@ -40,20 +45,23 @@ const colors: { primary: typeof variants; theme: typeof variants } = {
   primary: {
     default: "text-red-600 hover:bg-red-200 focus:bg-red-200",
     primary: `bg-primary hover:bg-hoverPrimary focus:bg-hoverPrimary  text-white 
-       focus:bg-hoverPrimary focus:outline-1 focus:outline-white focus:outline  `,
+        focus:bg-hoverPrimary focus:outline-1 focus:outline-white focus:outline  `,
     outlined: ` border-red-600 text-red-600 hover:bg-red-200/40 focus:bg-red-200/40`,
     tonal: "bg-red-200 text-textWhite hover:bg-red-300 focus:bg-red-300",
     text: `text-red-600 hover:bg-red-10 focus:bg-red-10 
     hover:text-red-800 focus:bg-highlight/20`,
     plain: `focus:outline-1 focus:outline-white focus:outline  `,
+    navigation: `hover:bg-highlight/5
+  dark:hover:bg-darkHoverBg/50 dark:hover:text-darkT2TextColor`,
+    active: `text-red-600 bg-red-100 hover:bg-red-200 focus:bg-red-200`,
   },
   theme: {
     default: `text-T2TextColor hover:bg-hoverBg focus:bg-hoverBg
       dark:text-darkT2TextColor dark:hover:bg-darkHoverBg 
-     focus:bg-darkHoverBg/20 `,
+    focus:bg-darkHoverBg/20 `,
     primary: ` bg-darkMainBg  hover:bg-darkHoverBg focus:bg-darkHoverBg text-darkT2TextColor hover:text-darkT1TextColor
     dark:bg-mainBg dark:hover:bg-hoverBg dark:focus:bg-hoverBg dark:text-T2TextColor dark:hover:text-T1TextColor
-     `,
+    `,
     outlined: `border-T2TextColor  text-T2TextColor  hover:bg-hoverBg focus:bg-hoverBg/20
     dark:border-darkT2TextColor dark:text-darkT2TextColor  dark:hover:bg-darkHoverBg`,
     tonal: `bg-mainT2Bg  text-T3TextColor hover:bg-hoverBg focus:bg-hoverBg
@@ -64,6 +72,8 @@ const colors: { primary: typeof variants; theme: typeof variants } = {
       dark:text-darkT2TextColor dark:hover:bg-darkHoverBg 
     dark:hover:text-darkT1TextColor dark:focus:bg-darkHoverBg/20`,
     plain: "",
+    navigation: `hover:bg-hoverBg  dark:hover:bg-darkHoverBg/50 dark:hover:text-darkT2TextColor`,
+    active: `text-T2TextColor dark:text-darkT2TextColor bg-activeBg dark:bg-darkActiveBg `,
   },
 };
 
@@ -80,7 +90,7 @@ const buttonClass = computed(() => {
     sizes[props.size as keyof typeof sizes] || sizes.md,
     colors[props.isPrimaryColor][props.variant],
     props.rounded ? "rounded-full" : "rounded-md",
-    props.icon ? "w-10 h-10 p-0" : "",
+    props.icon ? " p-0" : "",
     iconPositions[props.iconPosition],
     props.block ? "w-full" : "",
     props.disabled || props.loading ? " opacity-50 cursor-not-allowed" : "",
@@ -117,6 +127,7 @@ const iconSizeClass = computed(() => {
       v-if="!loading && name"
       :name="name"
       :class="[iconSizeClass]"
+      class="inline-block"
     />
 
     <!-- Button Label -->

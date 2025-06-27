@@ -2,6 +2,7 @@
   <NuxtLink
     :class="linkClass"
     :active-class="activeClass"
+    :to="to"
     v-slot="slotProps: any"
   >
     <slot v-bind="slotProps"></slot>
@@ -19,6 +20,7 @@ const props = defineProps({
   isPrimary: { type: Boolean, required: false },
   name: String,
   block: { type: Boolean, default: false },
+  to: { type: [String, Object], required: true, default: "/" },
 });
 const variants = {
   underline: ` inline-block py-3 md:relative z-10 max-md:px-5 max-md:shadow-lg  rounded-md `,

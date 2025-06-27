@@ -15,6 +15,7 @@ export default {
   mainT2Bg: "#f1ecec",
   mainT3Bg: "#eeeeee",
   hoverBg: "#e5e5e7",
+  activeBg: "#d1d1d7",
 
   T1TextColor: "#1a1a1a", // Primary text — near black
   T2TextColor: "#2d2d2f", // Secondary text
@@ -50,6 +51,7 @@ export default {
   darkMainT2Bg: "#222223",
   darkMainT3Bg: "#202021",
   darkHoverBg: "#242527",
+  darkActiveBg: "#353535",
   darkDarkBg: "#131315",
 
   darkHighlight: "#f87171",
@@ -57,7 +59,7 @@ export default {
   darkT1TextColor: "#ededf0",
   darkT2TextColor: "#d5d5db",
   darkT3TextColor: "#acacaf",
-  darkT4TextColor: "#989da0",
+  darkT4TextColor: "#848484",
 
   darkTextParagraph: "#CBD5E1",
   darkTextHeader: "#F8FAFC",

@@ -3,6 +3,7 @@
     <CustomContainer
       :variant="'section'"
       :id="id"
+      :section-number="sectionNumber"
     >
       <div>
         <CustomContainer
@@ -28,9 +29,9 @@
         <div :class="`grid  bg-mainT2Bg dark:bg-darkMainT2Bg pb-2`">
           <div
             :class="`
-           grid grid-cols-3 md:grid-cols-[7rem,repeat(7,1fr)]
+            grid grid-cols-3 md:grid-cols-[7rem,repeat(7,1fr)]
           shadow-lg pb-5
-           bg-mainBg dark:bg-darkMainBg mx-2 mt-0`"
+          bg-mainBg dark:bg-darkMainBg mx-2 mt-0`"
           >
             <div class="mx-4 w-20 flex items-center justify-center text-4xl text-T2TextColor dark:text-darkT2TextColor">
               {{ counter }}
@@ -151,11 +152,12 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomButtonVaraintsType } from "~/types/customButtonType";
+import type { CustomButtonVariantsType } from "~/types/customButtonType";
 defineProps({
   id: { type: String, required: true },
+  sectionNumber: { type: [String, Number], required: true },
 });
-const variants: CustomButtonVaraintsType[] = ["default", "outlined", "plain", "primary", "text", "tonal"];
+const variants: CustomButtonVariantsType[] = ["default", "outlined", "plain", "primary", "text", "tonal"];
 const iconPositions = ["left", "right", "top"];
 const iconPosition = ref<"left" | "right" | "top">("left");
 const sizes = ["lg", "md", "sm"];

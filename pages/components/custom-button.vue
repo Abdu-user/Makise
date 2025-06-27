@@ -24,14 +24,25 @@
         CustomButton
       </CustomHeads>
 
-      <CustomButtonEndProduct :id="navLinks[0].href.slice(1)" />
+      <CustomButtonEndProduct
+        :id="navLinks[0].href.slice(1)"
+        :section-number="1"
+      />
 
       <CustomButtonLearnHowToUse
         class="mt-7"
         :id="navLinks[1].href.slice(1)"
+        :section-number="2"
       />
-      <CustomButtonAllVariants :id="navLinks[2].href.slice(1)" />
-      <CustomButtonExplanation :id="navLinks[3].href.slice(1)" />
+      <CustomButtonAllVariants
+        :id="navLinks[2].href.slice(1)"
+        :section-number="3"
+      />
+      <CustomButtonExplanation
+        :id="navLinks[3].href.slice(1)"
+        :section-number="4"
+      />
+      />
     </div>
   </div>
   <ScrollLinks
