@@ -13,7 +13,7 @@
         :icon-position="'right'"
         size="sm"
         class="w-6 h-6"
-        @click="toggleTheme('light')"
+        @click="setTheme('light')"
       />
       <CustomButton
         :variant="themeMode === 'dark' ? 'active' : 'text'"
@@ -23,7 +23,7 @@
         :icon-position="'right'"
         size="sm"
         class="w-6 h-6"
-        @click="toggleTheme('dark')"
+        @click="setTheme('dark')"
       />
       <CustomButton
         :variant="themeMode === 'auto' ? 'active' : 'text'"
@@ -33,7 +33,7 @@
         :icon-position="'right'"
         size="sm"
         class="w-6 h-6"
-        @click="(themeMode = 'auto') && state.getPreferenceData()"
+        @click="((themeMode = 'auto'), state.setThemeMode('auto'), state.getPreferenceData())"
       />
     </CustomContainer>
   </div>
@@ -45,10 +45,19 @@ const state = useGlobalSettingStore();
 
 const themeMode = ref("auto");
 
-const toggleTheme = (theme: "dark" | "light") => {
+const setTheme = (theme: "dark" | "light") => {
   document.documentElement.classList.remove(theme === "dark" ? "dark" : "light");
   document.documentElement.classList.toggle("dark", theme === "dark");
   localStorage.setItem("theme", theme === "dark" ? "dark" : "light");
   themeMode.value = theme;
+  state.setThemeMode(theme);
 };
+onMounted(() => {
+  themeMode.value = state.themeMode;
+  if (state.themeMode !== "auto") {
+    setTheme(state.themeMode);
+  }
+  console.log(themeMode.value);
+  console.log("Theme mode on mounted:", state.themeMode);
+});
 </script>

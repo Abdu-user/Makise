@@ -70,13 +70,13 @@
         >Sign Up</NuxtLink
       >
     </p>
-    <ModalsNotification
+    <ModalsError
       @handleOk="notifyError = ''"
       :isOpen="Boolean(notifyError)"
       ok
     >
       {{ notifyError }}
-    </ModalsNotification>
+    </ModalsError>
   </div>
 </template>
 
@@ -106,6 +106,7 @@ function onSignIn() {
     .then((res) => {
       const conditionalRedirect = state.fromPage ? state.fromPage : "/";
       router.push(conditionalRedirect);
+      state.setFeedback("success", "Successfully signed in");
     })
     .catch((error) => {
       if (error.message.includes("email")) emailError.value = "Email not found";
@@ -113,6 +114,7 @@ function onSignIn() {
       else {
         notifyError.value = error.message;
       }
+      state.setFeedback("error", "Failed to sign in");
     });
 
   function validateEmail(email: string): boolean {

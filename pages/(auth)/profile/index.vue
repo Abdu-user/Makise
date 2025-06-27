@@ -72,7 +72,13 @@ const personalInfo = ref<PersonalInfoType>({
 const isEditingPersonal = ref(false);
 const updatePersonalInfo = async () => {
   if (!state.user?.$id) return;
-  const updateUserPerInf = await useAppwriteDocumentUpdate(state.user?.$id, { personalInformation: JSON.stringify(personalInfo.value) });
+  try {
+    const updateUserPerInf = await useAppwriteDocumentUpdate(state.user?.$id, { personalInformation: JSON.stringify(personalInfo.value) });
+    state.setFeedback("success", "Personal information updated successfully.");
+  } catch (error) {
+    console.error("Error updating personal information:", error);
+    state.setFeedback("error", "Failed to update personal information.");
+  }
 };
 const resetPersonalInfo = () => {
   const parsed = JSON.parse(state.userData?.personalInformation || "{}");
@@ -94,7 +100,13 @@ const IDProof = ref<IDProofType>({
 const isEditingIDProof = ref(false);
 const updateIDProof = async () => {
   if (!state.user?.$id) return;
-  const updateUserPerInf = await useAppwriteDocumentUpdate(state.user?.$id, { IDProof: JSON.stringify(IDProof.value) });
+  try {
+    const updateUserPerInf = await useAppwriteDocumentUpdate(state.user?.$id, { IDProof: JSON.stringify(IDProof.value) });
+    state.setFeedback("success", "ID Proof updated successfully.");
+  } catch (error) {
+    console.error("Error updating ID Proof:", error);
+    state.setFeedback("error", "Failed to update ID Proof.");
+  }
 };
 const resetIDProof = () => {
   const parsed = JSON.parse(state.userData?.IDProof || "{}");

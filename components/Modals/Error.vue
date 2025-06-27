@@ -24,7 +24,7 @@
           v-if="ok"
           :class="`absolute -bottom-5 
           text-textWhite  backdrop-blur-md  right-2  shadow-lg border
-           focus:bg-mainT3Bg  `"
+          focus:bg-mainT3Bg  `"
           :variant="'tonal'"
           :is-primary-color="'primary'"
           @click="emit('handleOk')"
@@ -53,9 +53,9 @@ const containerClass = computed(() => {
 const contentClass = computed(() => {
   const variants = {
     error: `max-w-sm bg-red-400/30 w-full backdrop-blur-md
-     absolute top-8 mx-50 px-5 py-4 rounded-lg
-     text-textWhite text-2xl
-     `,
+      absolute top-8 mx-50 px-5 py-4 rounded-lg
+      text-textWhite text-2xl
+      `,
   };
 
   return [variants[props.variant as keyof typeof variants]].join(" ");

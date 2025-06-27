@@ -260,8 +260,10 @@ async function updateUser() {
 
       await useAppwriteDocumentUpdate(state.user.$id, data);
       await refreshUserData();
+      state.setFeedback("success", "Profile updated successfully");
     } catch (error) {
       console.error(error);
+      state.setFeedback("error", "Failed to update profile");
     }
   }
 }

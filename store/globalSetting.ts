@@ -14,6 +14,13 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     isScrollLinksExist: false,
     loading: false,
     isLoginButtonDropdownOpen: false,
+    themeMode: "auto" as "light" | "dark" | "auto",
+    feedback: {
+      exists: false,
+      state: "idle" as "idle" | "success" | "error",
+      message: "",
+      duration: 3000, // Default duration for feedback messages
+    },
     consoleMessages: [] as string[],
     user: null as Models.User<Models.Preferences> | null,
     userData: null as UserProfileType | null,
@@ -55,6 +62,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
           isNavOpen: this.isNavOpen,
           isEditingProfile: this.isEditingProfile,
           isPrefillTheUserField: this.isPrefillTheUserField,
+          themeMode: this.themeMode,
         })
       );
     },
@@ -66,17 +74,26 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
         this.isNavOpen = parsed.isNavOpen ?? false;
         this.isEditingProfile = parsed.isEditingProfile ?? false;
         this.isPrefillTheUserField = parsed.isPrefillTheUserField ?? false;
+        this.themeMode = parsed.themeMode ?? "auto";
       }
     },
 
-    async getPreferenceData() {
+    getPreferenceData() {
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-      if (prefersDark) {
+      this.setDarkMode(prefersDark);
+    },
+    setDarkMode(isDarkMode: boolean) {
+      if (isDarkMode) {
         document.documentElement.classList.add("dark");
       } else {
         document.documentElement.classList.remove("dark");
       }
+    },
+    loadThemeMode() {
+      console.log(this.themeMode);
+      if (this.themeMode === "dark") this.setDarkMode(true);
+      else if (this.themeMode === "light") this.setDarkMode(false);
+      else this.getPreferenceData();
     },
     _loading(loading: boolean) {
       this.loading = loading;
@@ -105,6 +122,16 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       console.warn("setIsScrollLinksExist could be replaced with direct state assignment: store.isScrollLinksExist = ...");
       this.isScrollLinksExist = bool;
     },
+    setThemeMode(themeMode: typeof this.themeMode) {
+      this.themeMode = themeMode;
+      this.saveToLocalStorage();
+    },
+    setFeedback(state: typeof this.feedback.state, message: string = "", duration: number = 3000) {
+      this.feedback.state = state;
+      this.feedback.message = message;
+      this.feedback.exists = message !== "";
+      this.feedback.duration = duration;
+    },
     removeSingleResetFunction(cb: () => void) {
       this.resetFunctions = this.resetFunctions.filter((oldCb) => oldCb !== cb);
     },
@@ -124,6 +151,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     async initialize() {
       this.loadSettings();
       // Additional initialization logic can be added here
+      this.loadThemeMode();
     },
     callResetFunctions() {
       for (let i = 0; i < this.resetFunctions.length; i++) {

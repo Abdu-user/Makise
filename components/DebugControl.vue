@@ -142,6 +142,11 @@ const getUser = async () => {
 
 function toggleModal() {
   state.toggleDebugPanel();
+
+  state.setFeedback(
+    state.isDebugPanelOpen ? "success" : "error",
+    state.isDebugPanelOpen ? "Debug panel toggled successfully" : "Debug panel closed"
+  );
 }
 
 function tryToLogin() {

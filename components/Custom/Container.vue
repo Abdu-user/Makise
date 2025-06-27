@@ -47,8 +47,8 @@ const variants = {
   numbered: `border border-1 border-primary/40 rounded-md w-7 h-7 flex items-center justify-center
   text-T3TextColor dark:text-darkT3TextColor `,
   line: `w-[1px] bg-T4TextColor/50 dark:bg-darkT4TextColor/50 h-full max-h-full mx-auto`,
-  UIContainer: `bg-mainT2Bg dark:bg-darkMainT2Bg rounded-lg text-T3TextColor dark:text-darkT3TextColor border border-1 border-gray-500/30`,
-  ReverseUIContainer: `bg-mainBg dark:bg-darkMainBg rounded-lg text-T3TextColor dark:text-darkT3TextColor border border-1 border-gray-500/10`,
+  UIContainer: `bg-mainT2Bg dark:bg-darkMainT2Bg  rounded-lg text-T3TextColor dark:text-darkT3TextColor border border-1 border-gray-500/30`,
+  ReverseUIContainer: `bg-mainBg dark:bg-darkMainBg  rounded-lg text-T3TextColor dark:text-darkT3TextColor border border-1 border-gray-500/10`,
 };
 const props = defineProps({
   variant: { type: String as PropType<keyof typeof variants>, required: true },

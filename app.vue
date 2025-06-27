@@ -8,6 +8,7 @@
       <NuxtPage />
     </NuxtLayout>
     <DebugControl v-if="inDev" />
+    <ModalsDynamicFeedback />
   </div>
 </template>
 <script setup lang="ts">
@@ -22,7 +23,6 @@ const state = useGlobalSettingStore();
 onMounted(async () => {
   await state.initialize();
   getUser();
-  state.getPreferenceData();
 });
 
 const inDev = ref(false);

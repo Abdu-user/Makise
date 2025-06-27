@@ -105,8 +105,14 @@ async function uploadWideImage(event: Event) {
   };
   reader.readAsDataURL(file);
 
-  const uploadedUrl = await uploadFileToAppwrite(wideImgFile.value);
-  await useAppwriteDocumentUpdate(state.user.$id, { wideProfileImage: uploadedUrl });
-  refreshUserData();
+  try {
+    const uploadedUrl = await uploadFileToAppwrite(wideImgFile.value);
+    await useAppwriteDocumentUpdate(state.user.$id, { wideProfileImage: uploadedUrl });
+    refreshUserData();
+    state.setFeedback("success", "Wide image uploaded successfully");
+  } catch (error) {
+    console.error("Error uploading wide image:", error);
+    state.setFeedback("error", "Failed to upload wide image");
+  }
 }
 </script>

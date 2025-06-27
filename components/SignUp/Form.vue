@@ -102,6 +102,7 @@
     @on-verify-code-success="
       isHappy = true;
       errorMessage = '';
+      state.setFeedback('success', 'Verification email sent successfully! Please check your inbox.');
     "
   />
 </template>

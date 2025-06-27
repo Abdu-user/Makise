@@ -69,7 +69,8 @@
       <!-- <button class="mt-2 px-6 py-2 bg-primary hover:bg-active text-white font-semibold rounded transition-colors">fffsf</button> -->
       <CustomButton
         @click="closeVerifyEmailModal"
-        variety="secondary"
+        :variant="'outlined'"
+        :is-primary-color="'theme'"
         type="button"
         size="md"
       >

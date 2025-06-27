@@ -40,7 +40,7 @@
         </template>
       </template>
     </div>
-
+    <!-- <CustomTransitions :variant="'drop-down'"> -->
     <CustomContainer
       ref="dropdownWrapper"
       v-if="isInProfilePage && state.isLoginButtonDropdownOpen"
@@ -75,6 +75,7 @@
       </CustomButton>
       <ThemeToggleButton class="max-md:mx-2" />
     </CustomContainer>
+    <!-- </CustomTransitions> -->
   </div>
 </template>
 
