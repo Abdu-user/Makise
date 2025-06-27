@@ -19,7 +19,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       exists: false,
       state: "idle" as "idle" | "success" | "error",
       message: "",
-      duration: 3000, // Default duration for feedback messages
+      duration: 5000, // Default duration for feedback messages
     },
     consoleMessages: [] as string[],
     user: null as Models.User<Models.Preferences> | null,
@@ -126,11 +126,11 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       this.themeMode = themeMode;
       this.saveToLocalStorage();
     },
-    setFeedback(state: typeof this.feedback.state, message: string = "", duration: number = 3000) {
+    setFeedback(state: typeof this.feedback.state, message: string = "", duration?: number) {
       this.feedback.state = state;
       this.feedback.message = message;
       this.feedback.exists = message !== "";
-      this.feedback.duration = duration;
+      this.feedback.duration = duration ? duration : this.feedback.duration;
     },
     removeSingleResetFunction(cb: () => void) {
       this.resetFunctions = this.resetFunctions.filter((oldCb) => oldCb !== cb);

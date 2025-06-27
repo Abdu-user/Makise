@@ -250,7 +250,8 @@ async function updateUser() {
         profileStrength: Number(profileStrengthRef.value),
       });
       state.setUserData(res as unknown as UserProfileType);
-      if (!profileImgFile.value) throw "image profileImgFile doesn't exist. when string to upload to Appwrite";
+      state.setFeedback("success", "Profile data has been updated successfully");
+      if (!profileImgFile.value) return "image profileImgFile doesn't exist. when string to upload to Appwrite";
 
       const imgUrl = await uploadFileToAppwrite(profileImgFile.value);
       const res3 = (await useAppwriteDocumentGet(state.user.$id)) as unknown as UserProfileType;
@@ -260,10 +261,10 @@ async function updateUser() {
 
       await useAppwriteDocumentUpdate(state.user.$id, data);
       await refreshUserData();
-      state.setFeedback("success", "Profile updated successfully");
+      state.setFeedback("success", "Profile img and data has been updated successfully");
     } catch (error) {
       console.error(error);
-      state.setFeedback("error", "Failed to update profile");
+      state.setFeedback("error", `Failed to update profile, ${error}`, 10000);
     }
   }
 }

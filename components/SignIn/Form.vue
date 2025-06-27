@@ -114,7 +114,7 @@ function onSignIn() {
       else {
         notifyError.value = error.message;
       }
-      state.setFeedback("error", "Failed to sign in");
+      state.setFeedback("error", "Failed to sign itn");
     });
 
   function validateEmail(email: string): boolean {

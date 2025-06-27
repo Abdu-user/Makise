@@ -2,7 +2,7 @@
   <CustomTransitions :variant="'drop-down'">
     <div
       v-if="globalState.feedback.exists"
-      class="absolute top-20 left-0 right-0"
+      class="fixed top-20 left-0 right-0 z-10"
     >
       <div
         class="p-4 w-fit mx-auto rounded-lg text-T1TextColor dark:text-darkT1TextColor border border-1 border-gray-500/30"
@@ -31,7 +31,7 @@ watch(
     if (newValue) {
       timerId.value = setTimeout(() => {
         globalState.setFeedback("idle", "");
-      }, globalState.feedback.duration || 3000);
+      }, globalState.feedback.duration || 6000);
     }
   },
   { deep: true }
