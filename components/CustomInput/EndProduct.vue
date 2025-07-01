@@ -199,12 +199,12 @@ const copied = ref(false);
 const copyCode = computed(() => {
   const props = [
     `v-model="inputValue"`,
-    `:type="${JSON.stringify(type.value)}"`,
-    `:variant="${JSON.stringify(variant.value)}"`,
-    size.value ? `:size="${JSON.stringify(size.value)}"` : null,
-    min.value !== null ? `:min="${min.value}"` : null,
-    maxNumber.value !== null ? `:max-number="${maxNumber.value}"` : null,
-    error.value ? `:error="true"` : null,
+    `type=${JSON.stringify(type.value)}`,
+    `variant=${JSON.stringify(variant.value)}`,
+    size.value ? `size='${JSON.stringify(size.value)}` : null,
+    min.value !== null ? `min=${min.value}` : null,
+    maxNumber.value !== null ? `max-number=${maxNumber.value}` : null,
+    error.value ? `error="true"` : null,
   ]
     .filter(Boolean)
     .join("\n  ");

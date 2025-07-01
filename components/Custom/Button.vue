@@ -87,7 +87,7 @@ const newColors: typeof variants = {
   primary: "bg-primary text-bg hover:bg-secondary focus:outline-primary",
   outlined: "bg-transparent text-primary border border-primary hover:bg-primary hover:text-bg",
   tonal: "bg-highlight text-text-muted",
-  text: "bg-transparent text-primary hover:text-secondary focus:outline-primary  ",
+  text: "bg-transparent text-text hover:text-primary focus:outline-primary  ",
   plain: "bg-transparent text-text-muted",
   navigation: "bg-bg-light text-text-muted hover:bg-highlight",
   active: "bg-secondary text-bg border border-border",

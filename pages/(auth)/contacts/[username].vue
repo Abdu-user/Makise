@@ -87,13 +87,7 @@
 
       <ContactsMessages class="p-4 mt-auto" />
 
-      <CustomContainer
-        :variant="'mainContainer'"
-        type="text"
-        class="sticky bottom-0 h-16 left-0 mt-auto"
-      >
-        ss
-      </CustomContainer>
+      <ContactsMessageInput />
     </div>
   </div>
 </template>
@@ -104,6 +98,7 @@ const contactImg = ref("");
 const lastActive = ref("");
 const name = ref("");
 
+import { ContactsMessageInput } from "#components";
 // Auto scroll to bottom when messages update
 import { nextTick, onMounted } from "vue";
 
