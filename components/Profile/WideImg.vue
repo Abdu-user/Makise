@@ -26,20 +26,22 @@
   </label>
 
   <!-- Image Position Controls -->
-  <select
-    id="wideImgLocationSelect"
-    class="absolute top-14 right-3 bg-transparent md:top-15 md:right-10 cursor-pointer hover:bg-primary/10 border-2 border-primary/20 rounded-full w-9 h-9 focus:border-primary/20"
-    v-model="selectedImgPosition"
-  >
-    <option
-      v-for="position in positionOptions"
-      :key="position"
-      :value="position"
-      class="capitalize"
+  <CustomContainer :variant="'UIContainer'">
+    <select
+      id="wideImgLocationSelect"
+      class="absolute top-14 right-3 bg-transparent md:top-15 md:right-10 cursor-pointer hover:bg-primary/10 border-2 border-primary/20 rounded-full w-9 h-9 focus:border-primary/20"
+      v-model="selectedImgPosition"
     >
-      {{ position }}
-    </option>
-  </select>
+      <option
+        v-for="position in positionOptions"
+        :key="position"
+        :value="position"
+        class="capitalize"
+      >
+        {{ position }}
+      </option>
+    </select>
+  </CustomContainer>
 </template>
 
 <script setup lang="ts">

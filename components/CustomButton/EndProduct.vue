@@ -110,6 +110,7 @@
                 :icon="props.only"
                 :icon-position="iconPosition"
                 :size="size"
+                :new-colors="props.newColors"
                 >CustomButton</CustomButton
               >
             </div>
@@ -172,8 +173,9 @@ const props = ref({
   loading: false,
   only: false,
   icon: false,
+  newColors: false,
 });
-const propsArray = ["color", "disabled", "block", "rounded", "loading", "only", "icon"];
+const propsArray = ["color", "disabled", "block", "rounded", "loading", "only", "icon", "newColors"] as const;
 watch(
   () => props.value.only,
   () => {

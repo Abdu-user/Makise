@@ -16,6 +16,7 @@
           icon
           :variant="'text'"
           :is-primary-color="'theme'"
+          class="w-10 h-10 p-2 rounded-full"
         />
       </NuxtLink>
 

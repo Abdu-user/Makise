@@ -1,7 +1,11 @@
 <template>
-  <div class="max-w-7xl mx-auto dark:bg-darkMainBg bg-mainBg">
+  <div
+    class="max-w-7xl mx-auto"
+    :class="`${state.newColors ? 'bg-bg-dark' : 'dark:bg-darkMainBg bg-mainBg'}`"
+  >
     <header
-      class="fixed z-10 px-6 h-20 top-0 right-0 bg-mainBg/30 dark:bg-darkMainBg/30 backdrop-blur-sm border-b-[1px] border-gray-400/50 w-full"
+      class="fixed z-10 px-6 h-20 top-0 right-0 backdrop-blur-sm border-b-[1px] border-gray-400/50 w-full"
+      :class="`${state.newColors ? 'bg-bg-transparent' : 'bg-mainBg/30 dark:bg-darkMainBg/30 '}`"
     >
       <div class="max-w-7xl mx-auto h-full flex justify-center items-center gap-6">
         <MenuOpenButton
@@ -41,7 +45,7 @@
       </div>
     </header>
   </div>
-  <div class="dark:bg-darkMainBg bg-mainBg">
+  <CustomContainer :variant="'mainContainer'">
     <div
       :class="`${state.isScrollLinksExist ? `md:grid-cols-[1fr,14rem]` : 'md:grid-cols-[14rem,1fr]'}
      md:grid max-w-7xl mx-auto xl:grid-cols-[14rem,1fr,14rem]
@@ -55,8 +59,9 @@
             max-h-[calc(100vh-5rem)] p-4
             overflow-auto
             border-r-[1px] border-r-gray-400/50
-            dark:bg-darkMainBg/90 bg-mainBg/70 backdrop-blur-sm
+             backdrop-blur-sm
             ${state.isScrollLinksExist ? 'md:hidden xl:block' : ''}
+            ${state.newColors ? 'bg-bg-transparent' : 'dark:bg-darkMainBg/90 bg-mainBg/70'}
             `"
           v-if="state.isNavOpen"
           class="h-full"
@@ -67,7 +72,7 @@
 
       <slot></slot>
     </div>
-  </div>
+  </CustomContainer>
 </template>
 
 <script setup lang="ts">
@@ -80,11 +85,12 @@ const responsive = (isRouteChanged: boolean = false) => {
     state.isNavOpen || state.toggleIsNavOpen(true);
   } else isRouteChanged || (state.isNavOpen && state.toggleIsNavOpen(false));
 };
+const windowListener = () => responsive();
 onMounted(() => {
-  window.addEventListener("resize", responsive);
+  window.addEventListener("resize", windowListener);
 });
 onUnmounted(() => {
-  window.removeEventListener("resize", responsive);
+  window.removeEventListener("resize", windowListener);
 });
 watch(
   () => route.fullPath,

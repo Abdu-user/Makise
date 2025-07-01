@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { CustomButtonVariantsType } from "~/types/customButtonType";
+const state = useGlobalSettingStore();
 const variants = {
   default: `shadow-md `,
   primary: `font-semibold rounded transition-colors `,
@@ -24,7 +26,7 @@ const iconPositions = {
 
 const props = defineProps({
   variant: { type: String as PropType<keyof typeof variants>, required: true },
-  size: { type: String, default: "md" },
+  size: { type: String, default: "f" },
   icon: { type: Boolean, default: false },
   iconPosition: { type: String as PropType<keyof typeof iconPositions>, default: "left" },
   isPrimaryColor: { type: String as PropType<"primary" | "theme">, required: true },
@@ -35,8 +37,12 @@ const props = defineProps({
   block: { type: Boolean, default: false },
   prependIcon: { type: Object, default: null },
   appendIcon: { type: Object, default: null },
+  newColors: { type: Boolean, default: undefined }, // This is to use the new colors
 });
 
+const isNewColors = computed(() => {
+  return props.newColors === undefined ? state.newColors : props.newColors;
+});
 if (props.appendIcon || props.prependIcon) {
   console.error(props.appendIcon, props.prependIcon, "props.appendIcon||props.prependIcon they are depricated  ");
 }
@@ -76,6 +82,16 @@ const colors: { primary: typeof variants; theme: typeof variants } = {
     active: `text-T2TextColor dark:text-darkT2TextColor bg-activeBg dark:bg-darkActiveBg `,
   },
 };
+const newColors: typeof variants = {
+  default: "bg-bg text-text hover:bg-light hover:text-text-muted",
+  primary: "bg-primary text-bg hover:bg-secondary focus:outline-primary",
+  outlined: "bg-transparent text-primary border border-primary hover:bg-primary hover:text-bg",
+  tonal: "bg-highlight text-text-muted",
+  text: "bg-transparent text-primary hover:text-secondary focus:outline-primary  ",
+  plain: "bg-transparent text-text-muted",
+  navigation: "bg-bg-light text-text-muted hover:bg-highlight",
+  active: "bg-secondary text-bg border border-border",
+};
 
 const sizes = {
   sm: `md:text-sm text-md ${props.icon ? "p-0" : "px-3 py-1.5"}`,
@@ -86,9 +102,9 @@ const sizes = {
 const buttonClass = computed(() => {
   return [
     base,
-    variants[props.variant],
+    isNewColors.value ? "" : variants[props.variant],
     sizes[props.size as keyof typeof sizes] || sizes.md,
-    colors[props.isPrimaryColor][props.variant],
+    isNewColors.value ? newColors[props.variant] : colors[props.isPrimaryColor][props.variant],
     props.rounded ? "rounded-full" : "rounded-md",
     props.icon ? " p-0" : "",
     iconPositions[props.iconPosition],

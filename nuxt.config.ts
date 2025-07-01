@@ -11,6 +11,7 @@ export default defineNuxtConfig({
       appwriteDatabaseId: process.env.APPWRITE_DATABASE_ID,
       appwriteCollectionId: process.env.APPWRITE_COLLECTION_ID,
       appwriteBucketId: process.env.APPWRITE_BUCKET_ID,
+      appwriteRecoveryUrlPage: process.env.APPWRITE_RECOVERY_URL_PAGE,
     },
   },
 

@@ -1,6 +1,7 @@
 <template>
   <nav
-    class="bg-mainBg/80 dark:bg-darkMainBg backdrop-blur-sm text-textHeader fixed top-0 left-0 w-full z-50 border-b-[1px] border-e-gray-600 dark:border-b-darkT3TextColor/40"
+    class="opacity-90 backdrop-blur-sm fixed top-0 left-0 w-full z-50 border-b-[1px] border-e-gray-600 dark:border-b-darkT3TextColor/40"
+    :class="state.newColors ? 'bg-bg-dark text-text' : 'bg-mainBg/80 dark:bg-darkMainBg text-textHeader'"
   >
     <div class="max-w-7xl mx-auto">
       <div class="relative flex items-center justify-between gap-4 h-16 px-4 sm:px-6 lg:px-8 shadow-sm">
@@ -16,12 +17,19 @@
         </div>
         <span class="font-bold text-2xl md:text-xl capitalize text-T1TextColor dark:text-darkT1TextColor">{{ state.routeName }}</span>
 
-        <LoginButton :is-signed-in="false" />
+        <CustomNuxtLink
+          to="/search-contacts"
+          name="ic:outline-search"
+          v-if="route.fullPath === '/contacts'"
+          class="w-10 h-10 !p-0"
+          :variant="'navigation'"
+        />
+        <LoginButton v-else />
       </div>
     </div>
   </nav>
-  <div class="dark:bg-darkMainBg w-full">
-    <div class="pt-16 max-w-7xl mx-auto">
+  <div :class="state.newColors ? 'text-text-muted bg-bg-dark' : 'dark:bg-darkMainBg w-full'">
+    <div class="pt-16 max-w-7xl mx-auto min-h-screen">
       <!-- Add a test gradient background -->
       <slot></slot>
     </div>
@@ -29,7 +37,8 @@
   <CustomTransitions :variant="'drop-down'">
     <div
       v-if="state.isNavOpen"
-      class="fixed flex flex-col w-full md:max-w-96 md:w-3/12 backdrop-blur-sm bg-mainBg/80 dark:bg-darkMainBg/80 px-4 py-3 space-y-1 z-20 left-0 top-16 min-h-[calc(100vh-64px)] shadow-lg ease-in backdrop-saturate-150"
+      class="fixed flex flex-col w-full md:max-w-96 md:w-3/12 bg-opacity-5 backdrop-blur-sm px-4 py-3 space-y-1 z-20 left-0 top-16 min-h-[calc(100vh-64px)] shadow-lg ease-in backdrop-saturate-150"
+      :class="state.newColors ? 'bg-bg-transparent text-text-muted' : 'bg-mainBg/80 dark:bg-darkMainBg'"
       @click.self="() => state.toggleIsNavOpen()"
     >
       <NavigationalLinks />
@@ -45,6 +54,8 @@
 
 <script setup lang="ts">
 const state = useGlobalSettingStore();
+
+const route = useRoute();
 
 import LoginButton from "./loginButton.vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";

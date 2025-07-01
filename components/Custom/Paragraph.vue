@@ -1,15 +1,22 @@
 <template>
-  <p :class="paragraphClass">
+  <p
+    ref="paragraphRef"
+    :class="paragraphClass"
+  >
     <slot></slot>
   </p>
 </template>
 
 <script setup lang="ts">
+import { useGlobalSettingStore } from "~/store/globalSetting";
+const state = useGlobalSettingStore();
 const variants = {
-  default: "text-T3TextColor dark:text-darkT3TextColor my-4 mx-6",
-  noMargin: `text-T3TextColor dark:text-darkT3TextColor`,
-  edit: "text-T3TextColor dark:text-darkT3TextColor font-semibold text-xl",
-  editSecondary: " text-textSecondary dark:text-darkT4TextColor/90 font-semibold text-base",
+  default: `${state.newColors ? "text-text-muted" : "text-T3TextColor dark:text-darkT3TextColor"}  my-4 mx-6`,
+  noMargin: `
+${state.newColors ? "text-text-muted" : "text-T3TextColor dark:text-darkT3TextColor"}
+  `,
+  edit: `${state.newColors ? "text-text-muted" : "text-T3TextColor dark:text-darkT3TextColor "}font-semibold text-xl`,
+  editSecondary: state.newColors ? "text-text-muted" : " text-textSecondary dark:text-darkT4TextColor/90 font-semibold text-base",
 };
 const props = defineProps({
   variant: { type: String as PropType<keyof typeof variants>, default: "default" },
@@ -17,6 +24,12 @@ const props = defineProps({
 
 const paragraphClass = computed(() => {
   return [variants[props.variant]].join(" ");
+});
+
+const paragraphRef = ref<HTMLParagraphElement | null>(null);
+
+defineExpose({
+  paragraphRef,
 });
 </script>
 

@@ -2,7 +2,7 @@
   <!-- <InfoCard -->
   <div
     class="grid md:grid-cols-2 gap-7 pb-10 items-start"
-    v-if="state.userData?.personalInformation"
+    v-if="state.userData?.personalInformation || isMounted"
   >
     <!-- <ClientOnly> -->
     <InfoCard
@@ -56,8 +56,14 @@ definePageMeta({
   layout: "profile",
   middleware: "auth",
 });
+
 const state = useGlobalSettingStore();
-// Personal Information
+
+const isMounted = ref(false);
+onMounted(() => {
+  isMounted.value = true;
+});
+
 const personalInfo = ref<PersonalInfoType>({
   fullname: "",
   birthdayDate: "",
@@ -70,7 +76,8 @@ const personalInfo = ref<PersonalInfoType>({
   nationality: "",
 });
 const isEditingPersonal = ref(false);
-const updatePersonalInfo = async () => {
+onMounted;
+async function updatePersonalInfo() {
   if (!state.user?.$id) return;
   try {
     const updateUserPerInf = await useAppwriteDocumentUpdate(state.user?.$id, { personalInformation: JSON.stringify(personalInfo.value) });
@@ -79,7 +86,7 @@ const updatePersonalInfo = async () => {
     console.error("Error updating personal information:", error);
     state.setFeedback("error", "Failed to update personal information.");
   }
-};
+}
 const resetPersonalInfo = () => {
   const parsed = JSON.parse(state.userData?.personalInformation || "{}");
   personalInfo.value = { ...personalInfo.value, ...parsed };

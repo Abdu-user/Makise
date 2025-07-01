@@ -4,7 +4,7 @@ export type UserProfileType = {
   lastName?: string;
   isVerified?: boolean;
   phoneNumber?: string;
-  job?: string;
+  username?: string;
   address?: string;
   profileStrength?: number;
   profileImage?: string;

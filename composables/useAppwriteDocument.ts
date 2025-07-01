@@ -2,6 +2,7 @@
 import { ID, Storage } from "appwrite";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { UserProfileType } from "~/types/type";
+import { generateRandomUsername } from "~/utils";
 
 export async function useAppwriteToRegisterUser(data: UserProfileType) {
   const { $appwrite } = useNuxtApp();
@@ -9,6 +10,10 @@ export async function useAppwriteToRegisterUser(data: UserProfileType) {
   const config = useRuntimeConfig();
   const userId = (await $appwrite.account.get()).$id;
   if (!userId) throw "There is no user";
+
+  if (!data.username) {
+    data.username = generateRandomUsername();
+  }
   return await databases.createDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, userId, data);
 }
 

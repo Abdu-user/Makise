@@ -13,23 +13,36 @@
 
 <script setup lang="ts">
 const model = defineModel();
+import { useGlobalSettingStore } from "~/store/globalSetting";
+const state = useGlobalSettingStore();
 
 const sizes = {
-  sm: `text-sm px-3 py-1.5  h-5 w-5Remove`,
-  md: `text-base px-4 py-3 h-7 w-7Remove`,
-  lg: `text-lg px-5 py-3 h-10 w-10Remove`,
+  // 'Remove' text helps the class to act like a default, You need to to remove the 'Remove' text to use the class as it is (w-10Remove -> w-10).
+  sm: `text-sm px-3 py-1.5  h-7 w-5Remove`,
+  md: `text-base px-4 py-3 h-9 w-9Remove`,
+  lg: `text-lg px-5 py-3 h-12 w-12Remove`,
   f: "text-lg w-full h-full",
 } as const;
 
 const variants = {
-  edit: `border-b-2 border-b-gray-300 focus:border-b-red-500 block w-full focus:outline-none backdrop-blur-md bg-transparent
-    dark:border-b-gray-600 dark:focus:border-b-red-400 text-gray-800 dark:text-gray-100`,
+  edit: `border-b-2  block w-full focus:outline-none backdrop-blur-md bg-transparent
+    
+    ${
+      state.newColors
+        ? "border-b-border-muted focus:border-b-primary text-text-muted "
+        : "border-b-gray-300 focus:border-b-red-500 dark:border-b-gray-600 dark:focus:border-b-red-400 text-gray-800 dark:text-gray-100 "
+    }
+    `,
 
-  input: `w-full border border-textParagraph
+  input: `w-full border ${
+    state.newColors
+      ? "bg-bg-light text-text rounded-lg border-border-muted focus:border-primary focus:outline-none"
+      : ` border-textParagraph
     focus:border-textParagraph/20 rounded focus:outline-none focus:ring-2 focus:ring-activeStrong/30
     focus:bg-hoverBg dark:focus:bg-darkHoverBg
     bg-white text-base text-gray-900 dark:bg-darkMainBg dark:text-darkT1TextColor
-    dark:border-darkT2TextColor dark:focus:border-darkT1TextColor dark:focus:ring-darkHoverBg`,
+    dark:border-darkT2TextColor dark:focus:border-darkT1TextColor dark:focus:ring-darkHoverBg`
+  }`,
 
   checkbox: "inline-block  ",
 } as const;

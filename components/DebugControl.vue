@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed bottom-4 right-4 z-50">
+  <div class="fixed bottom-4 left-4 z-50">
     <ClientOnly>
       <div
         v-if="state.isDebugPanelOpen"
@@ -69,6 +69,14 @@
             size="md"
             @click="logout"
             >Logout</CustomButton
+          >
+          <CustomButton
+            :is-primary-color="'theme'"
+            type="button"
+            :variant="'primary'"
+            size="md"
+            @click="deleteUser('685e72247f8b4eacaf1b')"
+            >delete User</CustomButton
           >
 
           <CustomButton

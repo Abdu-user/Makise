@@ -12,8 +12,8 @@ export async function sendCode(email: string): Promise<{ success: boolean; error
     });
     if (!response.ok) {
       const res = await response.json();
-      console.error(res);
-      throw new Error("Failed to send code");
+      console.error(JSON.stringify(res));
+      throw new Error(`Failed to send code: ${res.message}`);
     }
     return await response.json();
   } catch (error) {
@@ -124,4 +124,27 @@ export async function getUser() {
   await cb();
   if (error.value) logout();
   if (user.value) state.setUser(user.value), await refreshUserData();
+}
+
+export async function deleteUser(userId: string) {
+  try {
+    fetch("/api/delete-user", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: userId }),
+    });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+}
+export async function deleteUserDocument(userId: string) {
+  try {
+    const { $appwrite } = useNuxtApp();
+    const config = useRuntimeConfig();
+    $appwrite.databases.deleteDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, userId);
+  } catch (error) {
+    console.error("Error deleting user document:", error);
+    throw error;
+  }
 }

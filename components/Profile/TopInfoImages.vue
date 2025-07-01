@@ -1,5 +1,9 @@
 <template>
-  <div class="bg-mainBg dark:bg-darkMainT2Bg shadow-md">
+  <CustomContainer
+    :variant="'UIContainer'"
+    class="shadow-md mt-2"
+    :class="state.newColors ? 'bg-bg' : 'bg-mainBg dark:bg-darkMainT2Bg'"
+  >
     <header class="flex flex-col">
       <!-- Images section -->
       <div class="w-full relative px-6 h-60 md:h-72 lg:h-96">
@@ -36,11 +40,15 @@
       `"
       >
         <template v-if="!state.isEditingProfile">
-          <!-- Not Editing: Name + Job + Address -->
+          <!-- Not Editing: Name + Username + Address -->
           <div class="max-md:mx-auto max-md:text-center max-md:col-span-2">
             <CustomParagraph :variant="'edit'">{{ cmpUserData.name || pl.name }} {{ cmpUserData.lastName || pl.lastName }}</CustomParagraph>
-            <CustomParagraph :variant="'editSecondary'">
-              {{ cmpUserData.job || pl.job }}
+            <CustomParagraph
+              @click="copyUsername"
+              ref="usernameRef"
+              :variant="'editSecondary'"
+            >
+              @{{ cmpUserData.username || pl.username }}
             </CustomParagraph>
             <CustomParagraph :variant="'editSecondary'">
               {{ cmpUserData.address || pl.address }}
@@ -66,8 +74,8 @@
             <CustomInput
               variant="edit"
               class="text-text-Paragraph text-base max-md:text-center max-md:mx-auto"
-              v-model="jobRef"
-              :placeholder="pl.job"
+              v-model="username"
+              :placeholder="pl.username"
             />
             <CustomInput
               variant="edit"
@@ -183,7 +191,7 @@
         </EditButtons>
       </div>
     </header>
-  </div>
+  </CustomContainer>
 </template>
 <script setup lang="ts">
 /// @ts-ignore
@@ -199,14 +207,14 @@ import { profileInputPlaceholders } from "~/mainFrame";
 import { refreshUserData } from "~/composables/useSignUp";
 
 const pl = computed(() => profileInputPlaceholders); // pl means placeholder-text
-const cmpUserData = computed(() => ({
+const cmpUserData = computed((): UserProfileType & { profileImgUrl: string } => ({
   name: state.userData?.name || "",
   lastName: state.userData?.lastName || "",
-  job: state.userData?.job || "",
+  username: state.userData?.username || "",
   address: state.userData?.address || "",
   email: state.userData?.email || "",
   phoneNumber: state.userData?.phoneNumber || "",
-  profileStrength: state.userData?.profileStrength ? String(state.userData?.profileStrength) : "0",
+  profileStrength: state.userData?.profileStrength ? state.userData?.profileStrength : 0,
   profileImgUrl: "/images/placeholder-avatar.jpg",
 }));
 
@@ -218,12 +226,26 @@ onMounted(async () => {
   if (!state.user || !state.userData) await getUser();
 });
 
+const usernameRef = ref<{ paragraphRef: HTMLParagraphElement } | null>(null);
+function copyUsername(e: Event) {
+  e.preventDefault();
+
+  const paragraph = usernameRef.value?.paragraphRef;
+  if (!paragraph?.textContent) {
+    state.setFeedback("error", "Username is empty");
+    return;
+  }
+
+  navigator.clipboard.writeText(paragraph.textContent);
+  state.setFeedback("success", "Username copied to clipboard");
+}
+
 const profileImgFile = ref<File | null>(null);
 const profileImgUrl = ref<string>("");
 
 const nameRef = ref(cmpUserData.value.name);
 const lastNameRef = ref(cmpUserData.value.lastName);
-const jobRef = ref(cmpUserData.value.job);
+const username = ref(cmpUserData.value.username);
 const addressRef = ref(cmpUserData.value.address);
 const phoneNumberRef = ref(cmpUserData.value.phoneNumber);
 const profileStrengthRef = ref(cmpUserData.value.profileStrength);
@@ -231,7 +253,7 @@ const profileStrengthRef = ref(cmpUserData.value.profileStrength);
 function resetInputRefs() {
   nameRef.value = cmpUserData.value.name;
   lastNameRef.value = cmpUserData.value.lastName;
-  jobRef.value = cmpUserData.value.job;
+  username.value = cmpUserData.value.username;
   addressRef.value = cmpUserData.value.address;
   phoneNumberRef.value = cmpUserData.value.phoneNumber;
   profileStrengthRef.value = cmpUserData.value.profileStrength;
@@ -244,7 +266,7 @@ async function updateUser() {
       const res = await useAppwriteDocumentUpdate(state.user.$id, {
         name: nameRef.value,
         lastName: lastNameRef.value,
-        job: jobRef.value,
+        username: username.value,
         address: addressRef.value,
         phoneNumber: phoneNumberRef.value,
         profileStrength: Number(profileStrengthRef.value),

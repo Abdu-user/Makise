@@ -2,11 +2,12 @@
   <CustomTransitions :variant="'drop-down'">
     <div
       v-if="globalState.feedback.exists"
-      class="fixed top-20 left-0 right-0 z-10"
+      class="fixed top-20 left-0 right-0 z-50"
     >
       <div
-        class="p-4 w-fit mx-auto rounded-lg text-T1TextColor dark:text-darkT1TextColor border border-1 border-gray-500/30"
-        :class="state[globalState.feedback.state as keyof typeof state]"
+        class="p-4 w-fit mx-auto rounded-lg border border-1 border-gray-500/30"
+        :class="`${state[globalState.feedback.state as keyof typeof state]}
+        ${globalState.newColors ? 'text-text' : 'text-T1TextColor dark:text-darkT1TextColor'}`"
       >
         {{ globalState.feedback.message }}
       </div>
@@ -18,8 +19,8 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const globalState = useGlobalSettingStore();
 const state = {
-  success: `bg-green-300/90 dark:bg-green-600/70`,
-  error: `bg-red-300/90 dark:bg-red-600/70`,
+  success: ` bg-success `,
+  error: `bg-danger `,
 };
 const timerId = ref<NodeJS.Timeout | null>(null);
 watch(

@@ -11,7 +11,15 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Missing email",
     });
   }
+  // const existing = codeStore.get(email);
+  const existing = codeStore.get(email);
 
+  if (existing && Date.now() - existing.createdAt < 60 * 1000) {
+    throw createError({
+      statusCode: 429,
+      statusMessage: "Too many requests. Please wait before requesting another code.",
+    });
+  }
   const code = Math.floor(100000 + Math.random() * 900000).toString();
   const transporter = nodemailer.createTransport({
     service: "gmail",

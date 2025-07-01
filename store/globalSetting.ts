@@ -13,6 +13,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     disabledExpensiveUrlFetch: false,
     isScrollLinksExist: false,
     loading: false,
+    newColors: true,
     isLoginButtonDropdownOpen: false,
     themeMode: "auto" as "light" | "dark" | "auto",
     feedback: {

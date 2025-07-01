@@ -8,15 +8,7 @@
         :type="'password'"
         v-bind="$attrs"
         variant="input"
-      />
-      <CustomButton
-        :is-primary-color="'theme'"
-        class="absolute right-2"
-        icon
-        size="md"
-        variant="plain"
-        name="material-symbols-light:eye-tracking-outline-sharp"
-        @click="toggleShowPassword"
+        :class="className"
       />
     </template>
     <template v-else>
@@ -26,24 +18,26 @@
         type="text"
         v-bind="$attrs"
         variant="input"
-      />
-      <CustomButton
-        :is-primary-color="'theme'"
-        class="absolute right-2 text-textHeader"
-        icon
-        size="md"
-        variant="plain"
-        name="material-symbols-light:eye-tracking-rounded"
-        @click="toggleShowPassword"
+        :class="className"
       />
     </template>
+    <CustomButton
+      :is-primary-color="'theme'"
+      class="absolute right-2"
+      icon
+      size="md"
+      variant="text"
+      :name="!showPassword ? 'material-symbols-light:eye-tracking-outline-sharp' : 'material-symbols-light:eye-tracking-rounded'"
+      @click="toggleShowPassword"
+    />
     <!-- </template> -->
   </div>
 </template>
 
 <script setup lang="ts">
 const model = defineModel<string | number>(); // Automatically handles `v-model`
-const props = defineProps({ id: String, showPassword: Boolean, type: String });
+const props = defineProps({ id: String, showPassword: Boolean, type: String, class: { type: String, default: "" } });
 const showPassword = ref(props.showPassword || false);
 const toggleShowPassword = () => (showPassword.value = !showPassword.value);
+const className = computed(() => props.class);
 </script>

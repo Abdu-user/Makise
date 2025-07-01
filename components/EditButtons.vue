@@ -7,6 +7,7 @@
       variant="text"
       @click="edit"
       :class="className"
+      size="md"
       :is-primary-color="'primary'"
     />
     <div

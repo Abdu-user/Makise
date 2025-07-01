@@ -1,16 +1,11 @@
 <template>
-  <div class="bg-accent dark:bg-darkMainT2Bg p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0">
+  <CustomContainer
+    :variant="'UIContainer'"
+    class="p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0"
+  >
     <div class="relative flex items-center justify-center">
-      <CustomButton
-        :variant="'text'"
-        :is-primary-color="'theme'"
-        icon
-        name="material-symbols-light:keyboard-backspace"
-        class="absolute -top-3 -left-1"
-        aria-label="back button"
-        size="lg"
-        @click="router.back"
-      />
+      <BackButton class="w-10 h-10 absolute -top-3 -left-1" />
+
       <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign In</h2>
     </div>
     <form @submit.prevent="onSignIn">
@@ -60,13 +55,21 @@
       >
         Sign In
       </CustomButton>
+      <p class="mt-4 text-center text-sm text-textParagraph">
+        <NuxtLink
+          href="/recovery"
+          replace
+          class="text-primary hover:underline outline-none focus:outline-primary rounded-lg focus:outline-2 focus:outline-offset-[6px]"
+          >Forgot password</NuxtLink
+        >
+      </p>
     </form>
     <p class="mt-4 text-center text-sm text-textParagraph">
       Don't have an account?
       <NuxtLink
         href="/sign-up"
         replace
-        class="text-primary hover:underline"
+        class="text-primary hover:underline outline-none focus:outline-primary rounded-lg focus:outline-2 focus:outline-offset-[6px]"
         >Sign Up</NuxtLink
       >
     </p>
@@ -77,7 +80,7 @@
     >
       {{ notifyError }}
     </ModalsError>
-  </div>
+  </CustomContainer>
 </template>
 
 <script setup lang="ts">

@@ -1,17 +1,22 @@
 <template>
-  <div
+  <CustomContainer
+    :variant="'mainContainer'"
     :class="`min-h-screen max-h-screen overflow-auto
      md:grid max-md:flex max-md:flex-col  md:grid-cols-2  items-center 
-     bg-mainBg dark:bg-darkMainBg p-4 gap-8 `"
+      p-4 gap-8 `"
   >
     <SignUpAdditionalInfo class="max-md:order-2" />
     <SignUpForm class="order-1" />
-  </div>
+  </CustomContainer>
 </template>
 
 <script setup lang="ts">
 useHead({
   title: "Sign up to Makise",
+});
+
+definePageMeta({
+  middleware: "is-logged-in",
 });
 </script>
 

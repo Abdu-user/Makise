@@ -1,6 +1,9 @@
 <template>
   <!-- <ModalsAlert v-if="errorMessage || false"> </ModalsAlert> -->
-  <div :class="`bg-accent dark:bg-darkMainT2Bg p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0  ${props.class}`">
+  <CustomContainer
+    :variant="'UIContainer'"
+    :class="`p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0  ${props.class}`"
+  >
     <div class="relative flex items-center justify-center">
       <CustomButton
         icon
@@ -82,18 +85,19 @@
     </form>
     <p class="mt-6 text-center text-textParagraph text-base">
       Already have an account?
-      <NuxtLink
+      <CustomNuxtLink
         to="/sign-in"
         replace
-        class="text-primary hover:underline"
-        >Sign In</NuxtLink
+        :variant="'link'"
+        >Sign In</CustomNuxtLink
       >
     </p>
-  </div>
+  </CustomContainer>
 
   <!-- Modal Verify Modal -->
   <SignUpModal
     v-if="isVerifyModalOpen"
+    :timer="timer"
     :email="email"
     :password="password"
     :errorMessage="errorMessage"
@@ -143,30 +147,46 @@ const confirmPasswordError = ref("");
 
 const resetInputRef = () => {
   email.value = state.isPrefillTheUserField ? "idfdwjoshv@gmail.com" : "";
-  password.value = state.isPrefillTheUserField ? "12345678" : "";
-  confirmPassword.value = state.isPrefillTheUserField ? "12345678" : "";
+  password.value = state.isPrefillTheUserField ? "87654321" : "";
+  confirmPassword.value = state.isPrefillTheUserField ? "87654321" : "";
 };
 onMounted(() => (state.setResetFunctions(resetInputRef), resetInputRef()));
 onUnmounted(() => state.removeSingleResetFunction(resetInputRef));
 
+const timer = ref(60);
+function sendAgainTimer() {
+  timer.value = 60;
+  const interval = setInterval(() => {
+    if (timer.value <= 0) {
+      clearInterval(interval);
+      return;
+    }
+    timer.value--;
+  }, 1000);
+  return interval;
+}
+
 async function handleSubmit() {
   if (await isValidForm()) return isAnimatingN.value++;
   if (await doesUserAlreadyExist()) return;
-
+  router.replace({ query: { ...route.query, "verify-email": undefined, "is-sending-email-failed": undefined } });
   try {
     const res = await sendCode(email.value);
+    sendAgainTimer();
+
     if (typeof res === "object" && !res.success) throw res.error;
     console.log(res);
 
     router.replace({ query: { ...route.query, "verify-email": "true" } });
     isHappy.value = true;
     errorMessage.value = "";
+    isVerifyModalOpen.value = true;
   } catch (err) {
-    router.replace({ query: { ...route.query, "verify-email": "true", "is-sending-email-failed": "true" } });
+    // router.replace({ query: { ...route.query, "verify-email": "true", "is-sending-email-failed": "true" } });
     isHappy.value = false;
+    console.log(err);
     errorMessage.value = (err as string) || defErrorMessage;
   } finally {
-    isVerifyModalOpen.value = true;
   }
 }
 
@@ -184,23 +204,14 @@ watch(
 async function doesUserAlreadyExist() {
   const { $appwrite } = useNuxtApp();
   try {
-    await $appwrite.account.createEmailPasswordSession(email.value, password.value);
-
-    const didConfirm = confirm(
-      "User with the " + email.value + " email and password already exists in our databse! Do you want to log in? "
-    );
-    if (didConfirm) {
-      await getUser();
-      router.push(state.fromPage ? state.fromPage : "/");
-    } else {
-      await $appwrite.account.deleteSession("current");
-    }
-    return true;
+    const user = await $appwrite.account.create("unique()", email.value, password.value);
+    deleteUser(user.$id);
+    return false;
   } catch (err) {
     console.log(err);
+    state.setFeedback("error", "" + err);
+    return true;
   }
-
-  return false;
 }
 
 async function isValidForm() {

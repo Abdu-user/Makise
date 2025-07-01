@@ -1,10 +1,10 @@
-import type { ImgLocation } from "./types/type";
+import type { ImgLocation, UserProfileType } from "./types/type";
 
 export const navLinks = {
   main: [
     { name: "home", icon: "material-symbols-light:home-rounded" },
     { name: "about", icon: "material-symbols-light:info" },
-    { name: "contact", icon: "material-symbols-light:contacts-rounded" },
+    { name: "contacts", icon: "material-symbols-light:contacts-rounded" },
     { name: "profile", icon: "material-symbols-light:account-circle" },
   ],
   separator1: "Documentation",
@@ -14,14 +14,14 @@ export const navLinks = {
   ],
 };
 
-export const profileInputPlaceholders = {
+export const profileInputPlaceholders: UserProfileType = {
   name: "Name",
   lastName: "Last Name",
-  job: "Job",
+  username: "Username",
   address: "about you",
   email: "input your email",
   phoneNumber: "phone number",
-  profileStrength: "0",
+  profileStrength: 0,
 };
 
 export const bigNames = {
