@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="messagesContainerRef"
     class="grid md:grid-cols-[minmax(auto,18rem),1fr] min-h-screen max-h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200 bg-[url('/images/tg-background.jpg')] object-cover"
     style="scrollbar-width: thin; scrollbar-color: #848484 transparent; scrollbar-track-color: #000"
   >
@@ -44,8 +45,8 @@
         v-if="leftSideState === 'contacts'"
       />
     </CustomContainer>
-    <div class="justify-center relative text-T2TextColor dark:text-darkT2TextColor">
-      <nav class="sticky top-0 right-0 left-0 flex items-center h-16 px-4 py-1 bg-mainBg dark:bg-darkMainBg">
+    <div class="relative text-text-muted grid grid-rows-[4rem,1fr,4rem]">
+      <nav class="sticky z-10 top-0 right-0 left-0 flex items-center h-16 px-4 py-1 bg-mainBg dark:bg-darkMainBg">
         <BackButton class="w-12 h-12 my-auto" />
         <CustomImg
           :src="contactImg || '/images/placeholder-avatar.jpg'"
@@ -83,11 +84,16 @@
           />
         </div>
       </nav>
-      <div class="grid items-center max-h-full p-4">
-        rr lorem()
-        {{ "lorem ".repeat(2000) }}
-        end
-      </div>
+
+      <ContactsMessages class="p-4 mt-auto" />
+
+      <CustomContainer
+        :variant="'mainContainer'"
+        type="text"
+        class="sticky bottom-0 h-16 left-0 mt-auto"
+      >
+        ss
+      </CustomContainer>
     </div>
   </div>
 </template>
@@ -97,7 +103,25 @@ const route = useRoute();
 const contactImg = ref("");
 const lastActive = ref("");
 const name = ref("");
+
+// Auto scroll to bottom when messages update
+import { nextTick, onMounted } from "vue";
+
+const messagesContainerRef = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  scrollToBottom();
+});
+
+function scrollToBottom() {
+  nextTick(() => {
+    if (messagesContainerRef.value) {
+      messagesContainerRef.value.scrollTop = messagesContainerRef.value.scrollHeight;
+    }
+  });
+}
 console.log(route.params?.username);
+
 const leftSideState = ref("contacts");
 function changeLeftSideState(state: "contacts" | "search") {
   leftSideState.value = state;
@@ -105,9 +129,6 @@ function changeLeftSideState(state: "contacts" | "search") {
 
 // definePageMeta({
 //   // middleware: "auth",
-// });
-// definePageMeta({
-//   layout: "main",
 // });
 </script>
 

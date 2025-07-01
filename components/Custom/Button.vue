@@ -44,7 +44,7 @@ const isNewColors = computed(() => {
   return props.newColors === undefined ? state.newColors : props.newColors;
 });
 if (props.appendIcon || props.prependIcon) {
-  console.error(props.appendIcon, props.prependIcon, "props.appendIcon||props.prependIcon they are depricated  ");
+  console.error(props.appendIcon, props.prependIcon, "props.appendIcon||props.prependIcon they are deprecated  ");
 }
 
 const colors: { primary: typeof variants; theme: typeof variants } = {

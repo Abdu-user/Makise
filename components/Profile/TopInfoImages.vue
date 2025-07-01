@@ -1,7 +1,7 @@
 <template>
   <CustomContainer
     :variant="'UIContainer'"
-    class="shadow-md mt-2"
+    class="shadow-md mt-2 mx-4"
     :class="state.newColors ? 'bg-bg' : 'bg-mainBg dark:bg-darkMainT2Bg'"
   >
     <header class="flex flex-col">

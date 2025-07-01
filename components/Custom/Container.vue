@@ -50,7 +50,7 @@ const variants = {
   text-T3TextColor dark:text-darkT3TextColor `,
   line: `w-[1px] bg-T4TextColor/50 dark:bg-darkT4TextColor/50 h-full max-h-full mx-auto`,
   UIContainer: state.newColors
-    ? "bg-bg text-text-muted border border-b-border-muted border-border border-t-highlight rounded-lg"
+    ? "bg-bg text-text-muted border border-b-border-muted border-border border-t-highlight rounded-lg shadow-lg"
     : `bg-mainT2Bg dark:bg-darkMainT2Bg  rounded-lg text-T3TextColor dark:text-darkT3TextColor border border-1 border-gray-500/30`,
   ReverseUIContainer: state.newColors
     ? "bg-bg-dark text-text-muted border border-b-border-muted border-border border-t-highlight rounded-lg"
