@@ -116,40 +116,8 @@ body {
 
   --bg-transparent: hsla(351, 100%, 4%, 0.604);
 } */
+
 :root {
-  /* hsl (fallback color) */
-  --bg-dark: hsl(324 31% 1%);
-  --bg: hsl(322 19% 5%);
-  --bg-light: hsl(322 11% 9%);
-  --text: hsl(323 70% 96%);
-  --text-muted: hsl(323 9% 70%);
-  --highlight: hsl(323 6% 40%);
-  --border: hsl(322 8% 29%);
-  --border-muted: hsl(322 12% 19%);
-  --primary: hsl(320 50% 73%);
-  --secondary: hsl(149 41% 62%);
-  --danger: hsl(9 26% 64%);
-  --warning: hsl(52 19% 57%);
-  --success: hsl(146 17% 59%);
-  --info: hsl(217 28% 65%);
-  --bg-transparent: hsla(300, 20%, 1%, 0.616);
-  /* oklch */
-  --bg-dark: oklch(0.1 0.01 340);
-  --bg: oklch(0.15 0.01 340);
-  --bg-light: oklch(0.2 0.01 340);
-  --text: oklch(0.96 0.02 340);
-  --text-muted: oklch(0.76 0.02 340);
-  --highlight: oklch(0.5 0.02 340);
-  --border: oklch(0.4 0.02 340);
-  --border-muted: oklch(0.3 0.02 340);
-  --primary: oklch(0.76 0.1 340);
-  --secondary: oklch(0.76 0.1 160);
-  --danger: oklch(0.7 0.05 30);
-  --warning: oklch(0.7 0.05 100);
-  --success: oklch(0.7 0.05 160);
-  --info: oklch(0.7 0.05 260);
-}
-body.light {
   /* hsl (fallback color) */
   --bg-dark: hsl(323 15% 90%);
   --bg: hsl(323 31% 95%);
@@ -166,20 +134,22 @@ body.light {
   --success: hsl(147 19% 36%);
   --info: hsl(217 22% 41%);
   --bg-transparent: hsla(326, 14%, 90%, 0.628);
-  /* oklch */
-  --bg-dark: oklch(0.92 0.01 340);
-  --bg: oklch(0.96 0.01 340);
-  --bg-light: oklch(1 0.01 340);
-  --text: oklch(0.15 0.02 340);
-  --text-muted: oklch(0.4 0.02 340);
-  --highlight: oklch(1 0.02 340);
-  --border: oklch(0.6 0.02 340);
-  --border-muted: oklch(0.7 0.02 340);
-  --primary: oklch(0.4 0.1 340);
-  --secondary: oklch(0.4 0.1 160);
-  --danger: oklch(0.5 0.05 30);
-  --warning: oklch(0.5 0.05 100);
-  --success: oklch(0.5 0.05 160);
-  --info: oklch(0.5 0.05 260);
+}
+:root.dark {
+  --bg-dark: hsl(300, 20%, 1%);
+  --bg: hsl(322 19% 5%);
+  --bg-light: hsl(322 11% 9%);
+  --text: hsl(323 70% 96%);
+  --text-muted: hsl(323 9% 70%);
+  --highlight: hsl(323 6% 40%);
+  --border: hsl(322 8% 29%);
+  --border-muted: hsl(322 12% 19%);
+  --primary: hsl(320 50% 73%);
+  --secondary: hsl(149 41% 62%);
+  --danger: hsl(9 26% 64%);
+  --warning: hsl(52 19% 57%);
+  --success: hsl(146 17% 59%);
+  --info: hsl(217 28% 65%);
+  --bg-transparent: hsla(300, 20%, 1%, 0.616);
 }
 </style>

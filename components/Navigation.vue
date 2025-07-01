@@ -1,7 +1,7 @@
 <template>
   <nav
-    class="opacity-90 backdrop-blur-sm fixed top-0 left-0 w-full z-50 border-b-[1px] border-e-gray-600 dark:border-b-darkT3TextColor/40"
-    :class="state.newColors ? 'bg-bg-dark text-text' : 'bg-mainBg/80 dark:bg-darkMainBg text-textHeader'"
+    class="backdrop-blur-sm fixed top-0 left-0 w-full z-50 border-b-[1px] border-e-gray-600 dark:border-b-darkT3TextColor/40"
+    :class="state.newColors ? 'bg-bg-transparent text-text' : 'bg-mainBg/80 dark:bg-darkMainBg text-textHeader'"
   >
     <div class="max-w-7xl mx-auto">
       <div class="relative flex items-center justify-between gap-4 h-16 px-4 sm:px-6 lg:px-8 shadow-sm">
@@ -18,9 +18,9 @@
         <span class="font-bold text-2xl md:text-xl capitalize text-T1TextColor dark:text-darkT1TextColor">{{ state.routeName }}</span>
 
         <CustomNuxtLink
+          v-if="route.fullPath === '/contacts'"
           to="/search-contacts"
           name="ic:outline-search"
-          v-if="route.fullPath === '/contacts'"
           class="w-10 h-10 !p-0"
           :variant="'navigation'"
         />
