@@ -47,7 +47,7 @@ const doesMessageExist = (message: string): boolean => {
   return message.trim().length > 0;
 };
 const route = useRoute();
-const message = ref("Muha");
+const message = ref("");
 const state = useGlobalSettingStore();
 async function sendMessage(text: string) {
   if (doesMessageExist(text)) {

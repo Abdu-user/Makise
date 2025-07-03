@@ -66,7 +66,7 @@ const contactInfo = ref<ContactType>();
 
 async function getContactInfo() {
   try {
-    const res = await fetch("/api/get-contact/" + route.params.username, { cache: "force-cache" });
+    const res = await fetch("/api/get-contact/" + route.params.username, { cache: "reload" });
     contactInfo.value = (await res.json()).contact;
     console.log(contactInfo.value);
   } catch (error) {

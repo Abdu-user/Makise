@@ -49,7 +49,7 @@ const route = useRoute();
 
 async function getMessages() {
   try {
-    const res = await fetch(`/api/get-messages?contactUsername=${route.params.username}&messageLimit=50`, { cache: "force-cache" });
+    const res = await fetch(`/api/get-messages?contactUsername=${route.params.username}&messageLimit=50`, { cache: "reload" });
     const fetchedMessages = (await res.json()).messages as MessageType[];
     messages.value = fetchedMessages;
   } catch (error) {
