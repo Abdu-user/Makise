@@ -21,12 +21,13 @@
           :variant="'text'"
           :is-primary-color="'theme'"
           class="w-12 h-12 my-auto p-1"
+          @click="inDevelopment"
         />
         <div class="relative mr-2">
           <CustomInput
             class="rounded-full border-none p-1 px-6"
             placeholder="Search "
-            @click="changeLeftSideState('search')"
+            @click="(changeLeftSideState('search'), inDevelopment)"
           />
           <CustomButton
             v-if="leftSideState === 'search'"
@@ -46,44 +47,7 @@
       />
     </CustomContainer>
     <div class="relative text-text-muted grid grid-rows-[4rem,1fr,4rem]">
-      <nav class="sticky z-10 top-0 right-0 left-0 flex items-center h-16 px-4 py-1 bg-mainBg dark:bg-darkMainBg">
-        <BackButton class="w-12 h-12 my-auto" />
-        <CustomImg
-          :src="contactImg || '/images/placeholder-avatar.jpg'"
-          class="rounded-full ml-4 mr-2 w-12 h-12"
-        />
-        <div class="ml-2 grid">
-          <p
-            :class="`text-T1TextColor dark:text-darkT1TextColor`"
-            class="grid grid-cols-[1fr,auto] pr-4 text-2xl line-clamp-1"
-          >
-            <span>{{ name || "Name" }}</span>
-          </p>
-          <p class="text-lg line-clamp-1 -mt-1">
-            <span :class="`text-T3TextColor dark:text-darkT3TextColor`"> Last seen {{ lastActive || "at 03:48" }} </span>
-          </p>
-        </div>
-        <div class="ml-auto flex gap-5">
-          <CustomButton
-            name="material-symbols:phone-enabled-sharp"
-            :variant="'text'"
-            :is-primary-color="'theme'"
-            icon
-            size="f"
-            class="w-14 p-3 h-14 my-1 transform scale-x-[-1]"
-            :rounded="true"
-          />
-          <CustomButton
-            name="pepicons-pop:dots-y"
-            :variant="'text'"
-            :is-primary-color="'theme'"
-            icon
-            size="f"
-            class="w-14 p-3 h-14 my-1"
-            :rounded="true"
-          />
-        </div>
-      </nav>
+      <ContactsNav :contactInfo="contactInfo" />
 
       <ContactsMessages class="p-4 mt-auto" />
 
@@ -94,13 +58,23 @@
 
 <script setup lang="ts">
 const route = useRoute();
-const contactImg = ref("");
-const lastActive = ref("");
-const name = ref("");
 
 import { ContactsMessageInput } from "#components";
-// Auto scroll to bottom when messages update
 import { nextTick, onMounted } from "vue";
+const state = useGlobalSettingStore();
+const contactInfo = ref<ContactType>();
+
+async function getContactInfo() {
+  try {
+    const res = await fetch("/api/get-contact/" + route.params.username, { cache: "force-cache" });
+    contactInfo.value = (await res.json()).contact;
+    console.log(contactInfo.value);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+getContactInfo();
 
 const messagesContainerRef = ref<HTMLElement | null>(null);
 
@@ -115,16 +89,52 @@ function scrollToBottom() {
     }
   });
 }
-console.log(route.params?.username);
 
 const leftSideState = ref("contacts");
 function changeLeftSideState(state: "contacts" | "search") {
   leftSideState.value = state;
 }
 
-// definePageMeta({
-//   // middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
+
+const config = useRuntimeConfig();
+
+const { $messaging, $getToken, $appwrite } = useNuxtApp();
+import { ID } from "appwrite";
+import { useGlobalSettingStore } from "~/store/globalSetting";
+import type { ContactType } from "~/types/messaging";
+
+const vapidKey = config.public.firebasePublicKeyPair as string;
+async function requestPermissionAndToken() {
+  const permission = await Notification.requestPermission();
+
+  if (permission === "granted") {
+    const token = await $getToken($messaging, { vapidKey });
+    // console.log("FCM Token:", token);
+
+    // await $appwrite.account.deletePushTarget(useAppwriteDocumentGet(user))
+    const res = await $appwrite.account.createPushTarget(ID.unique(), token);
+    console.log(res);
+    useAppwriteDocumentUpdate((await $appwrite.account.get()).$id, {
+      FCMToken: token,
+    });
+  } else {
+    console.warn("Push permission not granted.");
+  }
+}
+onMounted(() => {
+  noNotificationPermission();
+  // requestPermissionAndToken();
+});
+async function noNotificationPermission() {
+  if (Notification.permission === "default") {
+    requestPermissionAndToken();
+  } else if (Notification.permission === "denied") {
+    state.setFeedback("error", "You must grant notification permission to receive push notifications.");
+  }
+}
 </script>
 
 <style scoped></style>

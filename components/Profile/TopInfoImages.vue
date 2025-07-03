@@ -271,7 +271,11 @@ async function updateUser() {
         phoneNumber: phoneNumberRef.value,
         profileStrength: Number(profileStrengthRef.value),
       });
-      state.setUserData(res as unknown as UserProfileType);
+      console.log(res);
+      if (!res.ok) throw res.text();
+      const userData = await res.json();
+      console.log(userData);
+      state.setUserData(userData as unknown as UserProfileType);
       state.setFeedback("success", "Profile data has been updated successfully");
       if (!profileImgFile.value) return "image profileImgFile doesn't exist. when string to upload to Appwrite";
 
@@ -284,9 +288,10 @@ async function updateUser() {
       await useAppwriteDocumentUpdate(state.user.$id, data);
       await refreshUserData();
       state.setFeedback("success", "Profile img and data has been updated successfully");
-    } catch (error) {
-      console.error(error);
-      state.setFeedback("error", `Failed to update profile, ${error}`, 10000);
+    } catch (error: any) {
+      const parsedError = JSON.parse(await error);
+      console.error(parsedError);
+      state.setFeedback("error", `Failed to update profile, ${parsedError.message}`, 10000);
     }
   }
 }

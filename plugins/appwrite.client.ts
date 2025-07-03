@@ -1,6 +1,5 @@
 // plugins/appwrite.client.ts
-import { Client, Account, Databases, Storage } from "appwrite";
-import { Users } from "node-appwrite";
+import { Client, Account, Databases, Storage, Messaging } from "appwrite";
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
@@ -18,6 +17,7 @@ export default defineNuxtPlugin(() => {
   const account = new Account(client);
   const databases = new Databases(client);
   const storage = new Storage(client);
+  const messaging = new Messaging(client);
   // const users = new Users(client);
 
   return {
@@ -27,6 +27,7 @@ export default defineNuxtPlugin(() => {
         account,
         databases,
         storage,
+        messaging,
       },
     },
   };

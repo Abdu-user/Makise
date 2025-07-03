@@ -1,0 +1,137 @@
+<template>
+  <div>
+    <CustomButton
+      @click="showModal = !showModal"
+      :variant="'tonal'"
+      icon
+      name="bxs:pencil"
+      :class="buttonClass"
+      :size="'f'"
+      rounded
+      ref="button"
+    >
+    </CustomButton>
+
+    <CustomTransitions :variant="'drop-down'">
+      <CustomContainer
+        :variant="'UIContainer'"
+        v-if="showModal"
+        @close="showModal = false"
+        :class="modalClass"
+        class="p-4 mx-3"
+        ref="modal"
+      >
+        <div style="display: flex; flex-direction: column; gap: 1rem">
+          <CustomLabel
+            for="searchContact"
+            class="text-center"
+          >
+            Search new Contact
+          </CustomLabel>
+          <div class="flex items-center gap-3">
+            <CustomInput
+              id="searchContact"
+              :variant="'edit'"
+              v-model="searchQuery"
+              class="my-3 !px-0"
+              :size="'lg'"
+              placeholder="Enter contact username"
+            />
+            <Icon
+              v-if="contactFound"
+              name="gg:search-found"
+              class="w-10 h-10 text-primary"
+            />
+          </div>
+          <div class="">
+            <CustomButton
+              :variant="'primary'"
+              block
+              class="mb-2"
+              @click="addContact"
+              :disabled="!contactFound"
+            >
+              Add
+            </CustomButton>
+          </div>
+        </div>
+      </CustomContainer>
+    </CustomTransitions>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import { useGlobalSettingStore } from "~/store/globalSetting";
+defineProps({
+  buttonClass: { type: String, default: "" },
+  modalClass: { type: String, default: "" },
+});
+const state = useGlobalSettingStore();
+
+const showModal = ref(false);
+const searchQuery = ref("");
+
+const contactFound = ref(false);
+
+const timerId = ref();
+async function findContactFetch(addContact: boolean = false) {
+  return await fetch("/api/add-contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ contactUserName: searchQuery.value.trim(), userId: state.user?.$id, addContact }),
+  });
+}
+async function findContact() {
+  try {
+    const res = await findContactFetch();
+    const contact = await res.json();
+    if (contact.contactFound) {
+      contactFound.value = true;
+    } else contactFound.value = false;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+watch(
+  () => searchQuery.value,
+  () => {
+    clearTimeout(timerId.value);
+    timerId.value = setTimeout(() => {
+      findContact();
+    }, 500);
+  }
+);
+
+async function addContact() {
+  try {
+    const contactFound = await findContactFetch(true);
+    const contactMsg = await contactFound.json();
+
+    if (contactMsg.contactAlreadyExists) throw contactMsg;
+    state.setFeedback("success", "contact has been added1");
+  } catch (error: any) {
+    state.setFeedback("error", error.error);
+    console.error(error);
+  }
+}
+const button = ref();
+const modal = ref();
+function closeModal(e: Event) {
+  // console.log(modal.value.sectionRef, button.value);
+  if (!modal.value?.sectionRef || !button.value?.button) return;
+  const isOutsideClick = !modal.value.sectionRef.contains(e.target) && !button.value.button.contains(e.target);
+  if (isOutsideClick) {
+    showModal.value = false;
+  }
+}
+onMounted(() => {
+  document.addEventListener("click", closeModal);
+});
+onBeforeUnmount(() => {
+  document.removeEventListener("click", closeModal);
+});
+</script>

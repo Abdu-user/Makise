@@ -11,10 +11,10 @@
       <div class="pb-2 pl-2 grid border-b-[2px] border-gray-300 dark:border-darkMainT3Bg">
         <p
           :class="state.newColors ? 'text-text' : `text-T1TextColor dark:text-darkT1TextColor`"
-          class="grid grid-cols-[1fr,auto] pr-4 pt-2 text-lg line-clamp-1"
+          class="grid grid-cols-[1fr,auto] gap-2 pt-2 text-lg line-clamp-1"
         >
           <span class="line-clamp-1">{{ name || "Name" }}</span>
-          <span class="flex items-start gap-1">
+          <span class="flex items-start gap-1 text-sm">
             <span class="text-success">
               <span v-if="myLastMessageStatus === 'sending'">
                 <Icon name="svg-spinners:clock" />
@@ -31,7 +31,7 @@
                   class="w-7 h-7 inline-block"
               /></span>
             </span>
-            <span :class="state.newColors ? 'text-text-muted' : `text-T3TextColor dark:text-darkT3TextColor`">
+            <span :class="state.newColors ? 'text-text-muted ' : `text-T3TextColor dark:text-darkT3TextColor`">
               {{ lastActive || "03:48" }}
             </span>
           </span>

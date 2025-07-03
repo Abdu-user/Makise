@@ -1,31 +1,43 @@
 <template>
   <div>
     <ContactsNavLink
-      to="/contacts/22"
-      :last-active="`12:43`"
+      v-for="contact in contacts"
+      :to="`/contacts/${contact.username}`"
+      :last-active="getSmartTime(contact.lastOnline)"
       :last-message="'latest message'"
       :my-last-message-status="'sending'"
-      :name="'Muha active'"
-      :profile-img-src="'/images/chatgpt-image-placeholder.png'"
-    />
-    <ContactsNavLink
-      to="/contacts/33"
-      :last-active="`12:43`"
-      :last-message="'latest message'"
-      :my-last-message-status="'sent'"
-      :name="'Muha active'"
-      :profile-img-src="'/images/chatgpt-image-placeholder.png'"
+      :name="`${contact.name ?? ''} ${contact.lastName ?? ''}`.trim() || contact.username"
+      :profile-img-src="contact.profileImage ? contact.profileImage : '/images/placeholder-avatar.jpg'"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-const time = new Date().getTime();
-console.log(time);
-const minutes = Math.floor((time / 1000 / 60) % 60);
-const hours = Math.floor((time / 1000) % 60);
-console.log(new Date().toISOString());
-console.log(minutes, hours);
+import { useGlobalSettingStore } from "~/store/globalSetting";
+
+import dayjs from "dayjs";
+import type { ContactType } from "~/types/messaging";
+
+const contacts = ref<ContactType[]>([]);
+async function getContacts() {
+  try {
+    const response = await fetch("/api/get-contacts", {
+      method: "GET",
+      credentials: "include",
+      cache: "force-cache",
+    });
+    const contactsR = (await response.json()) as { success: boolean; users: ContactType[] };
+    contacts.value = contactsR.users;
+    console.log(contactsR.users);
+  } catch (error) {
+    console.error(error);
+  }
+}
+getContacts();
+
+defineExpose({
+  contacts,
+});
 </script>
 
 <style scoped></style>

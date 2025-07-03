@@ -5,8 +5,8 @@
       :key="message.id"
       class="flex items-start gap-3"
       :class="{
-        'justify-end': message.sender === 'user',
-        'justify-start': message.sender === 'contact',
+        'justify-end': isSender(message.senderId) === 'user',
+        'justify-start': isSender(message.senderId) !== 'user',
       }"
     >
       <div
@@ -29,209 +29,34 @@
 </template>
 
 <script setup lang="ts">
+import { useGlobalSettingStore } from "~/store/globalSetting";
+import type { MessageType } from "~/types/type";
+
+const state = useGlobalSettingStore();
 const isSmallMessage = (text: string) => {
   return text.length <= 8;
 };
-const rawMessages = ref([
-  {
-    id: 1,
-    text: "Start",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
 
-  {
-    id: 1,
-    text: "Hello, how are you?",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
+const userId = useCookie("userId"); // Cookie name
 
-  {
-    id: 1,
-    text: "Hello, how are you?",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
+const isSender = (senderId: string) => {
+  if (userId.value !== senderId) return "user";
+};
 
-  {
-    id: 1,
-    text: "Hello, how are you?",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
+const messages = ref<MessageType[]>([]);
 
-  {
-    id: 1,
-    text: "Hello, how are you?",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
+const route = useRoute();
 
-  {
-    id: 1,
-    text: "Hello, how are you?",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
-
-  {
-    id: 1,
-    text: "Hello, how are you?",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
-
-  {
-    id: 1,
-    text: "Hello, how are you?",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
-
-  {
-    id: 1,
-    text: "Hello, how are you?",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
-
-  {
-    id: 1,
-    text: "Hello, how are you?",
-    sender: "user",
-    timestamp: "2023-10-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    text: "I'm fine, thanks! And you?",
-    sender: "contact",
-    timestamp: "2023-10-01T12:01:00Z",
-  },
-  {
-    id: 3,
-    text: "Doing well, just working on some projects.",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
-  {
-    id: 3,
-    text: "END",
-    sender: "user",
-    timestamp: "2023-10-01T12:02:00Z",
-  },
-]);
-const messages = computed(() => {
-  return rawMessages.value.filter((_, id) => id < 3 || true);
-});
+async function getMessages() {
+  try {
+    const res = await fetch(`/api/get-messages?contactUsername=${route.params.username}&messageLimit=50`, { cache: "force-cache" });
+    const fetchedMessages = (await res.json()).messages as MessageType[];
+    messages.value = fetchedMessages;
+  } catch (error) {
+    console.error(error);
+  }
+}
+getMessages();
 </script>
 
 <style scoped></style>

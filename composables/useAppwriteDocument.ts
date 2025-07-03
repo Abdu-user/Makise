@@ -1,5 +1,5 @@
 // composables/useAppwrite.ts
-import { ID, Storage } from "appwrite";
+import { ID, Query, Storage } from "appwrite";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { UserProfileType } from "~/types/type";
 import { generateRandomUsername } from "~/utils";
@@ -17,12 +17,21 @@ export async function useAppwriteToRegisterUser(data: UserProfileType) {
   return await databases.createDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, userId, data);
 }
 
-export function useAppwriteDocumentUpdate(documentId: string, data: Partial<UserProfileType>) {
-  const { $appwrite } = useNuxtApp();
-  const databases = $appwrite.databases;
-  const config = useRuntimeConfig();
-
-  return databases.updateDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, documentId, data);
+export async function useAppwriteDocumentUpdate(documentId: string, data: Partial<UserProfileType>) {
+  // const { $appwrite } = useNuxtApp();
+  // const databases = $appwrite.databases;
+  // const config = useRuntimeConfig();
+  // const databaseId = config.public.appwriteDatabaseId;
+  // const collectionId = config.public.appwriteCollectionId;
+  try {
+    return await fetch("/api/update-user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ documentId, data }),
+    });
+  } catch (error) {
+    throw error;
+  }
 }
 
 export function useAppwriteDocumentGet(documentId: string) {

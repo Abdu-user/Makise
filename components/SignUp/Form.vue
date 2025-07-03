@@ -13,7 +13,7 @@
         class="absolute -top-3 -left-1"
         aria-label="back button"
         size="lg"
-        @click="router.back"
+        @click="router.push('/')"
       />
       <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign Up</h2>
     </div>

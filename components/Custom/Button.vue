@@ -29,7 +29,7 @@ const props = defineProps({
   size: { type: String, default: "f" },
   icon: { type: Boolean, default: false },
   iconPosition: { type: String as PropType<keyof typeof iconPositions>, default: "left" },
-  isPrimaryColor: { type: String as PropType<"primary" | "theme">, required: true },
+  isPrimaryColor: { type: String as PropType<"primary" | "theme">, default: "primary" },
   name: { type: String, default: null },
   loading: { type: Boolean, default: false },
   disabled: { type: Boolean, default: false },
@@ -86,9 +86,9 @@ const newColors: typeof variants = {
   default: "bg-bg text-text hover:bg-light hover:text-text-muted",
   primary: "bg-primary text-bg hover:bg-secondary focus:outline-primary",
   outlined: "bg-transparent text-primary border border-primary hover:bg-primary hover:text-bg",
-  tonal: "bg-highlight text-text-muted",
+  tonal: "bg-bg-light text-text-muted active:text-primary focus:outline-primary   ",
   text: "bg-transparent text-text hover:text-primary focus:outline-primary  ",
-  plain: "bg-transparent text-text-muted",
+  plain: "bg-transparent text-text-muted ",
   navigation: "bg-bg-light text-text-muted hover:bg-highlight",
   active: "bg-secondary text-bg border border-border",
 };
@@ -122,6 +122,10 @@ const iconSizeClass = computed(() => {
     }[props.size] || (props.icon ? "w-full h-full" : "w-6 h-6") // Default size for icons
   );
 });
+const button = ref<HTMLButtonElement>();
+defineExpose({
+  button,
+});
 </script>
 
 <template>
@@ -130,6 +134,7 @@ const iconSizeClass = computed(() => {
     :disabled="disabled || loading"
     type="button"
     class=""
+    ref="button"
   >
     <!-- Loading Spinner -->
     <span

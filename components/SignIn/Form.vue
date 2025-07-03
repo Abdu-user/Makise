@@ -4,7 +4,16 @@
     class="p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0"
   >
     <div class="relative flex items-center justify-center">
-      <BackButton class="w-10 h-10 absolute -top-3 -left-1" />
+      <CustomButton
+        icon
+        :is-primary-color="'theme'"
+        :variant="'text'"
+        name="material-symbols-light:keyboard-backspace"
+        class="absolute -top-3 -left-1"
+        aria-label="back button"
+        size="lg"
+        @click="router.push('/')"
+      />
 
       <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign In</h2>
     </div>

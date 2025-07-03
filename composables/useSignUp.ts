@@ -70,11 +70,11 @@ export const useAuth = () => {
   const { $appwrite } = useNuxtApp();
 
   const login = async (email: string, password: string) => {
-    const res = await $appwrite.account.createEmailPasswordSession(email, password);
+    const user = await $appwrite.account.createEmailPasswordSession(email, password);
 
     await current();
 
-    return res;
+    return user;
   };
 
   const logout = async () => {
