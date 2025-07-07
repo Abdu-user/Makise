@@ -118,7 +118,14 @@ watch(
 watch(
   () => messagingState.isUserAtBottom,
   () => {
-    markContactsMessagesAsRead();
+    if (messagingState.unreadMessages.isThere) {
+      if (messagingState.isUserAtBottom) {
+        nextTick(() => {
+          markContactsMessagesAsRead();
+          console.log("this is making those annoying notifications?");
+        });
+      }
+    }
   }
 );
 async function markContactsMessagesAsRead() {

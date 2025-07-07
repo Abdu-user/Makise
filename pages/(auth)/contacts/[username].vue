@@ -31,8 +31,9 @@ definePageMeta({
 
 async function getContactInfo() {
   try {
-    const res = await fetch("/api/get-contact/" + route.params.username, { cache: "reload" });
-    contactInfo.value = (await res.json()).contact;
+    const res = await fetch("/api/get-contact/" + route.params.username);
+    const contact = await res.json();
+    contactInfo.value = contact.contact;
   } catch (error) {
     console.error(error);
   }

@@ -28,6 +28,7 @@ async function getContacts() {
     });
     const contactsR = (await response.json()) as { success: boolean; users: ContactType[] };
     contacts.value = contactsR.users;
+    console.log(contacts);
   } catch (error) {
     console.error(error);
   }

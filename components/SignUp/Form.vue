@@ -103,13 +103,7 @@
     :errorMessage="errorMessage"
     :isHappy="isHappy"
     @close-modal="closeVerifyEmailModal"
-    @on-verify-code-success="
-      isHappy = true;
-      errorMessage = '';
-      state.setFeedback('success', 'Verification email sent successfully! Please check your inbox.');
-
-      saveDeviceToken();
-    "
+    @on-verify-code-success="onVerifyCodeSuccess"
   />
 </template>
 <script setup lang="ts">
@@ -166,6 +160,14 @@ function sendAgainTimer() {
     timer.value--;
   }, 1000);
   return interval;
+}
+
+function onVerifyCodeSuccess() {
+  isHappy.value = true;
+  errorMessage.value = "";
+  state.setFeedback("success", "Verification email sent successfully! Please check your inbox.");
+
+  saveDeviceToken();
 }
 
 async function handleSubmit() {
