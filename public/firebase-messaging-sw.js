@@ -25,6 +25,17 @@ messaging.onBackgroundMessage(async function (payload) {
 
   if (payload?.date?.type === "pushNotification") {
     const { title, body, link, time, senderUsername } = payload.data || {};
+    // Check for missing fields
+    const missing = [];
+    if (!title) missing.push("title");
+    if (!body) missing.push("body");
+    if (!link) missing.push("link");
+    if (!time) missing.push("time");
+    if (!senderUsername) missing.push("senderUsername");
+    if (missing.length > 0) {
+      console.error("Missing required notification fields:", missing.join(", "), payload);
+      return;
+    }
     const tag = `sender-${senderUsername}`;
 
     // Store message in cache

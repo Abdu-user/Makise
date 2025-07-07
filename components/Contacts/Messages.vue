@@ -109,7 +109,7 @@ watch(
           messagingState.scrollToBottom(true);
           markContactsMessagesAsRead();
         });
-        console.log("It is sending the ");
+        console.log("It is sending the read notification");
       }
     }
   }

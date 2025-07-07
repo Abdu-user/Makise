@@ -21,27 +21,53 @@ export async function sendCode(email: string): Promise<{ success: boolean; error
     return { success: false, error: (error as Error).message };
   }
 }
-
 export async function createAppwriteUser(email: string, password: string) {
   const state = useGlobalSettingStore();
   const { $appwrite } = useNuxtApp();
-  try {
-    const user = await $appwrite.account.create("unique()", email, password);
+  let newUser;
 
+  try {
+    // Create user in Appwrite
+    const user = await $appwrite.account.create("unique()", email, password);
+    newUser = user;
+
+    // Verify the user in your backend
     await fetch("/api/verify-user", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: user.$id,
-      }),
+      body: JSON.stringify({ userId: user.$id }),
     });
 
-    const res = await useAuth().login(email, password);
+    // Login the newly created user
+    await useAuth().login(email, password);
     state.setUser(user);
 
-    await useAppwriteToRegisterUser({ email });
+    // Save user to your own DB
+    await useAppwriteToRegisterUser({
+      email,
+      lastOnline: new Date().toISOString(),
+    });
+
+    return user;
   } catch (error) {
-    console.error(error);
+    console.error("❌ Error in createAppwriteUser:", error);
+
+    // If creation succeeded but next steps failed, clean up
+    if (newUser?.$id) {
+      try {
+        const isUserDeleted = await fetch("/api/delete-user", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: newUser.$id }),
+        });
+        console.warn("🧹 Cleanup: User deleted after failure");
+        return isUserDeleted;
+      } catch (deleteError) {
+        console.error("❌ Failed to clean up user after error:", deleteError);
+        throw deleteError;
+      }
+    }
+
     throw error;
   }
 }

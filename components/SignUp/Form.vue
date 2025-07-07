@@ -184,7 +184,6 @@ async function handleSubmit() {
     errorMessage.value = "";
     isVerifyModalOpen.value = true;
   } catch (err) {
-    // router.replace({ query: { ...route.query, "verify-email": "true", "is-sending-email-failed": "true" } });
     isHappy.value = false;
     console.log(err);
     errorMessage.value = (err as string) || defErrorMessage;

@@ -128,7 +128,6 @@ async function handleVerifyCode(code: string) {
     router.push("/");
   } catch (err) {
     console.log("Error during verification:", err);
-    // if(err ===)
 
     state.setFeedback("error", `${err}`);
     throw err;
