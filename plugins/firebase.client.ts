@@ -33,14 +33,21 @@ export default defineNuxtPlugin(() => {
   const messaging = getMessaging(app);
 
   // Somewhere in your app (e.g., a plugin or page)
+  // ! Uncomment this code only when you have to update the service worker
+  // if ("serviceWorker" in navigator) {
+  //   navigator.serviceWorker.getRegistrations().then((registrations) => {
+  //     registrations.forEach((reg) => reg.unregister());
+  //   });
+  // }
+
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
       .register("/firebase-messaging-sw.js")
-      .then((registration) => {
-        console.log("Service Worker registered:", registration);
+      .then((reg) => {
+        console.log("✅ SW registered successfully:", reg);
       })
       .catch((err) => {
-        console.error("Service Worker registration failed:", err);
+        console.error("❌ SW registration failed:", err);
       });
   }
 
@@ -53,22 +60,24 @@ export default defineNuxtPlugin(() => {
     const title = p?.title;
     const body = p?.body;
 
-    new Notification(title!, {
-      body: body,
-      icon: "/images/favicon.png",
-      // @ts-ignore
-      image: "/images/wide_angle_tetons.jpg",
-      requireInteraction: true,
-      // @ts-ignore
-      vibrate: [200, 100, 200],
-    });
+    //   // new Notification(title!, {
+    //   //   body: body,
+    //   //   icon: "/images/favicon.png",
+    //   //   // @ts-ignore
+    //   //   image: "/images/wide_angle_tetons.jpg",
+    //   //   requireInteraction: true,
+    //   //   // @ts-ignore
+    //   //   vibrate: [200, 100, 200],
+    //   // });
   });
 
   return {
     provide: {
-      messaging,
-      onMessage,
-      getToken,
+      firebase: {
+        messaging,
+        onMessage,
+        getToken,
+      },
     },
   };
 });

@@ -148,3 +148,16 @@ export async function deleteUserDocument(userId: string) {
     throw error;
   }
 }
+import { ID } from "appwrite";
+
+export async function saveDeviceToken() {
+  const config = useRuntimeConfig();
+  const vapidKey = config.public.firebasePublicKeyPair as string;
+  const { $firebase, $appwrite } = useNuxtApp();
+  const token = await $firebase.getToken($firebase.messaging, { vapidKey });
+  const res = await $appwrite.account.createPushTarget(ID.unique(), token);
+  useAppwriteDocumentUpdate((await $appwrite.account.get()).$id, {
+    FCMToken: [token],
+  });
+  console.log("token:", token);
+}

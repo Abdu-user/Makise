@@ -6,6 +6,8 @@ import {
   queryDocument,
   sendFCMAppwriteMessage,
 } from "~/composables/server/useAppwriteWebClient";
+import { MessageType } from "~/types/type";
+import { makeChatId } from "~/utils/messaging";
 
 // await messaging.createPushToken("[your-push-target-id]", token);
 
@@ -28,34 +30,39 @@ export default defineEventHandler(async (event) => {
   }
 
   const contactId = (await queryDocument([Query.equal("username", contactUserName)])).documents[0].$id;
-  const user = await users.get(contactId);
+  const contact = await users.get(contactId);
 
-  const message = await postAppwriteMessage({
-    text,
-    status: "sent",
-    chatId: [userId, contactId].sort().join("_"),
-    senderId: userId,
-    receiverId: contactId,
-    timestamp: new Date().toISOString(),
-  });
+  try {
+    const message = (await postAppwriteMessage({
+      text,
+      status: "sent",
+      chatId: makeChatId(userId, contactId),
+      senderId: userId,
+      receiverId: contactId,
+      timestamp: new Date().toISOString(),
+    })) as unknown as MessageType;
 
-  const pushNotifications = [];
-  for (const target of user.targets ?? []) {
-    if (target.providerType === "push") {
-      try {
-        const result = await sendFCMAppwriteMessage({ target: target.$id, text, userName });
-        pushNotifications.push(result);
-      } catch (err: any) {
-        pushNotifications.push({ error: true, target: target.$id, message: err.message });
+    // ^ send push notification to all devices that the contact have.
+    const pushNotifications = [];
+    for (const target of contact.targets ?? []) {
+      if (target.providerType === "push") {
+        try {
+          const result = await sendFCMAppwriteMessage({ target: target.$id, text, userName, senderUsername: userName, message });
+          pushNotifications.push(result);
+        } catch (err: any) {
+          pushNotifications.push({ error: true, target: target.$id, message: err.message });
+        }
       }
     }
-  }
+    return {
+      message,
 
-  return {
-    messageSent: message,
-    pushStatus: {
-      total: pushNotifications.length,
-      results: pushNotifications,
-    },
-  };
+      pushStatus: {
+        total: pushNotifications.length,
+        results: pushNotifications,
+      },
+    };
+  } catch (error) {
+    throw createError(error as any);
+  }
 });

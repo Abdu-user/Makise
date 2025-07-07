@@ -91,7 +91,6 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       }
     },
     loadThemeMode() {
-      console.log(this.themeMode);
       if (this.themeMode === "dark") this.setDarkMode(true);
       else if (this.themeMode === "light") this.setDarkMode(false);
       else this.getPreferenceData();

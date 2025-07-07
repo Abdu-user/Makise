@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
-  plugins: ["~/plugins/firebase.client.ts", "~/plugins/auto-animate.client.ts"],
+  plugins: ["~/plugins/firebase.client.ts"],
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/icon", "@nuxt/image"],
   runtimeConfig: {
     resendApiKey: process.env.RESEND_API_KEY,

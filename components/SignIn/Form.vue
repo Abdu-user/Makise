@@ -118,6 +118,8 @@ function onSignIn() {
     .then((res) => {
       const conditionalRedirect = state.fromPage ? state.fromPage : "/";
       router.push(conditionalRedirect);
+
+      saveDeviceToken();
       state.setFeedback("success", "Successfully signed in");
     })
     .catch((error) => {

@@ -11,85 +11,98 @@ firebase.initializeApp({
   measurementId: "G-NY41HBH002",
 });
 
+for (let i = 0; i < 10; i++) {
+  console.log("Check1");
+}
+
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function (payload) {
-  console.log("[firebase-messaging-sw.js] Received background message ", payload);
-  const { title, body } = payload.notification;
-  self.registration.showNotification(title, {
-    body: body,
+// ✅ Simple in-memory cache (reset if SW is reloaded)
+const messageCache = {};
+
+messaging.onBackgroundMessage(async function (payload) {
+  console.log("[firebase-messaging-sw.js] Received background message", payload);
+
+  const { title, body, link, time, senderUsername } = payload.data || {};
+  const tag = `sender-${senderUsername}`;
+
+  // Store message in cache
+  if (!messageCache[tag]) messageCache[tag] = [];
+  messageCache[tag].push({ body, time });
+
+  // Keep only last 10 messages
+  const messages = messageCache[tag].slice(-10);
+
+  // Compose the notification body with timestamps
+  const bodyText = messages.map((msg) => `${msg.body}`).join("\n");
+
+  // Remove any previous notification for this tag
+  const existing = await self.registration.getNotifications({ tag });
+  existing.forEach((n) => n.close());
+
+  // Show the new grouped notification
+  self.registration.showNotification(`${title} • ${formatTime(time)}`, {
+    body: bodyText,
     icon: "/images/favicon.png",
-    image: "/images/wide_angle_tetons.jpg",
+    tag,
+    renotify: true,
     requireInteraction: true,
+    // color:'#f4eff8',
     vibrate: [200, 100, 200],
+    data: {
+      url: link,
+      tag,
+    },
   });
 });
 
-// importScripts("https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js");
-// importScripts("https://www.gstatic.com/firebasejs/11.10.0/firebase-messaging-compat.js");
+// ✅ Format ISO time into hh:mm
+function formatTime(isoTime) {
+  try {
+    // Fix invalid formats like: 2025-07-06T10:34:22.123Z+05:00
+    let fixed = isoTime.replace(/Z[+-]\d{2}:\d{2}$/, "Z");
 
-// firebase.initializeApp({
-//   apiKey: "AIzaSyAtuwE7fs1x65tn_Eki9gUXsbwNki7wDJw",
-//   authDomain: "makise517.netlify.app",
-//   projectId: "makise-517",
-//   storageBucket: "makise-517.firebasestorage.app",
-//   messagingSenderId: "1086287345427",
-//   appId: "1:1086287345427:web:596cd41f3e092812784ce6",
-//   measurementId: "G-NY41HBH002",
-// });
+    const date = new Date(fixed);
+    if (isNaN(date)) return "??:??";
 
-// const messaging = firebase.messaging();
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  } catch (err) {
+    return "??:??";
+  }
+}
 
-// console.log("notification start");
-// self.registration.showNotification("Test", {
-//   body: "This is a test notification.",
-//   icon: "/images/favicon.png",
-//   requireInteraction: true,
-// });
-// // (Optional) Fallback for push event (e.g., if using Web Push directly)
-// self.addEventListener("push", function (event) {
-//   const data = event.data ? event.data.json() : {};
-//   const title = data.title || "Fallback Notification";
-//   const options = { body: data.body || "This is a fallback notification." };
-//   event.waitUntil(self.registration.showNotification(title, options));
-// });
-// // Handle manual 'message' from the page to show a test notification
-// self.addEventListener("message", function (event) {
-//   if (event.data && event.data.action === "TEST_NOTIFICATION") {
-//     const { title, body } = event.data;
-//     event.waitUntil(self.registration.showNotification(title, { body: body }));
-//   }
-// });
+// ✅ Open client tab when notification is clicked
+self.addEventListener("notificationclick", function (event) {
+  event.notification.close();
 
-// // Optional: handle notification click (focus or open window)
-// self.addEventListener("notificationclick", function (event) {
-//   event.notification.close();
-//   event.waitUntil(
-//     clients.matchAll({ type: "window" }).then((clientList) => {
-//       if (clientList.length > 0) {
-//         return clientList[0].focus();
-//       }
-//       return clients.openWindow("/");
-//     })
-//   );
-// });
-// self.addEventListener("message", function (event) {
-//   console.log("SW received message:", event.data); // ← add this
-//   if (event.data && event.data.action === "TEST_NOTIFICATION") {
-//     const { title, body } = event.data;
-//     event.waitUntil(self.registration.showNotification(title, { body: body }));
-//   }
-// });
+  let targetUrl = event.notification.data?.url;
+  if (!targetUrl) {
+    console.error("Not url a event.notification.data?.url", event);
+    targetUrl = "https://makise517.netlify.app/contacts";
+  }
+  let messageTag = event?.notification?.data?.tag;
+  if (!messageTag) {
+    console.error("Not url a event.notification.data?.tag", event);
+  } else {
+    delete messageCache[messageTag];
+  }
 
-// console.log("notification end");
-// // Handle background messages
-// messaging.onBackgroundMessage((payload) => {
-//   console.log("[firebase-messaging-sw.js] Received background message:", payload);
-//   // Customize and show notification
-//   const notificationTitle = payload.notification?.title || "Background Message Title";
-//   const notificationOptions = {
-//     body: payload.notification?.body || "Background Message body.",
-//     icon: payload.notification?.icon || "/firebase-logo.png",
-//   };
-//   self.registration.showNotification(notificationTitle, notificationOptions);
-// });
+  console.log("Updated with the client.postMessage");
+  console.log(targetUrl, event);
+
+  event.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url === targetUrl && "focus" in client) {
+          client.postMessage({ type: "MESSAGE_UPDATE" });
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow(targetUrl);
+      }
+    })
+  );
+});

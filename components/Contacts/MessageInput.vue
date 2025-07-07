@@ -1,9 +1,8 @@
 <template>
-  <CustomContainer
-    :variant="'mainContainer'"
+  <div
     type="text"
-    class="sticky bottom-0 h-16 left-0 pl-2 pr-6 grid gap-2 items-center"
-    :class="`${doesMessageExist(message) ? 'grid-cols-[2rem,1fr,2rem]' : 'grid-cols-[2rem,1fr]'}`"
+    class="bg-bg sticky bottom-0 h-16 left-0 pl-2 pr-6 grid gap-2 items-center"
+    :class="`${doesMessageExist(messagingState.message) ? 'grid-cols-[2rem,1fr,2rem]' : 'grid-cols-[2rem,1fr]'}`"
   >
     <CustomButton
       :variant="'text'"
@@ -13,21 +12,22 @@
       :size="'md'"
       class=""
       :rounded="true"
+      @click="inDevelopment"
     />
 
     <div class="px-4 h-10 w-full">
       <CustomInput
-        v-model="message"
+        v-model="messagingState.message"
         :variant="'edit'"
         class="w-fit !p-0 -mt-2"
         :size="'lg'"
         placeholder="Type a message..."
-        @keydown.enter="sendMessage(message)"
+        @keydown.enter="sendMessage(messagingState.message)"
       />
     </div>
 
     <CustomButton
-      v-if="doesMessageExist(message)"
+      v-if="doesMessageExist(messagingState.message)"
       :variant="'text'"
       :is-primary-color="'theme'"
       icon
@@ -35,29 +35,40 @@
       :size="'lg'"
       class=""
       :rounded="true"
-      @click="sendMessage(message)"
+      @click="sendMessage(messagingState.message)"
     />
-  </CustomContainer>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useGlobalSettingStore } from "~/store/globalSetting";
+import { useMessagingStore } from "~/store/messaging";
+import type { MessageType } from "~/types/type";
+const state = useGlobalSettingStore();
+const route = useRoute();
+const messagingState = useMessagingStore();
 
 const doesMessageExist = (message: string): boolean => {
   return message.trim().length > 0;
 };
-const route = useRoute();
-const message = ref("");
-const state = useGlobalSettingStore();
+
 async function sendMessage(text: string) {
   if (doesMessageExist(text)) {
     const { user, userData } = state;
     if (!user) throw new Error("User is falsy");
     if (!userData?.username) throw new Error("userData?.username is falsy");
     if (!route.params.username) throw new Error("route.params.username is not provided in the params");
-    // console.log();
+
+    messagingState.message = "";
 
     const body = JSON.stringify({ text, userId: user.$id, userName: userData.username, contactUserName: route.params.username });
+
+    const updateMessage = messagingState.addNewMessage({ text, userId: user.$id });
+
+    nextTick(() => {
+      // ^ Scroll to bottom after the dom updates
+      messagingState.scrollToBottom(true);
+    });
     try {
       const response = await fetch("/api/send-message", {
         method: "POST",
@@ -67,13 +78,14 @@ async function sendMessage(text: string) {
         body,
       });
 
-      const data = await response.json();
-      if (data.error) throw new Error(data);
+      const messageRes = await response.json();
+      if (messageRes.error) throw new Error(messageRes);
 
-      message.value = ""; // Clear input after sending
-
-      state.setFeedback("success", "Message sent");
+      updateMessage(messageRes.message);
     } catch (error) {
+      messagingState.message = text;
+      updateMessage({ status: "failed" });
+      console.log(error);
       console.error("Error sending message:", JSON.stringify(error));
     }
   } else {
@@ -81,5 +93,3 @@ async function sendMessage(text: string) {
   }
 }
 </script>
-
-<style scoped></style>

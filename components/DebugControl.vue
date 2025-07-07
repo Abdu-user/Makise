@@ -63,6 +63,15 @@
             >Login</CustomButton
           >
           <CustomButton
+            :variant="'primary'"
+            :is-primary-color="'primary'"
+            type="button"
+            variety="secondary"
+            size="md"
+            @click="sendNotification"
+            >sendNotification</CustomButton
+          >
+          <CustomButton
             :is-primary-color="'theme'"
             type="button"
             :variant="'primary'"
@@ -175,6 +184,24 @@ function toggleField() {
   console.log(state.resetFunctions);
 }
 onMounted(() => {});
+async function sendNotification() {
+  try {
+    const notification = await fetch("/api/send-notification", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token:
+          "eOx88WuzYJjughg9nsrrsD:APA91bEEmSde_OJNFfgPjX-XH8WNrucW3xifhWpAo1IJ_0jFeN1h0Mi22wQsRZII8vbfa5iuAxpj63woi-inxWkvWrVB3QtYEk6HBMhd799BAU0CYNm1FQA",
+      }),
+    });
+    console.log(notification);
+    state.setFeedback("success", "Message sent");
+  } catch (error) {
+    console.error("Error sending message:", JSON.stringify(error));
+  }
+}
 </script>
 
 <style scoped>

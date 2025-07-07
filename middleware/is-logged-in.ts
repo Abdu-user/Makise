@@ -6,9 +6,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const state = useGlobalSettingStore();
 
   // Only capture certain routes if needed
+  // console.log(to, from);
 
   try {
     await $appwrite.account.get();
-    return navigateTo("/profile");
+    return navigateTo(state.routeName ?? "/profile");
   } catch {}
 });

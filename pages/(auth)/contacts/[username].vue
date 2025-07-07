@@ -1,56 +1,16 @@
 <template>
   <div
     ref="messagesContainerRef"
-    class="grid md:grid-cols-[minmax(auto,18rem),1fr] min-h-screen max-h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200 bg-[url('/images/tg-background.jpg')] object-cover"
-    style="scrollbar-width: thin; scrollbar-color: #848484 transparent; scrollbar-track-color: #000"
+    class="grid md:grid-cols-[minmax(auto,18rem),1fr] h-[100dvh] max-h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200 bg-[url('/images/tg-background.jpg')] object-cover"
+    style="scrollbar-width: thin; scrollbar-color: #83a8ff transparent; scrollbar-track-color: #000"
   >
-    <CustomContainer
-      :variant="'mainContainer'"
-      :class="`max-md:hidden sticky top-0 right-0 left-0 h-screen
-      border-r-[1px] border-gray-500/20  overflow-y-scroll 
-      `"
-      style="scrollbar-width: thin; scrollbar-color: #848484 transparent; scrollbar-track-color: #000"
-    >
-      <CustomContainer
-        :variant="'mainContainer'"
-        class="flex items-center bg-mainT2Bg dark:bg-darkMainT2Bg h-14 gap-2 pl-2"
-      >
-        <CustomButton
-          name="material-symbols:menu-rounded"
-          icon
-          :variant="'text'"
-          :is-primary-color="'theme'"
-          class="w-12 h-12 my-auto p-1"
-          @click="inDevelopment"
-        />
-        <div class="relative mr-2">
-          <CustomInput
-            class="rounded-full border-none p-1 px-6"
-            placeholder="Search "
-            @click="(changeLeftSideState('search'), inDevelopment)"
-          />
-          <CustomButton
-            v-if="leftSideState === 'search'"
-            name="material-symbols:close-small-outline"
-            icon
-            :variant="'text'"
-            :is-primary-color="'theme'"
-            class="absolute top-1/2 right-2 transform -translate-y-1/2 w-8 h-8 p-1"
-            @click="changeLeftSideState('contacts')"
-          ></CustomButton>
-        </div>
-      </CustomContainer>
-
-      <ContactsNavLinks
-        class=""
-        v-if="leftSideState === 'contacts'"
-      />
-    </CustomContainer>
+    <ContactsNavLinksForPC />
     <div class="relative text-text-muted grid grid-rows-[4rem,1fr,4rem]">
       <ContactsNav :contactInfo="contactInfo" />
 
       <ContactsMessages class="p-4 mt-auto" />
 
+      <ContactsScrollDownButton />
       <ContactsMessageInput />
     </div>
   </div>
@@ -63,71 +23,91 @@ import { ContactsMessageInput } from "#components";
 import { nextTick, onMounted } from "vue";
 const state = useGlobalSettingStore();
 const contactInfo = ref<ContactType>();
-
-async function getContactInfo() {
-  try {
-    const res = await fetch("/api/get-contact/" + route.params.username, { cache: "reload" });
-    contactInfo.value = (await res.json()).contact;
-    console.log(contactInfo.value);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-getContactInfo();
-
-const messagesContainerRef = ref<HTMLElement | null>(null);
-
-onMounted(() => {
-  scrollToBottom();
-});
-
-function scrollToBottom() {
-  nextTick(() => {
-    if (messagesContainerRef.value) {
-      messagesContainerRef.value.scrollTop = messagesContainerRef.value.scrollHeight;
-    }
-  });
-}
-
-const leftSideState = ref("contacts");
-function changeLeftSideState(state: "contacts" | "search") {
-  leftSideState.value = state;
-}
+const messagingState = useMessagingStore();
 
 definePageMeta({
   middleware: "auth",
 });
 
-const config = useRuntimeConfig();
+async function getContactInfo() {
+  try {
+    const res = await fetch("/api/get-contact/" + route.params.username, { cache: "reload" });
+    contactInfo.value = (await res.json()).contact;
+  } catch (error) {
+    console.error(error);
+  }
+}
+getContactInfo();
 
-const { $messaging, $getToken, $appwrite } = useNuxtApp();
-import { ID } from "appwrite";
+state.routeName = "/contacts";
+
+const messagesContainerRef = ref<HTMLElement | null>(null);
+
+//  ~ Scroll down on mounded
+
+onMounted(() => {
+  messagingState.scrollToBottom(scrollToBottom);
+  messagesContainerRef.value?.addEventListener("scroll", detectScroll);
+
+  scrollWatch();
+});
+
+function scrollWatch() {
+  const stop = watch(
+    () => messagingState.messages, // ✅ Track the actual array for proper reactivity
+    async (messages) => {
+      if (messages.length === 0) return;
+
+      await nextTick(); // wait for DOM update
+      scrollToBottom(false);
+      stop(); // ✅ stop watching after first scroll
+    },
+    { immediate: true } // ✅ trigger immediately in case messages are already there
+  );
+}
+
+function detectScroll(e: Event) {
+  const el = messagesContainerRef.value;
+  if (!el) return;
+
+  const isAtBottom = el.scrollHeight - el.scrollTop <= el.clientHeight + 65;
+  // console.log(el.scrollHeight, el.scrollTop, el.clientHeight, 65);
+  messagingState.isUserAtBottom = isAtBottom;
+}
+
+onBeforeMount(() => {
+  messagesContainerRef.value?.removeEventListener("scroll", detectScroll);
+});
+function scrollToBottom(smooth = true) {
+  nextTick(() => {
+    const container = messagesContainerRef.value;
+    if (container) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: smooth ? "smooth" : "auto", // 🔁 toggle animation
+      });
+    }
+  });
+}
+
+//  ~ Get device-token for notification
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { ContactType } from "~/types/messaging";
+import { useMessagingStore } from "~/store/messaging";
 
-const vapidKey = config.public.firebasePublicKeyPair as string;
 async function requestPermissionAndToken() {
   const permission = await Notification.requestPermission();
 
   if (permission === "granted") {
-    const token = await $getToken($messaging, { vapidKey });
-    // console.log("FCM Token:", token);
-
-    // await $appwrite.account.deletePushTarget(useAppwriteDocumentGet(user))
-    const res = await $appwrite.account.createPushTarget(ID.unique(), token);
-    console.log(res);
-    useAppwriteDocumentUpdate((await $appwrite.account.get()).$id, {
-      FCMToken: token,
-    });
   } else {
-    console.warn("Push permission not granted.");
+    state.setFeedback("error", "Please allow Notification");
   }
 }
+
 onMounted(() => {
   noNotificationPermission();
-  // requestPermissionAndToken();
 });
+
 async function noNotificationPermission() {
   if (Notification.permission === "default") {
     requestPermissionAndToken();

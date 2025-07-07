@@ -1,4 +1,5 @@
 import * as sdk from "node-appwrite";
+import type { NotificationType } from "~/types/messaging";
 import type { MessageType, UserProfileType } from "~/types/type";
 
 const client = new sdk.Client();
@@ -12,20 +13,28 @@ const messaging = new sdk.Messaging(client);
 const database = new sdk.Databases(client);
 const users = new sdk.Users(client);
 
-export async function getAppwriteDocument(databaseVariant: "users", documentId: string) {
-  const { databaseId, usersCollectionId } = checkEnvs();
+export async function getAppwriteDocument(databaseVariant: "users" | "messages", documentId: string) {
+  const { databaseId, usersCollectionId, messagesCollectionId } = checkEnvs();
   const { database } = initializeServerAppWrite();
+  const collectionId = databaseVariant === "users" ? usersCollectionId : messagesCollectionId;
   if (databaseVariant === "users") {
-    const user = await database.getDocument(databaseId, usersCollectionId, documentId);
+    const user = await database.getDocument(databaseId, collectionId, documentId);
     return user as sdk.Models.Document & UserProfileType;
   }
 }
-export async function updateAppwriteDocument(databaseVariant: "users", documentId: string, data: Partial<UserProfileType>) {
-  const { databaseId, usersCollectionId } = checkEnvs();
+export async function updateAppwriteDocument(
+  collectionVariant: "users" | "messages",
+  documentId: string,
+  data: Partial<UserProfileType> | Partial<MessageType>
+) {
+  const { databaseId, usersCollectionId, messagesCollectionId } = checkEnvs();
   const { database } = initializeServerAppWrite();
-  if (databaseVariant === "users") {
+  if (collectionVariant === "users") {
     const user = await database.updateDocument(databaseId, usersCollectionId, documentId, data);
     return user as sdk.Models.Document & UserProfileType;
+  } else if (collectionVariant === "messages") {
+    const message = await database.updateDocument(databaseId, messagesCollectionId, documentId, data);
+    return message as sdk.Models.Document & MessageType;
   }
 }
 
@@ -45,30 +54,76 @@ export function checkEnvs() {
   return { databaseId, messagesCollectionId, usersCollectionId };
 }
 
-export async function sendFCMAppwriteMessage({ target, userName, text }: { target: string; userName: string; text: string }) {
+export async function sendFCMAppwriteMessage({
+  target,
+  userName,
+  text,
+  senderUsername,
+  message,
+}: {
+  target: string;
+  userName: string;
+  text: string;
+  senderUsername: string;
+  message: MessageType;
+}) {
+  const messageId = sdk.ID.unique();
+  const data: NotificationType = {
+    senderUsername,
+    body: text,
+    title: userName,
+    link: `${process.env.APPWRITE_RECOVERY_URL_PAGE}/contacts/${senderUsername}`,
+    time: new Date(Date.now()).toISOString(),
+    // message,
+    messageId: message.$id,
+  };
+
   return await messaging.createPush(
-    sdk.ID.unique(), // messageId
-    userName, // title (optional)
-    text, // body (optional)
+    messageId, // messageId (string)
+    undefined, // title (optional)
+    undefined, // body (optional)
     [], // topics (optional)
     [], // users (optional)
     [target], // targets (optional)
-    {}, // data (optional)
-    "<ACTION>" // action (optional)
-    // "[ID1:ID2]", // image (optional)
-    // "<ICON>", // icon (optional)
-    // "<SOUND>", // sound (optional)
-    // "<COLOR>", // color (optional)
-    // "<TAG>", // tag (optional)
-    // undefined, // badge (optional)
-    // false, // draft (optional)
-    // "", // scheduledAt (optional)
-    // false, // contentAvailable (optional)
-    // false, // critical (optional)
-    // sdk.MessagePriority.High // priority (optional)
+    data // data (optional)
+    // `${process.env.APPWRITE_RECOVERY_URL_PAGE}/contacts/${senderUsername}`, // action (optional)
+    // "683e58ac002dde7fe98b:6869add60033a0a6c4f7", // image (optional)
+    // "683e58ac002dde7fe98b:6869add60033a0a6c4f7" // icon (optional)
+    //"<SOUND>" // sound (optional)
+
+    // "<COLOR>",                    // color (optional)
+    // "<TAG>",                      // tag (optional)
+    // undefined,                    // badge (optional)
+    // false,                        // draft (optional)
+    // "",                           // scheduledAt (optional, ISO string)
+    // false,                        // contentAvailable (optional)
+    // false,                        // critical (optional)
+    // sdk.MessagePriority.High     // priority (optional)
   );
 }
-export async function postAppwriteMessage(message: Omit<MessageType, "id">) {
+
+export async function sendFCMNotification({
+  target,
+  data,
+}: {
+  target: string;
+  data: {
+    [key: string]: string;
+  };
+}) {
+  const messageId = sdk.ID.unique();
+
+  return await messaging.createPush(
+    messageId, // messageId (string)
+    undefined, // title (optional)
+    undefined, // body (optional)
+    [], // topics (optional)
+    [], // users (optional)
+    [target], // targets (optional)
+    data // data (optional)
+  );
+}
+export async function postAppwriteMessage(message: Omit<MessageType, "$id">) {
   const { databaseId, messagesCollectionId } = checkEnvs();
 
   const res = await database.createDocument(databaseId, messagesCollectionId, sdk.ID.unique(), message);

@@ -13,7 +13,7 @@ export type UserProfileType = {
   wideImageLocationSettingsJSON?: string;
   personalInformation?: string;
   IDProof?: string;
-  FCMToken?: string;
+  FCMToken?: string[];
   contacts?: string[];
   lastOnline?: string;
 };
@@ -42,13 +42,13 @@ export type IDProofType = {
 };
 
 export type MessageType = {
-  id: string;
+  $id: string;
   chatId: string;
   senderId: string;
   receiverId: string;
   text: string;
   timestamp: string;
-  status: "sent" | "delivered" | "read";
+  status: "sent" | "sending" | "read" | "failed";
   replyTo?: string | null;
   media?: {
     type: "image" | "audio" | "video";

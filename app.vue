@@ -14,18 +14,69 @@
 <script setup lang="ts">
 import { useGlobalSettingStore } from "./store/globalSetting";
 import { getUser, refreshUserData } from "./composables/useSignUp";
+import type { MessagePayload } from "firebase/messaging";
+import type { NotificationType } from "./types/messaging";
+import { useMessagingStore } from "./store/messaging";
+import type { MessageType } from "./types/type";
+const state = useGlobalSettingStore();
+const messagingState = useMessagingStore();
+const { $firebase } = useNuxtApp();
+const route = useRoute();
 
 useHead({
   title: "Makise",
 });
 
-const state = useGlobalSettingStore();
+// ~ Initialize
 onMounted(async () => {
   await state.initialize();
   await getUser();
   await saveUserCookie();
   await updateLastOnline();
+  initializeFirebaseNotify();
 });
+function initializeFirebaseNotify() {
+  $firebase.onMessage($firebase.messaging, (payload) => {
+    messageReceivedNotify(payload);
+  });
+}
+async function messageReceivedNotify(payload: MessagePayload) {
+  const messagingState = useMessagingStore();
+  console.log("[App] Foreground message received:", payload);
+
+  if (payload?.data && payload.data.type === "readMessageUpdate") {
+    console.log(payload.data);
+
+    if (!payload.data?.readMessagesId) return;
+    const readMessagesId = payload.data?.readMessagesId;
+    messagingState.messages = [
+      ...messagingState.messages.map((message) => {
+        if (readMessagesId.includes(message.$id)) {
+          const readMessage = { ...message, status: "read" } as MessageType;
+          return readMessage;
+        }
+        return message;
+      }),
+    ];
+  } else {
+    const p = payload.data as unknown as NotificationType;
+
+    if (!p?.body) console.error("NO title in the Firebase notification");
+    if (!p?.title) console.error("No body in the Firebase notification");
+    // const {title} = p
+    const { body, title, senderUsername, time, link, messageId } = p;
+
+    if (link.includes(route.fullPath)) {
+      const updateMessage = messagingState.addNewMessage({ text: body, userId: "" });
+      const message = await getMessageById(senderUsername, messageId);
+      updateMessage(message);
+      messagingState.setUnreadMessages({
+        number: messagingState.unreadMessages.number + 1,
+        isThere: true,
+      });
+    }
+  }
+}
 
 async function saveUserCookie() {
   // ✅ Store userId cookie manually
@@ -34,7 +85,7 @@ async function saveUserCookie() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId: state.user?.$id }),
   });
-  console.log(await res.json());
+  // console.log(await res.json());
 }
 async function updateLastOnline() {
   try {
@@ -45,6 +96,7 @@ async function updateLastOnline() {
   }
 }
 
+// ~ Dev debug button
 const inDev = ref(false);
 onMounted(() => {
   const { hostname } = window.location;
@@ -56,15 +108,14 @@ onMounted(() => {
 body {
   background-color: rgb(255, 244, 244);
 }
-* {
-  /* box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); */
-  /* background: #fee1ea; */
+/* * {
   box-shadow: 0 0 0 0 #ffe4e7;
-}
+} */
 body {
-  /* padding: 16px 0;
-  height: 100vh; */
   border-color: #848484;
+}
+:root {
+  --message-bubble: linear-gradient(rgb(255, 157, 0) 0%, rgb(253, 0, 253) 50%, rgb(167, 151, 255) 65%, rgb(0, 229, 255) 100%);
 }
 
 :root {

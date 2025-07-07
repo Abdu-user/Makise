@@ -6,3 +6,12 @@ export type ContactType = {
   lastName: string;
   lastOnline: string;
 };
+
+export type NotificationType = {
+  senderUsername: string;
+  body: string;
+  title: string;
+  link: string;
+  time: string;
+  messageId: string;
+};

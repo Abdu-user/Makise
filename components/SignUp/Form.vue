@@ -107,6 +107,8 @@
       isHappy = true;
       errorMessage = '';
       state.setFeedback('success', 'Verification email sent successfully! Please check your inbox.');
+
+      saveDeviceToken();
     "
   />
 </template>

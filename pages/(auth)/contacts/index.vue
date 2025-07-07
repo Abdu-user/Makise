@@ -18,15 +18,15 @@ const navLinks = ref();
 
 function largeDisplayRouterPush() {
   if (window.innerWidth > 768) {
-    if (!navLinks.value.contacts[0].username) return;
+    if (!navLinks.value?.contacts[0]?.username) return;
     router.replace(`/contacts/${navLinks.value.contacts[0].username}`);
   }
 }
 watch(
   () => navLinks.value?.contacts,
   (newVal) => {
-    console.log(JSON.stringify(navLinks.value.contacts));
-    console.log(JSON.stringify(newVal));
+    // console.log(JSON.stringify(navLinks.value.contacts));
+    // console.log(JSON.stringify(newVal));
     if (newVal) {
       largeDisplayRouterPush();
     }

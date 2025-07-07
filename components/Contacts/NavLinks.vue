@@ -3,7 +3,7 @@
     <ContactsNavLink
       v-for="contact in contacts"
       :to="`/contacts/${contact.username}`"
-      :last-active="getSmartTime(contact.lastOnline)"
+      :last-active="getSmartTime(contact.lastOnline, 'en', 3)"
       :last-message="'latest message'"
       :my-last-message-status="'sending'"
       :name="`${contact.name ?? ''} ${contact.lastName ?? ''}`.trim() || contact.username"
@@ -28,7 +28,6 @@ async function getContacts() {
     });
     const contactsR = (await response.json()) as { success: boolean; users: ContactType[] };
     contacts.value = contactsR.users;
-    console.log(contactsR.users);
   } catch (error) {
     console.error(error);
   }

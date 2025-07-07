@@ -15,22 +15,7 @@
         >
           <span class="line-clamp-1">{{ name || "Name" }}</span>
           <span class="flex items-start gap-1 text-sm">
-            <span class="text-success">
-              <span v-if="myLastMessageStatus === 'sending'">
-                <Icon name="svg-spinners:clock" />
-              </span>
-              <span v-else-if="myLastMessageStatus === 'sent'">✓</span>
-              <span v-else-if="myLastMessageStatus === 'read'"
-                ><Icon
-                  name="quill:checkmark-double"
-                  class="w-7 h-7 inline-block mt-0"
-              /></span>
-              <span v-else="myLastMessageStatus === 'read'"
-                ><Icon
-                  name="quill:checkmark-double"
-                  class="w-7 h-7 inline-block"
-              /></span>
-            </span>
+            <ContactsMessageStateIcon :state="myLastMessageStatus" />
             <span :class="state.newColors ? 'text-text-muted ' : `text-T3TextColor dark:text-darkT3TextColor`">
               {{ lastActive || "03:48" }}
             </span>

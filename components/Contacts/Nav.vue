@@ -1,5 +1,8 @@
 <template>
-  <nav class="sticky z-10 top-0 right-0 left-0 flex items-center h-16 px-4 py-1 bg-mainBg dark:bg-darkMainBg">
+  <nav
+    class="sticky z-10 top-0 right-0 left-0 flex items-center h-16 px-4 py-1"
+    :class="state.newColors ? 'bg-bg' : 'bg-mainBg dark:bg-darkMainBg'"
+  >
     <BackButton
       class="max-md:hidden w-12 h-12 my-auto"
       :onClick="() => router.push('../')"
@@ -51,8 +54,10 @@
 </template>
 
 <script setup lang="ts">
+import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { ContactType } from "~/types/messaging";
 import { inDevelopment } from "~/utils/devFunctions";
+const state = useGlobalSettingStore();
 
 const router = useRouter();
 
@@ -61,9 +66,7 @@ const props = defineProps<{
 }>();
 watch(
   () => props.contactInfo,
-  () => {
-    console.log(props.contactInfo);
-  }
+  (newContacts) => {}
 );
 </script>
 

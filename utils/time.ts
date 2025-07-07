@@ -4,6 +4,7 @@ import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import weekday from "dayjs/plugin/weekday";
+import isoWeek from "dayjs/plugin/isoWeek";
 
 import "dayjs/locale/en";
 import "dayjs/locale/ru";
@@ -15,22 +16,23 @@ dayjs.extend(isToday);
 dayjs.extend(isYesterday);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(weekday);
+dayjs.extend(isoWeek); // for accurate week detection
 
-const WEEKDAYS_SHORT: Record<string, string[]> = {
-  en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-  ru: ["вск", "пнд", "вт", "ср", "чт", "пт", "сб"],
-  tr: ["Paz", "Pts", "Sal", "Çar", "Per", "Cum", "Cmt"],
-  kk: ["Жек", "Дүй", "Сей", "Сәр", "Бей", "Жұм", "Сен"],
+const WEEKDAYS: Record<string, string[]> = {
+  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  ru: ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"],
+  tr: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
+  kk: ["Жексенбі", "Дүйсенбі", "Сейсенбі", "Сәрсенбі", "Бейсенбі", "Жұма", "Сенбі"],
 };
 
-const MONTHS_SHORT: Record<string, string[]> = {
-  en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-  ru: ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"],
-  tr: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
-  kk: ["Қаң", "Ақп", "Нау", "Сәу", "Мам", "Мау", "Шіл", "Там", "Қыр", "Қаз", "Қар", "Жел"],
+const MONTHS: Record<string, string[]> = {
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  ru: ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
+  tr: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+  kk: ["Қаңтар", "Ақпан", "Наурыз", "Сәуір", "Мамыр", "Маусым", "Шілде", "Тамыз", "Қыркүйек", "Қазан", "Қараша", "Желтоқсан"],
 };
 
-export function getSmartTime(isoString: string, locale: string = "en"): string {
+export function getSmartTime(isoString: string, locale: "en" | "ru" | "tr" | "kz" = "en", lengthOfMonthWeek?: number): string {
   const input = dayjs(isoString);
   const now = dayjs();
   dayjs.locale(locale);
@@ -39,26 +41,23 @@ export function getSmartTime(isoString: string, locale: string = "en"): string {
     return input.format("HH:mm");
   }
 
-  if (input.isYesterday()) {
-    return locale === "ru" ? "Вчера" : locale === "tr" ? "Dün" : locale === "kk" ? "Кеше" : "Yesterday";
-  }
-
-  const startOfWeek = now.startOf("week");
-  if (input.isSameOrAfter(startOfWeek)) {
+  // same ISO week (Sunday–Saturday or Monday–Sunday, depending on locale)
+  const sameWeek = input.isoWeek() === now.isoWeek() && input.year() === now.year();
+  if (sameWeek) {
     const dayIndex = input.day(); // 0-6
-    return WEEKDAYS_SHORT[locale]?.[dayIndex] ?? WEEKDAYS_SHORT["en"][dayIndex];
+    return WEEKDAYS[locale]?.[dayIndex] ?? WEEKDAYS["en"][dayIndex];
   }
 
+  // same year
   if (input.year() === now.year()) {
-    const monthIndex = input.month(); // 0-11
     const day = input.date();
-    const month = MONTHS_SHORT[locale]?.[monthIndex] ?? MONTHS_SHORT["en"][monthIndex];
-    return `${day} ${month}`; // e.g. 5 Aug
+    const month = MONTHS[locale]?.[input.month()] ?? MONTHS["en"][input.month()];
+    return `${day} ${month}`;
   }
 
-  const monthIndex = input.month();
+  // different year
   const day = input.date();
+  const month = MONTHS[locale]?.[input.month()] ?? MONTHS["en"][input.month()];
   const year = input.year();
-  const month = MONTHS_SHORT[locale]?.[monthIndex] ?? MONTHS_SHORT["en"][monthIndex];
-  return `${day} ${month} ${year}`; // e.g. 5 Aug 2023
+  return `${day} ${month} ${year}`;
 }
