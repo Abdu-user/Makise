@@ -85,7 +85,7 @@ export async function sendFCMAppwriteMessage({
     [], // topics (optional)
     [], // users (optional)
     [target], // targets (optional)
-    data // data (optional)
+    { ...data, type: "pushNotification" } // data (optional)
     // `${process.env.APPWRITE_RECOVERY_URL_PAGE}/contacts/${senderUsername}`, // action (optional)
     // "683e58ac002dde7fe98b:6869add60033a0a6c4f7", // image (optional)
     // "683e58ac002dde7fe98b:6869add60033a0a6c4f7" // icon (optional)

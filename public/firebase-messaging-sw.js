@@ -12,7 +12,7 @@ firebase.initializeApp({
 });
 
 for (let i = 0; i < 10; i++) {
-  console.log("Check1");
+  console.log("check2");
 }
 
 const messaging = firebase.messaging();
@@ -23,37 +23,39 @@ const messageCache = {};
 messaging.onBackgroundMessage(async function (payload) {
   console.log("[firebase-messaging-sw.js] Received background message", payload);
 
-  const { title, body, link, time, senderUsername } = payload.data || {};
-  const tag = `sender-${senderUsername}`;
+  if (payload?.date?.type === "pushNotification") {
+    const { title, body, link, time, senderUsername } = payload.data || {};
+    const tag = `sender-${senderUsername}`;
 
-  // Store message in cache
-  if (!messageCache[tag]) messageCache[tag] = [];
-  messageCache[tag].push({ body, time });
+    // Store message in cache
+    if (!messageCache[tag]) messageCache[tag] = [];
+    messageCache[tag].push({ body, time });
 
-  // Keep only last 10 messages
-  const messages = messageCache[tag].slice(-10);
+    // Keep only last 10 messages
+    const messages = messageCache[tag].slice(-10);
 
-  // Compose the notification body with timestamps
-  const bodyText = messages.map((msg) => `${msg.body}`).join("\n");
+    // Compose the notification body with timestamps
+    const bodyText = messages.map((msg) => `${msg.body}`).join("\n");
 
-  // Remove any previous notification for this tag
-  const existing = await self.registration.getNotifications({ tag });
-  existing.forEach((n) => n.close());
+    // Remove any previous notification for this tag
+    const existing = await self.registration.getNotifications({ tag });
+    existing.forEach((n) => n.close());
 
-  // Show the new grouped notification
-  self.registration.showNotification(`${title} • ${formatTime(time)}`, {
-    body: bodyText,
-    icon: "/images/favicon.png",
-    tag,
-    renotify: true,
-    requireInteraction: true,
-    // color:'#f4eff8',
-    vibrate: [200, 100, 200],
-    data: {
-      url: link,
+    // Show the new grouped notification
+    self.registration.showNotification(`${title} • ${formatTime(time)}`, {
+      body: bodyText,
+      icon: "/images/favicon.png",
       tag,
-    },
-  });
+      renotify: true,
+      requireInteraction: true,
+      // color:'#f4eff8',
+      vibrate: [200, 100, 200],
+      data: {
+        url: link,
+        tag,
+      },
+    });
+  }
 });
 
 // ✅ Format ISO time into hh:mm

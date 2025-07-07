@@ -85,7 +85,6 @@ async function saveUserCookie() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId: state.user?.$id }),
   });
-  // console.log(await res.json());
 }
 async function updateLastOnline() {
   try {
