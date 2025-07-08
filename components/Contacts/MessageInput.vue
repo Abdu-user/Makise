@@ -48,7 +48,6 @@
 <script setup lang="ts">
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
-import type { MessageType } from "~/types/type";
 const state = useGlobalSettingStore();
 const route = useRoute();
 const messagingState = useMessagingStore();
@@ -87,7 +86,7 @@ async function sendMessage(text: string) {
       if (messageRes.error) throw new Error(messageRes);
       console.log(messageRes);
       updateMessage(messageRes.message);
-
+      messagingState.scrollToBottom(true);
       console.log(messageRes);
     } catch (error) {
       messagingState.message = text;
