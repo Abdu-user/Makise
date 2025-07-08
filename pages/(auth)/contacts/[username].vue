@@ -1,7 +1,7 @@
 <template>
   <div
     ref="messagesContainerRef"
-    class="grid md:grid-cols-[minmax(auto,18rem),1fr] h-[100dvh] max-h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200 bg-[url('/images/tg-background.jpg')] object-cover"
+    class="grid md:grid-cols-[minmax(auto,18rem),1fr] h-[100dvh] max-h-[100dvh] overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200 bg-[url('/images/tg-background.jpg')] object-cover"
     style="scrollbar-width: thin; scrollbar-color: #83a8ff transparent; scrollbar-track-color: #000"
   >
     <ContactsNavLinksForPC />

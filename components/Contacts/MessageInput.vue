@@ -56,7 +56,7 @@ async function sendMessage(text: string) {
   if (doesMessageExist(text)) {
     const { user, userData } = state;
     if (!user) throw new Error("User is falsy");
-    if (!userData?.username) throw new Error("userData?.username is falsy");
+    if (!userData?.username) throw new Error("userData?.username is falsy: " + userData);
     if (!route.params.username) throw new Error("route.params.username is not provided in the params");
 
     messagingState.message = "";
@@ -67,8 +67,11 @@ async function sendMessage(text: string) {
 
     nextTick(() => {
       // ^ Scroll to bottom after the dom updates
-      messagingState.scrollToBottom(true);
+      nextTick(() => {
+        messagingState.scrollToBottom(true);
+      });
     });
+
     try {
       const response = await fetch("/api/send-message", {
         method: "POST",
@@ -80,7 +83,7 @@ async function sendMessage(text: string) {
 
       const messageRes = await response.json();
       if (messageRes.error) throw new Error(messageRes);
-
+      console.log(messageRes);
       updateMessage(messageRes.message);
 
       console.log(messageRes);
@@ -89,6 +92,7 @@ async function sendMessage(text: string) {
       updateMessage({ status: "failed" });
       console.log(error);
       console.error("Error sending message:", JSON.stringify(error));
+      state.setFeedback("error", `"Error sending message:", ${JSON.stringify(error)}`);
     }
   } else {
     console.warn("Cannot send an empty message.");

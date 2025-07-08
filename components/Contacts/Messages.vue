@@ -65,11 +65,14 @@ const router = useRouter();
 onMounted(() => {
   if ("serviceWorker" in navigator) {
     console.log("Message updater event listener was added");
-    navigator.serviceWorker.addEventListener("message", (event) => {
+    navigator.serviceWorker.addEventListener("message", async (event) => {
       if (event.data?.type === "MESSAGE_UPDATE") {
         console.log("🧠 Message update received from SW");
-        getMessages(); // 🔁 your fetch logic
-        messagingState.scrollToBottom(true);
+        await getMessages(); // 🔁 your fetch logic
+        if (typeof messagingState.scrollDownFunction === "function") {
+          // @ts-ignore
+          messagingState.scrollDownFunction(false);
+        }
       }
     });
   }
@@ -81,15 +84,15 @@ async function getMessages() {
     const fetchedMessages = (await res.json()).messages as MessageType[];
     messagingState.messages = [...fetchedMessages];
 
+    const notMyMessages = messagingState.messages.filter((message) => {
+      return !isMyMessage(message.senderId) && message.status === "sent";
+    });
+    console.log(notMyMessages);
     messagingState.setUnreadMessages({
-      number: messagingState.messages
-        .filter((message) => {
-          return !isMyMessage(message.senderId);
-        })
-        .reduce((t, c) => {
-          return t + 1;
-        }, 0),
-      isThere: true,
+      number: notMyMessages.reduce((t, c) => {
+        return t + 1;
+      }, 0),
+      isThere: notMyMessages.length > 0,
     });
   } catch (error) {
     console.error(error);
@@ -98,6 +101,19 @@ async function getMessages() {
   }
 }
 getMessages();
+
+onMounted(() => {
+  window.addEventListener("focus", handleFocus);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("focus", handleFocus);
+});
+
+async function handleFocus() {
+  console.log("This window is focused");
+  await getMessages(); // 🟢 Replace with your actual fetching function
+}
 
 // ^ scroll down if new message was received when User was at the bottom
 watch(
@@ -145,6 +161,10 @@ async function markContactsMessagesAsRead() {
 async function postMsgDocStatusAsRead() {
   const contactUsername = route.params.username as string;
 
+  if (!messagingState.unreadMessages.number) {
+    console.error(`messagingState.unreadMessages.number is falsy: `, messagingState.unreadMessages);
+    return;
+  }
   try {
     const res = await fetch("/api/mark-messages-as-read", {
       method: "POST",
