@@ -56,6 +56,7 @@ export type MessageType = {
     thumbnailUrl?: string;
   } | null;
 };
+export type FCMTypes = "readMessageUpdate" | "pushNotification";
 // {
 //   "id": "msg_8723",
 //   "chatId": "user123_user456",

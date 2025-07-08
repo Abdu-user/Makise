@@ -5,7 +5,7 @@ import {
   sendFCMNotification,
   updateAppwriteDocument,
 } from "~/composables/server/useAppwriteWebClient";
-import { MessageType, UserProfileType } from "~/types/type";
+import { FCMTypes, MessageType, UserProfileType } from "~/types/type";
 import { makeChatId } from "~/utils/messaging";
 
 export default defineEventHandler(async (event) => {
@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
             const result = await sendFCMNotification({
               target: target.$id,
               data: {
-                type: "readMessageUpdate",
+                type: "readMessageUpdate" as FCMTypes,
                 readMessagesId: readResults.map((readM) => readM.$id).join(":"),
               },
             });

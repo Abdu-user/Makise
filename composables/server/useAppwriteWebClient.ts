@@ -1,6 +1,6 @@
 import * as sdk from "node-appwrite";
 import type { NotificationType } from "~/types/messaging";
-import type { MessageType, UserProfileType } from "~/types/type";
+import type { FCMTypes, MessageType, UserProfileType } from "~/types/type";
 
 const client = new sdk.Client();
 
@@ -68,14 +68,14 @@ export async function sendFCMAppwriteMessage({
   message: MessageType;
 }) {
   const messageId = sdk.ID.unique();
-  const data: NotificationType = {
+  const data: NotificationType & { type: FCMTypes } = {
     senderUsername,
     body: text,
     title: userName,
     link: `${process.env.APPWRITE_RECOVERY_URL_PAGE}/contacts/${senderUsername}`,
     time: new Date(Date.now()).toISOString(),
-    // message,
     messageId: message.$id,
+    type: "pushNotification",
   };
 
   return await messaging.createPush(
@@ -85,7 +85,7 @@ export async function sendFCMAppwriteMessage({
     [], // topics (optional)
     [], // users (optional)
     [target], // targets (optional)
-    { ...data, type: "pushNotification" } // data (optional)
+    data // data (optional)
     // `${process.env.APPWRITE_RECOVERY_URL_PAGE}/contacts/${senderUsername}`, // action (optional)
     // "683e58ac002dde7fe98b:6869add60033a0a6c4f7", // image (optional)
     // "683e58ac002dde7fe98b:6869add60033a0a6c4f7" // icon (optional)

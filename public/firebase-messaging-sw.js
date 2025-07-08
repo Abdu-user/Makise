@@ -23,7 +23,10 @@ const messageCache = {};
 messaging.onBackgroundMessage(async function (payload) {
   console.log("[firebase-messaging-sw.js] Received background message", payload);
 
-  if (payload?.date?.type === "pushNotification") {
+  console.log("Type value:", payload?.data?.type);
+  console.log("Title:", payload?.data?.title);
+
+  if (payload?.data?.type === "pushNotification") {
     const { title, body, link, time, senderUsername } = payload.data || {};
     // Check for missing fields
     const missing = [];
@@ -65,6 +68,13 @@ messaging.onBackgroundMessage(async function (payload) {
         url: link,
         tag,
       },
+    });
+  } else if (payload?.data?.type === "readMessageUpdate") {
+    console.warn("This is empty");
+  } else {
+    self.registration.showNotification("Fallback", {
+      body: "Notification type was not matched",
+      icon: "/images/favicon.png",
     });
   }
 });

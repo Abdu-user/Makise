@@ -24,7 +24,7 @@ async function getContacts() {
     const response = await fetch("/api/get-contacts", {
       method: "GET",
       credentials: "include",
-      cache: "force-cache",
+      cache: "reload",
     });
     const contactsR = (await response.json()) as { success: boolean; users: ContactType[] };
     contacts.value = contactsR.users;

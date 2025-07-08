@@ -82,6 +82,8 @@ async function sendMessage(text: string) {
       if (messageRes.error) throw new Error(messageRes);
 
       updateMessage(messageRes.message);
+
+      console.log(messageRes);
     } catch (error) {
       messagingState.message = text;
       updateMessage({ status: "failed" });

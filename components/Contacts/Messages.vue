@@ -131,10 +131,12 @@ watch(
 async function markContactsMessagesAsRead() {
   if (messagingState.isUserAtBottom) {
     if (messagingState.unreadMessages.isThere) {
-      await postMsgDocStatusAsRead();
-      messagingState.setUnreadMessages({
-        isThere: false,
-        number: 0,
+      nextTick(async () => {
+        await postMsgDocStatusAsRead();
+        messagingState.setUnreadMessages({
+          isThere: false,
+          number: 0,
+        });
       });
     }
   }
