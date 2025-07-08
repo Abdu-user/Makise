@@ -1,43 +1,47 @@
 <template>
   <div
     type="text"
-    class="bg-bg sticky bottom-0 h-16 left-0 pl-2 pr-6 grid gap-2 items-center"
-    :class="`${doesMessageExist(messagingState.message) ? 'grid-cols-[2rem,1fr,2rem]' : 'grid-cols-[2rem,1fr]'}`"
+    class="bg-bg"
   >
-    <CustomButton
-      :variant="'text'"
-      :is-primary-color="'theme'"
-      icon
-      name="uiw:paper-clip"
-      :size="'md'"
-      class=""
-      :rounded="true"
-      @click="inDevelopment"
-    />
+    <div
+      class="h-16 pl-2 pr-6 grid gap-2 items-center"
+      :class="`${childClass} ${doesMessageExist(messagingState.message) ? 'grid-cols-[2rem,1fr,2rem]' : 'grid-cols-[2rem,1fr]'}`"
+    >
+      <CustomButton
+        :variant="'text'"
+        :is-primary-color="'theme'"
+        icon
+        name="uiw:paper-clip"
+        :size="'md'"
+        class=""
+        :rounded="true"
+        @click="inDevelopment"
+      />
 
-    <div class="px-4 h-10 w-full">
-      <CustomInput
-        v-model="messagingState.message"
-        :variant="'edit'"
-        class="w-fit !p-0 -mt-2"
+      <div class="px-4 h-10 w-full">
+        <CustomInput
+          v-model="messagingState.message"
+          :variant="'edit'"
+          class="w-fit !p-0 -mt-2"
+          :size="'lg'"
+          placeholder="Type a message..."
+          @keydown.enter="sendMessage(messagingState.message)"
+          type="text"
+        />
+      </div>
+
+      <CustomButton
+        v-if="doesMessageExist(messagingState.message)"
+        :variant="'text'"
+        :is-primary-color="'theme'"
+        icon
+        name="fe:paper-plane"
         :size="'lg'"
-        placeholder="Type a message..."
-        @keydown.enter="sendMessage(messagingState.message)"
-        type="text"
+        class=""
+        :rounded="true"
+        @click="sendMessage(messagingState.message)"
       />
     </div>
-
-    <CustomButton
-      v-if="doesMessageExist(messagingState.message)"
-      :variant="'text'"
-      :is-primary-color="'theme'"
-      icon
-      name="fe:paper-plane"
-      :size="'lg'"
-      class=""
-      :rounded="true"
-      @click="sendMessage(messagingState.message)"
-    />
   </div>
 </template>
 
@@ -48,6 +52,10 @@ import type { MessageType } from "~/types/type";
 const state = useGlobalSettingStore();
 const route = useRoute();
 const messagingState = useMessagingStore();
+
+defineProps({
+  childClass: { type: String, default: "" },
+});
 
 const doesMessageExist = (message: string): boolean => {
   return message.trim().length > 0;
@@ -65,13 +73,6 @@ async function sendMessage(text: string) {
     const body = JSON.stringify({ text, userId: user.$id, userName: userData.username, contactUserName: route.params.username });
 
     const updateMessage = messagingState.addNewMessage({ text, userId: user.$id });
-
-    nextTick(() => {
-      // ^ Scroll to bottom after the dom updates
-      nextTick(() => {
-        messagingState.scrollToBottom(true);
-      });
-    });
 
     try {
       const response = await fetch("/api/send-message", {

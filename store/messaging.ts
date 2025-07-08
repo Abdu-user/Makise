@@ -1,3 +1,4 @@
+import type { ContactType } from "~/types/messaging";
 import type { MessageType } from "~/types/type";
 
 type UnreadMessagesType = {
@@ -10,6 +11,7 @@ export const useMessagingStore = defineStore("messaging", {
     messages: [] as MessageType[],
     messageInput: "idle" as "idle" | "typing" | "send" | "failed",
     messageReceive: {},
+    contacts: [] as ContactType[],
     scrollDownFunction: null as null | (() => void),
     isUserAtBottom: false,
     unreadMessages: {
@@ -83,6 +85,20 @@ export const useMessagingStore = defineStore("messaging", {
     },
     setUnreadMessages(unreadMessages: UnreadMessagesType) {
       this.unreadMessages = unreadMessages;
+    },
+    async getContacts() {
+      try {
+        const response = await fetch("/api/get-contacts", {
+          method: "GET",
+          credentials: "include",
+          cache: "reload",
+        });
+        const contactsR = (await response.json()) as { success: boolean; users: ContactType[] };
+        this.contacts = contactsR.users;
+        console.log(this.contacts);
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 });

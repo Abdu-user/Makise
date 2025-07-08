@@ -1,41 +1,47 @@
 <template>
-  <div class="flex flex-col gap-4 p-4 relative background max-w-2xl mx-auto w-full">
-    <div
-      v-for="message in messagingState.messages"
-      :key="message.$id"
-      :id="message.$id"
-      class="flex gap-3"
-      :class="{
-        'justify-end': isMyMessage(message.senderId),
-        'justify-start': !isMyMessage(message.senderId),
-      }"
-    >
-      <button
-        class="max-w-xs p-3 pr-2 rounded-lg text-sm relative z-0"
-        :class="[
-          isSmallMessage(message.text) ? '' : 'pb-5',
-          isMyMessage(message.senderId) ? 'bg-attached-gradient text-text' : 'bg-bg-light text-text',
-          message.status === 'failed' ? 'text-danger' : '',
-        ]"
-        @click="inDevelopment"
+  <div
+    ref="messagesContainerRef"
+    class="flex-1 justify-end relative background w-full max-h-[100%] overflow-y-auto"
+    style="scrollbar-width: thin; scrollbar-color: #83a8ff transparent; scrollbar-track-color: #000"
+  >
+    <div class="flex flex-col gap-4 p-4 justify-end min-h-full">
+      <div
+        v-for="message in messagingState.messages"
+        :key="message.$id"
+        :id="message.$id"
+        class="flex gap-3"
+        :class="{
+          'justify-end': isMyMessage(message.senderId),
+          'justify-start': !isMyMessage(message.senderId),
+        }"
       >
-        <span class="mr-3">
-          {{ message.text }}
-        </span>
-
-        <!-- Timestamp -->
-        <span
-          class="mt-1 whitespace-nowrap relative z-10 text-xs text-text"
-          :class="isSmallMessage(message.text) ? '-bottom-2' : 'absolute -bottom-3 right-0'"
+        <button
+          class="max-w-[70%] m p-3 pr-2 rounded-lg text-sm relative z-0"
+          :class="[
+            isSmallMessage(message.text) ? '' : 'pb-5',
+            isMyMessage(message.senderId) ? 'bg-attached-gradient text-text' : 'bg-bg-light text-text',
+            message.status === 'failed' ? 'text-danger' : '',
+          ]"
+          @click="inDevelopment"
         >
-          {{ dayjs(message.timestamp).format("HH:mm") }}
-          <contacts-message-state-icon
-            v-if="isMyMessage(message.senderId)"
-            :state="message.status"
-            class="font-bold inline-block -mb-[2px]"
-          />
-        </span>
-      </button>
+          <span class="mr-3">
+            {{ message.text }}
+          </span>
+
+          <!-- Timestamp -->
+          <span
+            class="mt-1 whitespace-nowrap relative z-10 text-xs text-text"
+            :class="isSmallMessage(message.text) ? '-bottom-2' : 'absolute -bottom-3 right-0'"
+          >
+            {{ dayjs(message.timestamp).format("HH:mm") }}
+            <contacts-message-state-icon
+              v-if="isMyMessage(message.senderId)"
+              :state="message.status"
+              class="font-bold inline-block -mb-[2px]"
+            />
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -63,7 +69,7 @@ const isMyMessage = (senderId: string) => state.user?.$id === senderId;
 // Fetch messages
 async function getMessages() {
   try {
-    const res = await fetch(`/api/get-messages?contactUsername=${route.params.username}&messageLimit=10`, {
+    const res = await fetch(`/api/get-messages?contactUsername=${route.params.username}&messageLimit=400`, {
       cache: "reload",
     });
 
@@ -171,6 +177,55 @@ watch(
     }
   }
 );
+
+const messagesContainerRef = ref<HTMLElement | null>(null);
+
+//  ~ Scroll down on mounded
+
+onMounted(() => {
+  messagingState.scrollToBottom(scrollToBottom);
+  messagesContainerRef.value?.addEventListener("scroll", detectScroll);
+
+  scrollWatch();
+});
+onBeforeMount(() => {
+  messagingState.messages = [];
+});
+onBeforeUnmount(() => {
+  messagesContainerRef.value?.removeEventListener("scroll", detectScroll);
+});
+
+function detectScroll(e: Event) {
+  const el = messagesContainerRef.value;
+  if (!el) return;
+
+  const isAtBottom = el.scrollHeight - el.scrollTop <= el.clientHeight + 65;
+  // console.log(el.scrollHeight, el.scrollTop, el.clientHeight, 65);
+  messagingState.isUserAtBottom = isAtBottom;
+}
+
+function scrollWatch() {
+  const stop = watch(
+    () => messagingState.messages, // ✅ Track the actual array for proper reactivity
+    async (messages) => {
+      if (messages.length === 0) return;
+      await nextTick();
+      scrollToBottom(false);
+      stop(); // ✅ stop watching after first scroll
+    },
+    { immediate: true } // ✅ trigger immediately in case messages are already there
+  );
+}
+
+function scrollToBottom(smooth = true) {
+  const container = messagesContainerRef.value;
+  if (container) {
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: smooth ? "smooth" : "auto", // 🔁 toggle animation
+    });
+  }
+}
 </script>
 
 <style>

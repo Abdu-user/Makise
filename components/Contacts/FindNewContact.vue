@@ -102,7 +102,7 @@ watch(
     clearTimeout(timerId.value);
     timerId.value = setTimeout(() => {
       findContact();
-    }, 500);
+    }, 250);
   }
 );
 
@@ -113,6 +113,7 @@ async function addContact() {
 
     if (contactMsg.contactAlreadyExists) throw contactMsg;
     state.setFeedback("success", "contact has been added1");
+    showModal.value = false;
   } catch (error: any) {
     state.setFeedback("error", error.error);
     console.error(error);
@@ -121,7 +122,6 @@ async function addContact() {
 const button = ref();
 const modal = ref();
 function closeModal(e: Event) {
-  // console.log(modal.value.sectionRef, button.value);
   if (!modal.value?.sectionRef || !button.value?.button) return;
   const isOutsideClick = !modal.value.sectionRef.contains(e.target) && !button.value.button.contains(e.target);
   if (isOutsideClick) {

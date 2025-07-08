@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sticky bottom-16 left-0 flex justify-center"
+    class="flex justify-center"
     aria-label="scroll down"
     v-if="!messagingState.isUserAtBottom"
   >

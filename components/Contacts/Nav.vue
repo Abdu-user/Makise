@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="sticky z-10 top-0 right-0 left-0 flex items-center h-16 px-4 py-1"
+    class="top-0 left-0 flex items-center h-16 px-4 py-1"
     :class="state.newColors ? 'bg-bg' : 'bg-mainBg dark:bg-darkMainBg'"
   >
     <BackButton

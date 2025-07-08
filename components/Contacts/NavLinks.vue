@@ -1,7 +1,7 @@
 <template>
   <div>
     <ContactsNavLink
-      v-for="contact in contacts"
+      v-for="contact in messagingState.contacts"
       :to="`/contacts/${contact.username}`"
       :last-active="getSmartTime(contact.lastOnline, 'en', 3)"
       :last-message="'latest message'"
@@ -14,30 +14,15 @@
 
 <script setup lang="ts">
 import { useGlobalSettingStore } from "~/store/globalSetting";
+import { useMessagingStore } from "~/store/messaging";
 
-import dayjs from "dayjs";
-import type { ContactType } from "~/types/messaging";
+const messagingState = useMessagingStore();
 
-const contacts = ref<ContactType[]>([]);
-async function getContacts() {
-  try {
-    const response = await fetch("/api/get-contacts", {
-      method: "GET",
-      credentials: "include",
-      cache: "reload",
-    });
-    const contactsR = (await response.json()) as { success: boolean; users: ContactType[] };
-    contacts.value = contactsR.users;
-    console.log(contacts);
-  } catch (error) {
-    console.error(error);
-  }
-}
-getContacts();
+messagingState.getContacts();
 
-defineExpose({
-  contacts,
-});
+// defineExpose({
+//   contacts,
+// });
 </script>
 
 <style scoped></style>
