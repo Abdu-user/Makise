@@ -29,7 +29,10 @@ export default defineEventHandler(async (event) => {
     const chatId = makeChatId(userId, contactId);
 
     if (!messageId) {
-      const messages = await queryDocument([Query.equal("chatId", chatId), Query.limit(Number(messageLimit))], "messages");
+      const messages = await queryDocument(
+        [Query.equal("chatId", chatId), Query.limit(Number(messageLimit)), Query.orderDesc("$createdAt")],
+        "messages"
+      );
       return { success: true, messages: messages.documents, total: messages.total };
     } else {
       const message = await getAppwriteDocument("messages", messageId);

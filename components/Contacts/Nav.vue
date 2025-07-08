@@ -16,18 +16,17 @@
       class="rounded-full ml-4 mr-2 w-12 h-12"
     />
     <div class="ml-2 grid">
-      <p
-        :class="`text-T1TextColor dark:text-darkT1TextColor`"
-        class="grid grid-cols-[1fr,auto] pr-4 text-2xl line-clamp-1"
-      >
-        <span>{{ `${contactInfo?.name ?? ""} ${contactInfo?.lastName ?? ""}`.trim() || contactInfo?.username || "Name" }}</span>
-      </p>
-      <p class="text-lg line-clamp-1 -mt-1">
-        <span :class="`text-T3TextColor dark:text-darkT3TextColor`">
-          Last seen {{ contactInfo?.lastOnline ? getSmartTime(contactInfo.lastOnline) : "at 33:33" }}
+      <p class="text-text text-2xl pr-4 truncate">
+        <span>
+          {{ `${contactInfo?.name ?? ""} ${contactInfo?.lastName ?? ""}`.trim() || contactInfo?.username || "Name" }}
         </span>
       </p>
+
+      <p class="text-lg -mt-1 truncate text-muted">
+        <span> Last seen {{ contactInfo?.lastOnline ? getSmartTime(contactInfo.lastOnline) : "at 33:33" }} </span>
+      </p>
     </div>
+
     <div class="ml-auto flex gap-5">
       <CustomButton
         name="material-symbols:phone-enabled-sharp"

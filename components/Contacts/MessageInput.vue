@@ -23,6 +23,7 @@
         :size="'lg'"
         placeholder="Type a message..."
         @keydown.enter="sendMessage(messagingState.message)"
+        type="text"
       />
     </div>
 
