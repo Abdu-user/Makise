@@ -4,10 +4,10 @@
     class="bg-bg"
   >
     <div
-      class="h-16 pl-2 pr-6 grid gap-2 items-center"
-      :class="`${childClass} ${doesMessageExist(messagingState.message) ? 'grid-cols-[2rem,1fr,2rem]' : 'grid-cols-[2rem,1fr]'}`"
+      class="h-16 pl-4 pr-6 flex gap-2 items-center"
+      :class="`${childClass} `"
     >
-      <CustomButton
+      <!-- <CustomButton
         :variant="'text'"
         :is-primary-color="'theme'"
         icon
@@ -16,7 +16,7 @@
         class=""
         :rounded="true"
         @click="inDevelopment"
-      />
+      />// TODO -->
 
       <div class="px-4 h-10 w-full">
         <CustomInput

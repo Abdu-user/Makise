@@ -4,14 +4,16 @@
     class="relative"
   >
     <div
-      class="flex items-center justify-center h-12 w-12 overflow-hidden rounded-full"
+      class="flex items-center justify-center h-12 w-12 rounded-full"
       ref="profileImg"
     >
       <Icon
         v-if="state.loading"
         name="material-symbols-light:forward-circle"
         class="w-full h-full animate-spin"
+        aria-label="loading"
       />
+
       <template v-else>
         <NuxtLink
           v-if="!state.user"
@@ -25,11 +27,21 @@
             :to="isInProfilePage ? '' : '/profile'"
             class="w-full h-full flex cursor-pointer"
             @click="openDropdown"
+            @keydown.enter="openDropdown"
+            role="button"
+            tabindex="0"
+            :class="'focus:outline focus:outline-primary focus:outline-2 outline-none active:animate-spin flex items-center rounded-full '"
           >
+            <Icon
+              v-if="isInProfilePage"
+              name="meteor-icons:gear"
+              class="w-full h-full m-2"
+              aria-label="settings"
+            />
             <CustomImg
-              v-if="state.userData?.profileImage"
+              v-else-if="state.userData?.profileImage"
               :src="state.userData?.profileImage"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover rounded-full"
             />
             <Icon
               v-else
@@ -40,7 +52,6 @@
         </template>
       </template>
     </div>
-    <!-- <CustomTransitions :variant="'drop-down'"> -->
     <CustomContainer
       ref="dropdownWrapper"
       v-if="isInProfilePage && state.isLoginButtonDropdownOpen"
@@ -73,9 +84,9 @@
       >
         Sign out
       </CustomButton>
-      <ThemeToggleButton class="max-md:mx-2" />
+      <ThemeToggleButton class="max-md:mx-2 mt-2" />
+      <LanguageSelector class="mx-3 flex justify-between mt-1" />
     </CustomContainer>
-    <!-- </CustomTransitions> -->
   </div>
 </template>
 

@@ -27,13 +27,8 @@ export function useRealtimeMessages(chatId: string, onNewMessage: (message: Mode
         const isCreate = response.events.includes("databases.*.collections.*.documents.*.create");
         const isUpdate = response.events.includes("databases.*.collections.*.documents.*.update");
 
-        if (isCreate) {
-          console.log(isCreate, isUpdate, "isCreate,isUpdate");
-          console.log(response.events, message.status);
+        if (isCreate || isUpdate) {
           onNewMessage(message);
-        } else if (isUpdate) {
-          console.log(response.events, message.status);
-          onNewMessage({ ...message, status: message.status });
         } else {
           console.log("🚫 Ignored event (not create/update):", response.events);
         }

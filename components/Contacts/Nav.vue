@@ -7,12 +7,12 @@
       <BackButton
         class="max-md:hidden w-10 h-10 my-auto"
         :onClick="() => router.push('../')"
-        :size="'lg'"
+        :size="'md'"
       />
       <BackButton
         class="md:hidden w-10 h-10 my-auto"
         :onClick="() => router.push('./')"
-        :size="'lg'"
+        :size="'md'"
       />
     </div>
     <CustomImg
@@ -20,39 +20,39 @@
       class="rounded-full ml-4 mr-2 w-10 h-10"
     />
     <div class="ml-2 grid">
-      <p class="text-text text-2xl pr-4 truncate">
+      <p class="text-text text-base pr-4 truncate">
         <span>
           {{ `${contactInfo?.name ?? ""} ${contactInfo?.lastName ?? ""}`.trim() || contactInfo?.username || "Name" }}
         </span>
       </p>
 
-      <p class="text-lg -mt-1 truncate text-muted">
+      <p class="text-xs -mt-1 truncate text-muted">
         <span> Last seen {{ contactInfo?.lastOnline ? getSmartTime(contactInfo.lastOnline) : "at 33:33" }} </span>
       </p>
     </div>
 
-    <div class="ml-auto flex gap-5">
+    <!-- <div class="ml-auto flex gap-5">
       <CustomButton
         name="material-symbols:phone-enabled-sharp"
         :variant="'text'"
         :is-primary-color="'theme'"
         icon
-        size="lg"
+        size="md"
         class="w-10 h-10 my-1 transform scale-x-[-1]"
         :rounded="true"
         @click="inDevelopment"
-      />
+      />// TODO
       <CustomButton
         name="pepicons-pop:dots-y"
         :variant="'text'"
         :is-primary-color="'theme'"
         icon
-        size="lg"
+        size="md"
         class="w-10 h-10 my-1"
         :rounded="true"
         @click="inDevelopment"
       />
-    </div>
+    </div> -->
   </nav>
 </template>
 

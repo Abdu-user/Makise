@@ -14,7 +14,7 @@
           class="grid grid-cols-[1fr,auto] gap-2 pt-2 text-lg line-clamp-1"
         >
           <span class="line-clamp-1">{{ name || "Name" }}</span>
-          <span class="flex items-start gap-1 text-sm">
+          <span class="flex items-start gap-1 text-xs">
             <ContactsMessageStateIcon :state="myLastMessageStatus" />
             <span :class="state.newColors ? 'text-text-muted ' : `text-T3TextColor dark:text-darkT3TextColor`">
               {{ lastActive || "03:48" }}

@@ -47,6 +47,15 @@
             >GetUser</CustomButton
           >
           <CustomButton
+            :variant="'primary'"
+            :is-primary-color="'primary'"
+            type="button"
+            variety="secondary"
+            size="md"
+            @click="getUserById('685f96b22dc2fa977963')"
+            >getUserById()</CustomButton
+          >
+          <CustomButton
             :is-primary-color="'theme'"
             variant="plain"
             @click="console.log(state.fromPage)"
@@ -210,6 +219,19 @@ async function sendNotification() {
   } catch (error) {
     console.error("Error sending message:", JSON.stringify(error));
   }
+}
+async function getUserById(documentUserId: string) {
+  const { $appwrite } = useNuxtApp();
+  // console.log();
+  const config = useRuntimeConfig();
+  const databaseId = config.public.appwriteDatabaseId;
+  const collectionId = config.public.appwriteCollectionId;
+  const aUser = await $appwrite.databases.getDocument(databaseId, collectionId, documentUserId);
+  const res = await $appwrite.databases.updateDocument(databaseId, collectionId, documentUserId, {
+    address: "address" + new Date().toISOString(),
+  });
+  console.log(aUser);
+  console.log(res);
 }
 </script>
 
