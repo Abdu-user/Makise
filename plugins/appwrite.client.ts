@@ -18,7 +18,6 @@ export default defineNuxtPlugin(() => {
   const databases = new Databases(client);
   const storage = new Storage(client);
   const messaging = new Messaging(client);
-  // const users = new Users(client);
 
   return {
     provide: {

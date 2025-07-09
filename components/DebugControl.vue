@@ -87,6 +87,14 @@
             @click="deleteUser('685e72247f8b4eacaf1b')"
             >delete User</CustomButton
           >
+          <CustomButton
+            :is-primary-color="'theme'"
+            type="button"
+            :variant="'primary'"
+            size="md"
+            @click="console.log(useMessagingStore())"
+            >messaging state</CustomButton
+          >
 
           <CustomButton
             :variant="'primary'"
@@ -149,6 +157,7 @@ import colors from "~/colors.ts";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useAuth } from "~/composables/useSignUp";
 import { cons } from "~/utils";
+import { useMessagingStore } from "~/store/messaging";
 const state = useGlobalSettingStore();
 
 const { logout, current, login } = useAuth();

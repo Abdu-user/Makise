@@ -16,6 +16,7 @@ const route = useRoute();
 import { ContactsMessageInput } from "#components";
 import { onMounted } from "vue";
 const state = useGlobalSettingStore();
+const messagingState = useMessagingStore();
 const contactInfo = ref<ContactType>();
 
 definePageMeta({
@@ -28,16 +29,23 @@ async function getContactInfo() {
     const res = await fetch("/api/get-contact/" + route.params.username);
     const contact = await res.json();
     contactInfo.value = contact.contact;
+    messagingState.contactInfo = contact.contact;
   } catch (error) {
     console.error(error);
   }
 }
+
+onBeforeUnmount(() => {
+  messagingState.contactInfo = null;
+});
+
 getContactInfo();
 
 state.routeName = "/contacts";
 
 //  ~ ask for notification permission
 import { useGlobalSettingStore } from "~/store/globalSetting";
+import { useMessagingStore } from "~/store/messaging";
 import type { ContactType } from "~/types/messaging";
 
 async function requestPermissionAndToken() {

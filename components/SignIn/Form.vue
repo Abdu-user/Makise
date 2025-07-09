@@ -115,11 +115,12 @@ function onSignIn() {
   if (!validateEmail(email.value)) emailError.value = "Invalid email format";
 
   login(email.value, password.value)
-    .then((res) => {
+    .then(async (res) => {
       const conditionalRedirect = state.fromPage ? state.fromPage : "/";
       router.push(conditionalRedirect);
 
       saveDeviceToken();
+      await refreshUserData();
       state.setFeedback("success", "Successfully signed in");
     })
     .catch((error) => {

@@ -6,7 +6,7 @@
   >
     <div class="flex flex-col gap-4 p-4 justify-end min-h-full">
       <div
-        v-for="message in messagingState.messages"
+        v-for="(message, i) in messagingState.messages"
         :key="message.$id"
         :id="message.$id"
         class="flex gap-3"
@@ -14,6 +14,9 @@
           'justify-end': isMyMessage(message.senderId),
           'justify-start': !isMyMessage(message.senderId),
         }"
+        :data-last-message="i === messagingState.messages.length - 1 ? true : undefined"
+        :aria-label="`message status:${message.status}`"
+        :data-unread="!isMyMessage(message.senderId) && message.status === 'sent' ? true : undefined"
       >
         <button
           class="max-w-[70%] m p-3 pr-2 rounded-lg text-sm relative z-0"
@@ -49,10 +52,15 @@
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import dayjs from "dayjs";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+dayjs.extend(isSameOrBefore);
 
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
 import type { MessageType } from "~/types/type";
+
+import { useRealtimeMessages } from "@/composables/useRealtimeMessaging";
+let realtime: ReturnType<typeof useRealtimeMessages> | null = null;
 
 // Stores
 const state = useGlobalSettingStore();
@@ -69,7 +77,7 @@ const isMyMessage = (senderId: string) => state.user?.$id === senderId;
 // Fetch messages
 async function getMessages() {
   try {
-    const res = await fetch(`/api/get-messages?contactUsername=${route.params.username}&messageLimit=400`, {
+    const res = await fetch(`/api/get-messages?contactUsername=${route.params.username}&messageLimit=40`, {
       cache: "reload",
     });
 
@@ -88,95 +96,151 @@ async function getMessages() {
   }
 }
 
-// Mark messages as read
-async function postMsgDocStatusAsRead() {
-  if (!messagingState.unreadMessages.number) return;
+// Lifecycle
+onMounted(() => {
+  getMessages();
+});
 
+async function getChatId() {
+  try {
+    const res = await fetch("/api/get-contact/" + route.params.username);
+    const contact = await res.json();
+    return makeChatId(state.user?.$id!, contact.contact.id);
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+}
+
+onMounted(async () => {
+  const chatId = await getChatId();
+  if (typeof chatId === "string" && chatId.length > 39) {
+    realtime = useRealtimeMessages(chatId, (newMessage) => {
+      const isMeMessageVar = isMyMessage(newMessage.senderId);
+      const doesMessageAlreadyExists = messagingState.messages.some((msg) => msg.$id === newMessage.$id);
+
+      if (newMessage.status === "read" && isMeMessageVar) {
+        // ^ Mark messages as read
+
+        messagingState.messages = messagingState.messages.map((message) => {
+          const isSentStatus = message.status !== "read";
+          const isSameOrBefore = dayjs(message.timestamp).isSameOrBefore(newMessage.timestamp);
+          if (isSentStatus && isSameOrBefore) {
+            return {
+              ...message,
+              status: newMessage.status,
+            };
+          }
+          return message;
+        });
+      } else if (!doesMessageAlreadyExists && !isMeMessageVar) {
+        // ^ Add a new message in realtime
+        messagingState.addNewMessage(newMessage);
+        messagingState.unreadMessages.isThere = true;
+        messagingState.unreadMessages.number++;
+      } else {
+        console.log("🟡 Message already exists in state, or it is my message, ignoring", newMessage);
+      }
+
+      if (messagingState.isUserAtBottom) {
+        nextTick(() => scrollToBottom(true));
+      }
+    });
+
+    realtime.subscribe();
+  } else {
+    console.error("No chatId", chatId);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (realtime) realtime.stop();
+});
+
+// ~ Watchers
+watch(
+  () => messagingState.messages,
+  () => {
+    setupReadObserver();
+  }
+);
+let observer: IntersectionObserver | null = null;
+
+function setupReadObserver() {
+  nextTick(() => {
+    disconnectPreviousObserver();
+    observer = createObserver();
+
+    observeUnreadMessages();
+  });
+}
+
+function disconnectPreviousObserver() {
+  if (observer) observer.disconnect();
+}
+
+function createObserver(): IntersectionObserver {
+  return new IntersectionObserver(handleIntersections, {
+    root: messagesContainerRef.value,
+    threshold: 1.0, // Only when fully visible
+  });
+}
+
+async function handleIntersections(entries: IntersectionObserverEntry[]) {
+  const newlyReadIds: string[] = [];
+
+  entries.forEach((entry) => {
+    const messageId = entry.target.getAttribute("id");
+    const isUnread = entry.target.hasAttribute("data-unread");
+
+    if (entry.isIntersecting && messageId && isUnread) {
+      const messageIndex = messagingState.messages.findIndex((msg) => msg.$id === messageId);
+      const message = messagingState.messages[messageIndex];
+
+      if (message && message.status === "sent") {
+        messagingState.messages[messageIndex].status = "read";
+        newlyReadIds.push(messageId);
+      }
+    }
+  });
+
+  if (newlyReadIds.length > 0) {
+    updateUnreadState(newlyReadIds.length);
+    await markMessagesAsReadOnBackend(newlyReadIds);
+  }
+}
+
+function updateUnreadState(count: number) {
+  messagingState.unreadMessages.number -= count;
+
+  if (messagingState.unreadMessages.number <= 0) {
+    messagingState.setUnreadMessages({ number: 0, isThere: false });
+  }
+}
+
+async function markMessagesAsReadOnBackend(readIds: string[]) {
   try {
     const res = await fetch("/api/mark-messages-as-read", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contactUserName: route.params.username,
-        unreadMessagesNumber: messagingState.unreadMessages.number,
+        readMessageIds: readIds,
+        unreadMessagesNumber: readIds.length,
       }),
     });
-
-    const data = await res.json();
-    console.log("Marked as read:", data);
+    console.log(await res.json());
   } catch (error) {
-    console.error(error);
+    console.error("❌ Failed to mark messages as read:", error);
   }
 }
 
-async function markContactsMessagesAsRead() {
-  if (!messagingState.isUserAtBottom || !messagingState.unreadMessages.isThere) return;
-
-  await nextTick();
-  await postMsgDocStatusAsRead();
-  messagingState.setUnreadMessages({ isThere: false, number: 0 });
+function observeUnreadMessages() {
+  const unreadElements = document.querySelectorAll("[data-unread]");
+  unreadElements.forEach((el) => {
+    observer?.observe(el);
+  });
 }
-
-// Event Handlers
-function handleFocus() {
-  console.log("🟢 Window focused — refetching messages");
-  getMessages();
-}
-
-function handleServiceWorkerMessage(event: MessageEvent) {
-  if (event.data?.type === "MESSAGE_UPDATE") {
-    console.log("🧠 SW -> MESSAGE_UPDATE received");
-    getMessages().then(() => {
-      if (typeof messagingState.scrollDownFunction === "function")
-        //@ts-ignore
-        messagingState.scrollDownFunction(false);
-    });
-  }
-}
-
-// Lifecycle
-onMounted(() => {
-  // Initial fetch
-  getMessages();
-
-  // Refetch on window focus
-  window.addEventListener("focus", handleFocus);
-
-  // Setup SW listener
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.addEventListener("message", handleServiceWorkerMessage);
-    console.log("✅ SW message listener added");
-  }
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("focus", handleFocus);
-  navigator.serviceWorker.removeEventListener("message", handleServiceWorkerMessage);
-});
-
-// Watchers
-watch(
-  () => messagingState.unreadMessages.isThere,
-  (isThere) => {
-    if (isThere && messagingState.isUserAtBottom) {
-      nextTick(() => {
-        messagingState.scrollToBottom(true);
-        markContactsMessagesAsRead();
-      });
-    }
-  }
-);
-
-watch(
-  () => messagingState.isUserAtBottom,
-  (atBottom) => {
-    if (atBottom && messagingState.unreadMessages.isThere) {
-      nextTick(() => {
-        markContactsMessagesAsRead();
-      });
-    }
-  }
-);
 
 const messagesContainerRef = ref<HTMLElement | null>(null);
 
@@ -213,7 +277,7 @@ function scrollWatch() {
       scrollToBottom(false);
       stop(); // ✅ stop watching after first scroll
     },
-    { immediate: true } // ✅ trigger immediately in case messages are already there
+    { immediate: true }
   );
 }
 

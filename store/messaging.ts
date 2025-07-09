@@ -12,6 +12,7 @@ export const useMessagingStore = defineStore("messaging", {
     messageInput: "idle" as "idle" | "typing" | "send" | "failed",
     messageReceive: {},
     contacts: [] as ContactType[],
+    contactInfo: null as ContactType | null,
     scrollDownFunction: null as null | (() => void),
     isUserAtBottom: false,
     unreadMessages: {
@@ -20,40 +21,35 @@ export const useMessagingStore = defineStore("messaging", {
     } as UnreadMessagesType,
   }),
   actions: {
-    addNewMessage({ text, userId }: { text: string; userId: string }) {
-      /**
-       * Adds a new message to the messages array with the provided text and userId.
-       *
-       * @param text - The content of the new message to be sent.
-       * @param userId - The ID of the user sending the message.
-       * @returns A function `updateMessagingState` that can be used to update the state of the newly added message.
-       *
-       * @remarks
-       * - Initializes a new message object with default and provided values.
-       * - Appends the new message to the `messages` array.
-       * - Returns an updater function that allows selective updating of the message fields in a type-safe manner.
-       * - The updater function skips undefined fields and handles the `media` field with special logic.
-       * - After updating, the messages array is refreshed to trigger reactivity.
-       */
-      const newMessage: MessageType = {
-        $id: "",
-        chatId: "",
-        senderId: userId,
-        receiverId: "",
-        text,
-        timestamp: new Date(Date.now()).toISOString(),
-        status: "sending",
-      };
+    addNewMessage(input: MessageType | { text: string; userId: string }) {
+      let newMessage: MessageType;
+
+      if ("$id" in input) {
+        // It's a full MessageType
+        newMessage = input;
+      } else {
+        // It's the { text, userId } version
+        const { text, userId } = input;
+        newMessage = {
+          $id: "",
+          chatId: "",
+          senderId: userId,
+          receiverId: "",
+          text,
+          timestamp: new Date().toISOString(),
+          status: "sending",
+        };
+      }
+
       this.messages = [...this.messages, newMessage];
+
       const updateMessagingState = (message: Partial<MessageType>) => {
         for (const key in message) {
           const k = key as keyof MessageType;
           const value = message[k];
 
-          // Skip undefined fields
           if (value === undefined) continue;
 
-          // Type-safe assignment per key
           if (k === "media") {
             if (value === null || typeof value === "object") {
               newMessage.media = value;
@@ -67,6 +63,7 @@ export const useMessagingStore = defineStore("messaging", {
 
       return updateMessagingState;
     },
+
     scrollToBottom(functionORCallFunction: true | (() => void)) {
       if (!functionORCallFunction) {
         return console.error(`${functionORCallFunction} is not valid argument`);

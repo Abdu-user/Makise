@@ -1,5 +1,6 @@
 // const sdk = require('node-appwrite');
 
+import { Permission, Role } from "node-appwrite";
 import {
   initializeServerAppWrite,
   postAppwriteMessage,
@@ -14,7 +15,7 @@ import { makeChatId } from "~/utils/messaging";
 export default defineEventHandler(async (event) => {
   const { messaging, users, Query, ID } = initializeServerAppWrite();
   const body = await readBody(event);
-  const { text, userId, userName, contactUserName } = body;
+  const { text, userId, userName, contactUserName }: { userId: string; [key: string]: string } = body;
 
   if (!text || !text.trim().length) {
     throw createError({ statusCode: 400, statusMessage: "No text message" });
@@ -33,14 +34,23 @@ export default defineEventHandler(async (event) => {
   const contact = await users.get(contactId);
 
   try {
-    const message = (await postAppwriteMessage({
-      text,
-      status: "sent",
-      chatId: makeChatId(userId, contactId),
-      senderId: userId,
-      receiverId: contactId,
-      timestamp: new Date().toISOString(),
-    })) as unknown as MessageType;
+    const message = (await postAppwriteMessage(
+      {
+        text,
+        status: "sent",
+        chatId: makeChatId(userId, contactId),
+        senderId: userId,
+        receiverId: contactId,
+        timestamp: new Date().toISOString(),
+      },
+      [
+        Permission.read(Role.user(userId)), // ✅ sender can read
+        Permission.read(Role.user(contactId)), // ✅ receiver can read
+        Permission.update(Role.user(userId)), // optional, if you want sender to update status
+        Permission.delete(Role.user(userId)), // optional, if you want sender to delete status
+        Permission.delete(Role.user(contactId)), // optional
+      ]
+    )) as unknown as MessageType;
 
     // ^ send push notification to all devices that the contact have.
     const pushNotifications = [];

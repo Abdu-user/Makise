@@ -67,11 +67,11 @@ async function sendMessage(text: string) {
     if (!userData?.username) throw new Error("userData?.username is falsy: " + userData);
     if (!route.params.username) throw new Error("route.params.username is not provided in the params");
 
+    const updateMessage = messagingState.addNewMessage({ text, userId: user.$id });
+
     messagingState.message = "";
 
     const body = JSON.stringify({ text, userId: user.$id, userName: userData.username, contactUserName: route.params.username });
-
-    const updateMessage = messagingState.addNewMessage({ text, userId: user.$id });
 
     try {
       const response = await fetch("/api/send-message", {
@@ -83,11 +83,12 @@ async function sendMessage(text: string) {
       });
 
       const messageRes = await response.json();
-      if (messageRes.error) throw new Error(messageRes);
-      console.log(messageRes);
+      if (messageRes.error) {
+        console.error(messageRes);
+        throw messageRes;
+      }
       updateMessage(messageRes.message);
       messagingState.scrollToBottom(true);
-      console.log(messageRes);
     } catch (error) {
       messagingState.message = text;
       updateMessage({ status: "failed" });

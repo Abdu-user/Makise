@@ -36,16 +36,16 @@ onMounted(async () => {
   initializeFirebaseNotify();
 });
 function initializeFirebaseNotify() {
-  $firebase.onMessage($firebase.messaging, (payload) => {
-    messageReceivedNotify(payload);
-  });
+  // $firebase.onMessage($firebase.messaging, (payload) => {
+  //   messageReceivedNotify(payload);
+  // });
 }
 async function messageReceivedNotify(payload: MessagePayload) {
   const messagingState = useMessagingStore();
   console.log("[App] Foreground message received:", payload);
 
   if (payload?.data && payload.data.type === "readMessageUpdate") {
-    console.error(payload.data);
+    // console.error(payload.data);
 
     if (!payload.data?.readMessagesId) return;
     const readMessagesId = payload.data?.readMessagesId;

@@ -3,17 +3,21 @@
     class="top-0 left-0 flex items-center h-16 px-4 py-1"
     :class="state.newColors ? 'bg-bg' : 'bg-mainBg dark:bg-darkMainBg'"
   >
-    <BackButton
-      class="max-md:hidden w-12 h-12 my-auto"
-      :onClick="() => router.push('../')"
-    />
-    <BackButton
-      class="md:hidden w-12 h-12 my-auto"
-      :onClick="() => router.push('./')"
-    />
+    <div>
+      <BackButton
+        class="max-md:hidden w-10 h-10 my-auto"
+        :onClick="() => router.push('../')"
+        :size="'lg'"
+      />
+      <BackButton
+        class="md:hidden w-10 h-10 my-auto"
+        :onClick="() => router.push('./')"
+        :size="'lg'"
+      />
+    </div>
     <CustomImg
       :src="contactInfo?.profileImage || '/images/placeholder-avatar.jpg'"
-      class="rounded-full ml-4 mr-2 w-12 h-12"
+      class="rounded-full ml-4 mr-2 w-10 h-10"
     />
     <div class="ml-2 grid">
       <p class="text-text text-2xl pr-4 truncate">
@@ -33,8 +37,8 @@
         :variant="'text'"
         :is-primary-color="'theme'"
         icon
-        size="f"
-        class="w-14 p-3 h-14 my-1 transform scale-x-[-1]"
+        size="lg"
+        class="w-10 h-10 my-1 transform scale-x-[-1]"
         :rounded="true"
         @click="inDevelopment"
       />
@@ -43,8 +47,8 @@
         :variant="'text'"
         :is-primary-color="'theme'"
         icon
-        size="f"
-        class="w-14 p-3 h-14 my-1"
+        size="lg"
+        class="w-10 h-10 my-1"
         :rounded="true"
         @click="inDevelopment"
       />

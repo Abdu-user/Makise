@@ -52,13 +52,14 @@ export default defineNuxtPlugin(() => {
   }
 
   onMessage(messaging, (payload) => {
-    console.log("[App] Foreground message received:", payload);
+    console.log("[App] Foreground message received:");
+    // console.log("[App] Foreground message received:",payload);
 
-    const p = payload.notification;
-    if (!p?.body) console.error("NO title in the Firebase notification");
-    if (!p?.title) console.error("No body in the Firebase notification");
-    const title = p?.title;
-    const body = p?.body;
+    // const p = payload.notification;
+    // if (!p?.body) console.error("NO title in the Firebase notification");
+    // if (!p?.title) console.error("No body in the Firebase notification");
+    // const title = p?.title;
+    // const body = p?.body;
 
     //   // new Notification(title!, {
     //   //   body: body,

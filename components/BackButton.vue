@@ -4,9 +4,8 @@
     is-primary-color="theme"
     :new-colors="true"
     icon
-    name="material-symbols-light:keyboard-backspace"
+    name="fluent-mdl2:chrome-back"
     aria-label="back button"
-    size="f"
     :rounded="true"
     @click="handleClick"
   />

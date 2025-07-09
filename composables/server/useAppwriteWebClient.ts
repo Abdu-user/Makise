@@ -1,4 +1,5 @@
 import * as sdk from "node-appwrite";
+import { permission } from "process";
 import type { NotificationType } from "~/types/messaging";
 import type { FCMTypes, MessageType, UserProfileType } from "~/types/type";
 
@@ -123,10 +124,10 @@ export async function sendFCMNotification({
     data // data (optional)
   );
 }
-export async function postAppwriteMessage(message: Omit<MessageType, "$id">) {
+export async function postAppwriteMessage(message: Omit<MessageType, "$id">, permissions: string[] = []) {
   const { databaseId, messagesCollectionId } = checkEnvs();
 
-  const res = await database.createDocument(databaseId, messagesCollectionId, sdk.ID.unique(), message);
+  const res = await database.createDocument(databaseId, messagesCollectionId, sdk.ID.unique(), message, permissions);
   return res;
 }
 export async function queryDocument(query: string[], collection: "users" | "messages" = "users") {
