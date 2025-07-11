@@ -64,17 +64,17 @@ async function messageReceivedNotify(payload: MessagePayload) {
     if (!p?.body) console.error("NO title in the Firebase notification");
     if (!p?.title) console.error("No body in the Firebase notification");
     // const {title} = p
-    const { body, title, senderUsername, time, link, messageId } = p;
+    // const { body, title, senderUsername, time, link, messageId } = p;
 
-    if (link.includes(route.fullPath)) {
-      const updateMessage = messagingState.addNewMessage({ text: body, userId: "" });
-      const message = await getMessageById(senderUsername, messageId);
-      updateMessage(message);
-      messagingState.setUnreadMessages({
-        number: messagingState.unreadMessages.number + 1,
-        isThere: true,
-      });
-    }
+    // if (link.includes(route.fullPath)) {
+    //   const updateMessage = messagingState.addNewMessage({ text: body, userId: "" },);
+    //   const message = await getMessageById(senderUsername, messageId);
+    //   updateMessage(message);
+    //   messagingState.setUnreadMessages({
+    //     number: messagingState.unreadMessages.number + 1,
+    //     isThere: true,
+    //   });
+    // }
   }
 }
 
@@ -87,11 +87,23 @@ async function saveUserCookie() {
   });
 }
 async function updateLastOnline() {
-  try {
+  let intervalId: NodeJS.Timeout;
+  async function postUpdateLastOnline() {
     if (!state.user?.$id) throw Error("User not logged in");
     const res = await useAppwriteDocumentUpdate(state.user?.$id, { lastOnline: new Date().toISOString() });
+    return res;
+  }
+  try {
+    await postUpdateLastOnline();
+    intervalId = setInterval(() => {
+      postUpdateLastOnline();
+    }, 60000);
   } catch (error) {
     console.error(error);
+  } finally {
+    onBeforeUnmount(() => {
+      clearInterval(intervalId);
+    });
   }
 }
 

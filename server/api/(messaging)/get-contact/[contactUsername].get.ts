@@ -23,8 +23,9 @@ export default defineEventHandler(async (event) => {
     }
 
     const contacts = user.contacts ?? [];
+    const contactId = (await queryDocument([Query.equal("username", contactUsername)], "users")).documents[0].$id;
 
-    if (!contacts.includes(contactUsername)) {
+    if (!contacts.includes(contactId)) {
       throw createError({
         statusCode: 403,
         statusMessage: "This contact is not in your contacts list",

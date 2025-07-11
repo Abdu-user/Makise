@@ -39,6 +39,16 @@ onBeforeUnmount(() => {
   messagingState.contactInfo = null;
 });
 
+onMounted(() => {
+  let intervalId: NodeJS.Timeout;
+  intervalId = setInterval(() => {
+    getContactInfo();
+  }, 240000);
+  onBeforeMount(() => {
+    clearInterval(intervalId);
+  });
+});
+
 getContactInfo();
 
 state.routeName = "/contacts";

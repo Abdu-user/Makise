@@ -3,7 +3,7 @@ import { initializeServerAppWrite } from "~/composables/server/useAppwriteWebCli
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const { documentId, data } = body;
+  const { documentId, permissions, data } = body;
 
   const { database, Query } = initializeServerAppWrite();
   const config = useRuntimeConfig();
@@ -20,7 +20,13 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const user = await database.updateDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, documentId, data);
+  const user = await database.updateDocument(
+    config.public.appwriteDatabaseId,
+    config.public.appwriteCollectionId,
+    documentId,
+    data,
+    permissions
+  );
 
   return user;
 });

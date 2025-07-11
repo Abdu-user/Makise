@@ -52,7 +52,7 @@
             type="button"
             variety="secondary"
             size="md"
-            @click="getUserById('685f96b22dc2fa977963')"
+            @click="getUserById(state.user?.$id!)"
             >getUserById()</CustomButton
           >
           <CustomButton
@@ -87,6 +87,14 @@
             size="md"
             @click="logout"
             >Logout</CustomButton
+          >
+          <CustomButton
+            :is-primary-color="'theme'"
+            type="button"
+            :variant="'primary'"
+            size="md"
+            @click="GiveUserPermission()"
+            >GiveUserPermission</CustomButton
           >
           <CustomButton
             :is-primary-color="'theme'"
@@ -167,6 +175,7 @@ import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useAuth } from "~/composables/useSignUp";
 import { cons } from "~/utils";
 import { useMessagingStore } from "~/store/messaging";
+import { Permission, Role } from "appwrite";
 const state = useGlobalSettingStore();
 
 const { logout, current, login } = useAuth();
@@ -227,11 +236,32 @@ async function getUserById(documentUserId: string) {
   const databaseId = config.public.appwriteDatabaseId;
   const collectionId = config.public.appwriteCollectionId;
   const aUser = await $appwrite.databases.getDocument(databaseId, collectionId, documentUserId);
-  const res = await $appwrite.databases.updateDocument(databaseId, collectionId, documentUserId, {
-    address: "address" + new Date().toISOString(),
-  });
   console.log(aUser);
-  console.log(res);
+  // const res = await $appwrite.databases.updateDocument(databaseId, collectionId, documentUserId, {
+  //   address: "address" + new Date().toISOString(),
+  // });
+  // console.log(aUser);
+  // console.log(res);
+}
+async function GiveUserPermission() {
+  const userId = state.user!?.$id;
+  try {
+    const res = await fetch("/api/update-user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        documentId: userId,
+        data: {},
+        permissions: [Permission.read(Role.user(userId)), Permission.update(Role.user(userId)), Permission.delete(Role.user(userId))],
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
 }
 </script>
 

@@ -1,11 +1,11 @@
 <template>
   <div>
     <ContactsNavLink
-      v-for="contact in messagingState.contacts"
+      v-for="contact in messagingState.contactsWithMessage"
       :to="`/contacts/${contact.username}`"
-      :last-active="getSmartTime(contact.lastOnline, 'en', 3)"
-      :last-message="'latest message'"
-      :my-last-message-status="'sending'"
+      :last-active="getSmartTime(contact?.message?.timestamp || new Date().toISOString(), 'en', 3)"
+      :last-message="contact?.message ? contact?.message.text : 'Start a chat'"
+      :my-last-message-status="contact?.message?.senderId === state.user?.$id ? (contact?.message ? contact?.message.status : null) : null"
       :name="`${contact.name ?? ''} ${contact.lastName ?? ''}`.trim() || contact.username"
       :profile-img-src="contact.profileImage ? contact.profileImage : '/images/placeholder-avatar.jpg'"
     />
@@ -13,16 +13,45 @@
 </template>
 
 <script setup lang="ts">
+import { Query } from "appwrite";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
-
+import type { ContactType } from "~/types/messaging";
+import type { MessageType } from "~/types/type";
+const state = useGlobalSettingStore();
 const messagingState = useMessagingStore();
 
-messagingState.getContacts();
+onMounted(async () => {
+  const contacts = await messagingState.getContacts();
 
-// defineExpose({
-//   contacts,
-// });
+  if (contacts) await getContactNavLinks(contacts);
+});
+
+async function getContactNavLinks(contacts: ContactType[]) {
+  if (contacts === undefined) return;
+
+  const contactPromise = contacts.map(async (contact) => {
+    console.log(contact);
+    if (state.user) {
+      const chatId = makeChatId(state.user.$id, contact.id);
+      const res = await queryDocument("messages", [Query.equal("chatId", chatId), Query.orderDesc("$createdAt"), Query.limit(1)]);
+      return {
+        contact: contact,
+        message: res,
+      };
+    } else {
+      const message = "state.user is undefined or null";
+      console.error(message);
+    }
+  });
+
+  const newContacts = await Promise.all(contactPromise);
+  messagingState.contactsWithMessage = newContacts.map((newContact) => {
+    return { ...newContact?.contact, message: newContact?.message } as unknown as ContactType & {
+      message: MessageType;
+    };
+  });
+}
 </script>
 
 <style scoped></style>

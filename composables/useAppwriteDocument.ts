@@ -1,5 +1,5 @@
 // composables/useAppwrite.ts
-import { ID, Query, Storage } from "appwrite";
+import { ID, Permission, Query, Role, Storage } from "appwrite";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { UserProfileType } from "~/types/type";
 import { generateRandomUsername } from "~/utils";
@@ -14,15 +14,14 @@ export async function useAppwriteToRegisterUser(data: UserProfileType) {
   if (!data.username) {
     data.username = generateRandomUsername();
   }
-  return await databases.createDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, userId, data);
+  return await databases.createDocument(config.public.appwriteDatabaseId, config.public.appwriteCollectionId, userId, data, [
+    Permission.read(Role.user(userId)),
+    Permission.update(Role.user(userId)),
+    Permission.delete(Role.user(userId)),
+  ]);
 }
 
 export async function useAppwriteDocumentUpdate(documentId: string, data: Partial<UserProfileType>) {
-  // const { $appwrite } = useNuxtApp();
-  // const databases = $appwrite.databases;
-  // const config = useRuntimeConfig();
-  // const databaseId = config.public.appwriteDatabaseId;
-  // const collectionId = config.public.appwriteCollectionId;
   try {
     return await fetch("/api/update-user", {
       method: "POST",
@@ -69,4 +68,15 @@ export function loadFileFromAppwrite(bucketId: string, fileId: string) {
   const storage = new Storage($appwrite.client);
 
   return storage.getFileDownload(bucketId, fileId);
+}
+
+export async function queryDocument(collectionVariant: "messages", query: string[]) {
+  const { $appwrite } = useNuxtApp();
+  const config = useRuntimeConfig();
+  const databaseId = config.public.appwriteDatabaseId;
+  const userCollectionId = config.public.appwriteCollectionId;
+  const messageCollectionId = config.public.appwriteMessagesCollectionId;
+  const collectionId = collectionVariant === "messages" ? messageCollectionId : userCollectionId;
+  const res = await $appwrite.databases.listDocuments(databaseId, collectionId, query);
+  return res.documents[0];
 }

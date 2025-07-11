@@ -50,21 +50,22 @@ export default defineEventHandler(async (event) => {
     }
 
     if (addContact) {
+      const contactId = contact.$id;
       const userContacts = user.contacts ?? [];
       const contactContacts = contact.contacts ?? [];
 
-      const userAlreadyHas = userContacts.includes(contactUserName);
-      const contactAlreadyHas = contactContacts.includes(user.username);
+      const userAlreadyHas = userContacts.includes(contactId);
+      const contactAlreadyHas = contactContacts.includes(user.$id);
 
       if (!userAlreadyHas) {
         await updateAppwriteDocument("users", userId, {
-          contacts: [...userContacts, contactUserName],
+          contacts: [...userContacts, contactId],
         });
       }
 
       if (!contactAlreadyHas) {
         await updateAppwriteDocument("users", contact.$id, {
-          contacts: [...contactContacts, user.username],
+          contacts: [...contactContacts, user.$id],
         });
       }
 

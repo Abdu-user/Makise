@@ -46,6 +46,7 @@
 </template>
 
 <script setup lang="ts">
+import { getChatId } from "~/composables/(contacts)/useRealtimeUpdateMessages";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
 const state = useGlobalSettingStore();
@@ -67,7 +68,15 @@ async function sendMessage(text: string) {
     if (!userData?.username) throw new Error("userData?.username is falsy: " + userData);
     if (!route.params.username) throw new Error("route.params.username is not provided in the params");
 
-    const updateMessage = messagingState.addNewMessage({ text, userId: user.$id });
+    const { contactId } = await getChatId();
+    if (contactId === undefined) {
+      const message = "ContactId is falsy: ";
+      console.error(message, contactId);
+      state.setFeedback("error", message + " " + contactId);
+      return;
+    }
+
+    const updateMessage = messagingState.addNewMessage({ text, userId: user.$id }, contactId);
 
     messagingState.message = "";
 

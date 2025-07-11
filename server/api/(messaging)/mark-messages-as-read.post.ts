@@ -1,5 +1,6 @@
 import { Models } from "node-appwrite";
 import {
+  checkEnvs,
   initializeServerAppWrite,
   queryDocument,
   sendFCMNotification,
@@ -9,8 +10,10 @@ import { FCMTypes, MessageType, UserProfileType } from "~/types/type";
 import { makeChatId } from "~/utils/messaging";
 
 export default defineEventHandler(async (event) => {
-  const { messaging, users, Query, ID } = initializeServerAppWrite();
+  const { database, messaging, users, Query, ID } = initializeServerAppWrite();
+  const { databaseId, messagesCollectionId } = checkEnvs();
   const body = await readBody(event);
+
   const { contactUserName, unreadMessagesNumber, readMessageIds } = body;
   const userId = getCookie(event, "userId");
 
@@ -26,6 +29,15 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    const messagePromise = readMessageIds.map((msgId: string) => database.getDocument(databaseId, messagesCollectionId, msgId));
+    const messagesResult = await Promise.all(messagePromise);
+    for (let i = 0; i < messagesResult.length; i++) {
+      const message = messagesResult[i];
+      if (message.receiverId !== userId) {
+        throw createError({ statusCode: 403, statusMessage: "Forbidden" });
+      }
+    }
+
     if (readMessageIds) {
       const readPromises = readMessageIds.map((readMessageId: string) => {
         return updateAppwriteDocument("messages", readMessageId, { status: "read" });

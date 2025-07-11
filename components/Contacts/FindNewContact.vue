@@ -63,11 +63,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
+import { useMessagingStore } from "~/store/messaging";
 defineProps({
   buttonClass: { type: String, default: "" },
   modalClass: { type: String, default: "" },
 });
 const state = useGlobalSettingStore();
+const messagingState = useMessagingStore();
 
 const showModal = ref(false);
 const searchQuery = ref("");
@@ -114,6 +116,7 @@ async function addContact() {
     if (contactMsg.contactAlreadyExists) throw contactMsg;
     state.setFeedback("success", "contact has been added1");
     showModal.value = false;
+    await messagingState.getContacts();
   } catch (error: any) {
     state.setFeedback("error", error.error);
     console.error(error);

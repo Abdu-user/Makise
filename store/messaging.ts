@@ -12,6 +12,7 @@ export const useMessagingStore = defineStore("messaging", {
     messageInput: "idle" as "idle" | "typing" | "send" | "failed",
     messageReceive: {},
     contacts: [] as ContactType[],
+    contactsWithMessage: [] as (ContactType & { message: MessageType })[],
     contactInfo: null as ContactType | null,
     scrollDownFunction: null as null | (() => void),
     isUserAtBottom: false,
@@ -21,7 +22,7 @@ export const useMessagingStore = defineStore("messaging", {
     } as UnreadMessagesType,
   }),
   actions: {
-    addNewMessage(input: MessageType | { text: string; userId: string }) {
+    addNewMessage(input: MessageType | { text: string; userId: string }, contactId: string) {
       let newMessage: MessageType;
 
       if ("$id" in input) {
@@ -42,6 +43,18 @@ export const useMessagingStore = defineStore("messaging", {
       }
 
       this.messages = [...this.messages, newMessage];
+      const updateContactWithMessage = () => {
+        if (contactId) {
+          this.contactsWithMessage = this.contactsWithMessage.map((coWMsg) => {
+            if (coWMsg.id === contactId) {
+              return { ...coWMsg, message: newMessage };
+            } else return coWMsg;
+          });
+        } else {
+          console.error("No contactId is provided");
+        }
+      };
+      updateContactWithMessage();
 
       const updateMessagingState = (message: Partial<MessageType>) => {
         for (const key in message) {
@@ -59,6 +72,7 @@ export const useMessagingStore = defineStore("messaging", {
           }
         }
         this.messages = [...this.messages];
+        updateContactWithMessage();
       };
 
       return updateMessagingState;
@@ -92,7 +106,7 @@ export const useMessagingStore = defineStore("messaging", {
         });
         const contactsR = (await response.json()) as { success: boolean; users: ContactType[] };
         this.contacts = contactsR.users;
-        console.log(this.contacts);
+        return contactsR.users;
       } catch (error) {
         console.error(error);
       }

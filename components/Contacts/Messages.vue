@@ -44,7 +44,8 @@ onMounted(() => {
   getMessages();
 });
 // && RealTimeDomUpdate
-useRealtimeUpdateMessages(isMyMessage);
+const { setupRealTimeMessaging } = useRealtimeUpdateMessages(isMyMessage);
+setupRealTimeMessaging();
 
 const messagesContainerRef = ref<HTMLElement | null>(null);
 const { setupObserver } = useReadObserver(messagesContainerRef);

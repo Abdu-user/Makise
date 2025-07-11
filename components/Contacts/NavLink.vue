@@ -15,7 +15,10 @@
         >
           <span class="line-clamp-1">{{ name || "Name" }}</span>
           <span class="flex items-start gap-1 text-xs">
-            <ContactsMessageStateIcon :state="myLastMessageStatus" />
+            <ContactsMessageStateIcon
+              :state="myLastMessageStatus"
+              v-if="myLastMessageStatus"
+            />
             <span :class="state.newColors ? 'text-text-muted ' : `text-T3TextColor dark:text-darkT3TextColor`">
               {{ lastActive || "03:48" }}
             </span>
@@ -31,13 +34,14 @@
 
 <script setup lang="ts">
 import { useGlobalSettingStore } from "~/store/globalSetting";
+import type { MessageType } from "~/types/type";
 
 const state = useGlobalSettingStore();
 defineProps({
   profileImgSrc: { type: String, required: true },
   name: { type: String, required: true },
   lastActive: { type: String, required: true },
-  myLastMessageStatus: { type: String as PropType<"sending" | "sent" | "read">, required: true },
+  myLastMessageStatus: { type: String as PropType<MessageType["status"] | null>, required: true },
   lastMessage: { type: String, required: true },
   to: { type: [String, Object], required: true, default: "/" },
 });

@@ -33,14 +33,27 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    const userPromises = contacts.map((contactUsername) => queryDocument([Query.equal("username", contactUsername), Query.limit(1)]));
+    const userPromises = contacts.map(async (contactId) => {
+      try {
+        const user = await getAppwriteDocument("users", contactId);
+        return { user, error: null };
+      } catch (error) {
+        return {
+          user: null,
+          error: {
+            message: `Failed to fetch user:", ${contactId} ${error}`,
+          },
+        };
+      }
+    });
 
     const usersResults = await Promise.all(userPromises);
 
-    const userPolished = usersResults
+    const usersPolished = usersResults
       .map((userR) => {
-        const user = userR.documents[0] as Models.Document & UserProfileType;
-        return user
+        const user = userR.user as Models.Document & UserProfileType;
+        console.log(userR.error);
+        return userR.user
           ? {
               username: user.username,
               profileImage: user.profileImage,
@@ -49,13 +62,21 @@ export default defineEventHandler(async (event) => {
               lastName: user.lastName,
               lastOnline: user.lastOnline,
             }
-          : null;
+          : {
+              //@ts-ignore
+              username: userR.error?.message,
+              profileImage: "",
+              id: "",
+              name: "Contact is not found",
+              lastName: "",
+              lastOnline: 0,
+            };
       })
       .filter(Boolean);
 
     return {
       success: true,
-      users: userPolished,
+      users: usersPolished,
       usedCookie: userId,
     };
   } catch (error: any) {

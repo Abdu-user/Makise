@@ -10,6 +10,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   try {
     await $appwrite.account.get();
-    return navigateTo(state.routeName ?? "/profile");
+    return navigateTo("/profile");
   } catch {}
 });

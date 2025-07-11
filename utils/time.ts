@@ -31,7 +31,6 @@ const MONTHS: Record<string, string[]> = {
   tr: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
   kk: ["Қаңтар", "Ақпан", "Наурыз", "Сәуір", "Мамыр", "Маусым", "Шілде", "Тамыз", "Қыркүйек", "Қазан", "Қараша", "Желтоқсан"],
 };
-
 export function getSmartTime(isoString: string, locale: "en" | "ru" | "tr" | "kz" = "en", lengthOfMonthWeek?: number): string {
   const input = dayjs(isoString);
   const now = dayjs();
@@ -41,23 +40,27 @@ export function getSmartTime(isoString: string, locale: "en" | "ru" | "tr" | "kz
     return input.format("HH:mm");
   }
 
-  // same ISO week (Sunday–Saturday or Monday–Sunday, depending on locale)
+  // Same ISO week (same week of the year)
   const sameWeek = input.isoWeek() === now.isoWeek() && input.year() === now.year();
   if (sameWeek) {
-    const dayIndex = input.day(); // 0-6
-    return WEEKDAYS[locale]?.[dayIndex] ?? WEEKDAYS["en"][dayIndex];
+    const dayIndex = input.day(); // 0 (Sunday) – 6 (Saturday)
+    let weekday = WEEKDAYS[locale]?.[dayIndex] ?? WEEKDAYS["en"][dayIndex];
+    if (lengthOfMonthWeek) weekday = weekday.slice(0, lengthOfMonthWeek);
+    return weekday;
   }
 
-  // same year
+  // Same year, different week
   if (input.year() === now.year()) {
     const day = input.date();
-    const month = MONTHS[locale]?.[input.month()] ?? MONTHS["en"][input.month()];
+    let month = MONTHS[locale]?.[input.month()] ?? MONTHS["en"][input.month()];
+    if (lengthOfMonthWeek) month = month.slice(0, lengthOfMonthWeek);
     return `${day} ${month}`;
   }
 
-  // different year
+  // Different year
   const day = input.date();
-  const month = MONTHS[locale]?.[input.month()] ?? MONTHS["en"][input.month()];
+  let month = MONTHS[locale]?.[input.month()] ?? MONTHS["en"][input.month()];
+  if (lengthOfMonthWeek) month = month.slice(0, lengthOfMonthWeek);
   const year = input.year();
   return `${day} ${month} ${year}`;
 }
