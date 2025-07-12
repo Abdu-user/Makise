@@ -134,6 +134,7 @@ body {
 }
 :root {
   --message-bubble: linear-gradient(rgb(255, 157, 0) 0%, rgb(253, 0, 253) 50%, rgb(167, 151, 255) 65%, rgb(0, 229, 255) 100%);
+  --text-gradient: linear-gradient(to right, #c46767 0%, #ea7878 39%, #9280c9 69%, #ed7a7a 89%, #ee5656 100%);
 }
 
 :root {

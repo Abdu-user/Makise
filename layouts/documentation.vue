@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { bigNames, navLinks } from "~/mainFrame";
+import { bigNames, navLinks } from "~/constants";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const route = useRoute();
 const state = useGlobalSettingStore();

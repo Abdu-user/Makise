@@ -203,7 +203,7 @@ const state = useGlobalSettingStore();
 
 import { ref, watch, computed } from "vue";
 import type { UserProfileType } from "~/types/type";
-import { profileInputPlaceholders } from "~/mainFrame";
+import { profileInputPlaceholders } from "~/constants";
 import { refreshUserData } from "~/composables/useSignUp";
 
 const pl = computed(() => profileInputPlaceholders); // pl means placeholder-text

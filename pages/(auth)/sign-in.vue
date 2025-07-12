@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { bigNames } from "~/mainFrame";
+import { bigNames } from "~/constants";
 
 useHead({
   title: "Sign in to " + bigNames.appName,

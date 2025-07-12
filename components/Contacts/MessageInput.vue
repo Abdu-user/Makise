@@ -137,6 +137,8 @@ async function sendMessage(text: string) {
 
         if (!isContactAdded?.userAddedToContact || !isContactAdded?.contactAddedToTheUser) {
           console.error("Contact is not added: ", isContactAdded);
+        } else {
+          await messagingState.getContacts();
         }
       }
     }

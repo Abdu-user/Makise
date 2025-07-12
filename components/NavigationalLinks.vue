@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { navLinks } from "../mainFrame";
+import { navLinks } from "../constants";
 </script>
 
 <style scoped></style>

@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { ProfileRoutes } from "~/mainFrame";
+import { ProfileRoutes } from "~/constants";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 

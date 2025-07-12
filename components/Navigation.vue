@@ -17,14 +17,18 @@
         </div>
         <span class="font-bold text-2xl md:text-xl capitalize text-T1TextColor dark:text-darkT1TextColor">{{ state.routeName }}</span>
 
-        <CustomNuxtLink
-          v-if="route.fullPath === '/contacts'"
-          to="/search-contacts"
-          name="ic:outline-search"
-          class="w-10 h-10 !p-0"
-          :variant="'navigation'"
-        />
-        <LoginButton v-else />
+        <div class="flex items-center">
+          <ThemeToggleButton v-if="!state.isInProfilePage" />
+
+          <CustomNuxtLink
+            v-if="route.fullPath === '/contacts'"
+            to="/search-contacts"
+            name="ic:outline-search"
+            class="w-10 h-10 !p-0"
+            :variant="'navigation'"
+          />
+          <LoginButton v-else />
+        </div>
       </div>
     </div>
   </nav>
@@ -59,5 +63,5 @@ const route = useRoute();
 
 import LoginButton from "./loginButton.vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
-import { bigNames } from "../mainFrame";
+import { bigNames } from "../constants";
 </script>

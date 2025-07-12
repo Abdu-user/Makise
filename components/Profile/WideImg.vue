@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { positionOptions } from "~/mainFrame";
+import { positionOptions } from "~/constants";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { ImgLocation, WideImageLocationSettingsType } from "~/types/type";
 

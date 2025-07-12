@@ -48,7 +48,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { IDProofs, personalInformations } from "~/mainFrame";
+import { IDProofs, personalInformations } from "~/constants";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { IDProofType, PersonalInfoType } from "~/types/type";
 

@@ -24,7 +24,7 @@
         >
         <template v-else>
           <NuxtLink
-            :to="isInProfilePage ? '' : '/profile'"
+            :to="state.isInProfilePage ? '' : '/profile'"
             class="w-full h-full flex cursor-pointer"
             @click="openDropdown"
             @keydown.enter="openDropdown"
@@ -33,7 +33,7 @@
             :class="'focus:outline focus:outline-primary focus:outline-2 outline-none active:animate-spin flex items-center rounded-full '"
           >
             <Icon
-              v-if="isInProfilePage"
+              v-if="state.isInProfilePage"
               name="meteor-icons:gear"
               class="w-full h-full m-2"
               aria-label="settings"
@@ -54,7 +54,7 @@
     </div>
     <CustomContainer
       ref="dropdownWrapper"
-      v-if="isInProfilePage && state.isLoginButtonDropdownOpen"
+      v-if="state.isInProfilePage && state.isLoginButtonDropdownOpen"
       :variant="'UIContainer'"
       class="absolute top-16 -right-3 p-3"
     >
@@ -84,7 +84,10 @@
       >
         Sign out
       </CustomButton>
-      <ThemeToggleButton class="max-md:mx-2 mt-2" />
+      <ThemeToggleButton
+        class="max-md:mx-2 mt-2"
+        :text="'Theme'"
+      />
       <LanguageSelector class="mx-3 flex justify-between mt-1" />
     </CustomContainer>
   </div>
@@ -108,10 +111,10 @@ const router = useRouter();
 const setRoutePath = () => {
   state.setFromPage(route.path);
 };
-const isInProfilePage = ref(false);
+// const isInProfilePage = ref(false);
 
 onMounted(() => {
-  isInProfilePage.value = route.fullPath.includes("/profile");
+  state.isInProfilePage = route.fullPath.includes("/profile");
 });
 
 const logout = () => {
@@ -124,7 +127,7 @@ const logout = () => {
 };
 
 const openDropdown = () => {
-  if (isInProfilePage.value) {
+  if (state.isInProfilePage) {
     state.isLoginButtonDropdownOpen = !state.isLoginButtonDropdownOpen;
     state.isNavOpen = false;
   }

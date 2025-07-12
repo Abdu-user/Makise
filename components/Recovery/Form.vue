@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import { sendRecovery } from "~/composables/useRecovery";
-import { bigNames } from "~/mainFrame";
+import { bigNames } from "~/constants";
 const inputValue = ref("");
 function recoverAccount() {
   sendRecovery(inputValue.value);

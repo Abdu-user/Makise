@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { bigNames } from "~/mainFrame";
+import { bigNames } from "~/constants";
 
 useHead({
   title: `Recover ${bigNames.appName} Account`,

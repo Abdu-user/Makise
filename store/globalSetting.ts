@@ -12,6 +12,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
     isPrefillTheUserField: false,
     disabledExpensiveUrlFetch: false,
     isScrollLinksExist: false,
+    isInProfilePage: false,
     loading: false,
     newColors: true,
     isLoginButtonDropdownOpen: false,

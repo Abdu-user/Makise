@@ -61,3 +61,5 @@ export const componentsLinks = [
 ];
 
 export const positionOptions: ImgLocation[] = ["top", "center", "bottom"];
+
+export const homeHashLinks = ["Home", "Messaging", "About me"];

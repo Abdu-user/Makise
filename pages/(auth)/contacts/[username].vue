@@ -1,5 +1,7 @@
 <template>
-  <div class="relative text-text-muted flex flex-col h-[100dvh] max-h-[100dvh">
+  <div
+    class="relative text-text-muted flex flex-col h-[100dvh] max-h-[100dvh bg-[url('/images/telegram-bg4.png')] dark:bg-[url('/images/tg-background.jpg')]"
+  >
     <ContactsNav :contactInfo="contactInfo" />
 
     <ContactsMessages class="max-w-2xl mx-auto" />

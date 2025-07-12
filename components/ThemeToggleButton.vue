@@ -1,6 +1,6 @@
 <template>
   <div class="flex ps-3 pe-2 justify-between">
-    Theme
+    {{ text }}
     <CustomContainer
       :variant="'ReverseUIContainer'"
       class="p-[2px]"
@@ -42,6 +42,7 @@
 <script setup lang="ts">
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
+defineProps<{ text?: string }>();
 
 const themeMode = ref("auto");
 
