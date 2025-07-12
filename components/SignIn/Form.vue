@@ -121,6 +121,7 @@ function onSignIn() {
 
       saveDeviceToken();
       await refreshUserData();
+      useKeyPair();
       state.setFeedback("success", "Successfully signed in");
     })
     .catch((error) => {

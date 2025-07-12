@@ -15,7 +15,7 @@ import { makeChatId } from "~/utils/messaging";
 export default defineEventHandler(async (event) => {
   const { messaging, users, Query, ID } = initializeServerAppWrite();
   const body = await readBody(event);
-  const { text, userId, userName, contactUserName }: { userId: string; [key: string]: string } = body;
+  const { text, userId, userName, contactUserName, encText }: { userId: string; [key: string]: string } = body;
 
   if (!text || !text.trim().length) {
     throw createError({ statusCode: 400, statusMessage: "No text message" });
@@ -33,10 +33,17 @@ export default defineEventHandler(async (event) => {
   const contactId = (await queryDocument([Query.equal("username", contactUserName)])).documents[0].$id;
   const contact = await users.get(contactId);
 
+  let newText: string;
+  if (encText) {
+    newText = encText;
+  } else {
+    newText = text;
+  }
+
   try {
     const message = (await postAppwriteMessage(
       {
-        text,
+        text: newText,
         status: "sent",
         chatId: makeChatId(userId, contactId),
         senderId: userId,

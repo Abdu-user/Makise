@@ -87,6 +87,9 @@ async function handleVerifyCode(code: string) {
     router.push({ query: { ...route.query, "verify-email": undefined } });
 
     await createAppwriteUser(signUpState.email, signUpState.password);
+
+    useKeyPair();
+
     router.push("/");
   } catch (err) {
     console.log("Error during verification:", err);

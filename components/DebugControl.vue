@@ -112,6 +112,14 @@
             @click="console.log(useMessagingStore())"
             >messaging state</CustomButton
           >
+          <CustomButton
+            :is-primary-color="'theme'"
+            type="button"
+            :variant="'primary'"
+            size="md"
+            @click="ChangeTheKeyPair"
+            >ChangeTheKeyPair</CustomButton
+          >
 
           <CustomButton
             :variant="'primary'"
@@ -176,6 +184,7 @@ import { useAuth } from "~/composables/useSignUp";
 import { cons } from "~/utils";
 import { useMessagingStore } from "~/store/messaging";
 import { Permission, Role } from "appwrite";
+import { debugKeyPairs } from "~/composables/useKeyPair";
 const state = useGlobalSettingStore();
 
 const { logout, current, login } = useAuth();
@@ -262,6 +271,10 @@ async function GiveUserPermission() {
   } catch (error) {
     console.error(error);
   }
+}
+
+function ChangeTheKeyPair() {
+  useKeyPair();
 }
 </script>
 

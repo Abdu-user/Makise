@@ -33,8 +33,16 @@ onMounted(async () => {
   await getUser();
   await saveUserCookie();
   await updateLastOnline();
+  addPublicKeyIfHavNt();
   initializeFirebaseNotify();
 });
+function addPublicKeyIfHavNt() {
+  if (state.userData) {
+    if (!state.userData.publicKey) {
+      console.error("User doesn't have a publicKeyPair");
+    }
+  }
+}
 function initializeFirebaseNotify() {
   // $firebase.onMessage($firebase.messaging, (payload) => {
   //   messageReceivedNotify(payload);
@@ -86,8 +94,8 @@ async function saveUserCookie() {
     body: JSON.stringify({ userId: state.user?.$id }),
   });
 }
+let intervalId: NodeJS.Timeout;
 async function updateLastOnline() {
-  let intervalId: NodeJS.Timeout;
   async function postUpdateLastOnline() {
     if (!state.user?.$id) throw Error("User not logged in");
     const res = await useAppwriteDocumentUpdate(state.user?.$id, { lastOnline: new Date().toISOString() });
@@ -100,12 +108,11 @@ async function updateLastOnline() {
     }, 60000);
   } catch (error) {
     console.error(error);
-  } finally {
-    onBeforeUnmount(() => {
-      clearInterval(intervalId);
-    });
   }
 }
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
+});
 
 // ~ Dev debug button
 const inDev = ref(false);

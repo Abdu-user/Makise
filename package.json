@@ -20,6 +20,7 @@
     "dayjs": "^1.11.13",
     "firebase": "^11.10.0",
     "firebase-admin": "^13.4.0",
+    "libsodium-wrappers": "^0.7.15",
     "node-appwrite": "^17.0.0",
     "nodemailer": "^7.0.3",
     "nuxt": "^3.17.4",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.14.0",
+    "@types/libsodium-wrappers": "^0.7.14",
     "@types/node": "^22.15.21",
     "@types/nodemailer": "^6.4.17",
     "autoprefixer": "^10.4.21",

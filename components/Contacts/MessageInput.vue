@@ -68,7 +68,8 @@ async function sendMessage(text: string) {
     if (!userData?.username) throw new Error("userData?.username is falsy: " + userData);
     if (!route.params.username) throw new Error("route.params.username is not provided in the params");
 
-    const { contactId } = await getChatId();
+    const { contactId, contact } = await getChatId();
+
     if (contactId === undefined) {
       const message = "ContactId is falsy: ";
       console.error(message, contactId);
@@ -79,8 +80,9 @@ async function sendMessage(text: string) {
     const updateMessage = messagingState.addNewMessage({ text, userId: user.$id }, contactId);
 
     messagingState.message = "";
+    const encText = await encryptMessageText(contact, text);
 
-    const body = JSON.stringify({ text, userId: user.$id, userName: userData.username, contactUserName: route.params.username });
+    const body = JSON.stringify({ text, encText, userId: user.$id, userName: userData.username, contactUserName: route.params.username });
 
     try {
       const response = await fetch("/api/send-message", {
@@ -96,7 +98,14 @@ async function sendMessage(text: string) {
         console.error(messageRes);
         throw messageRes;
       }
-      updateMessage(messageRes.message);
+
+      let message;
+      if (contact.publicKey) {
+        message = { ...messageRes.message, text: decryptMessageText(messageRes.message.text, contact?.publicKey) };
+      } else {
+        message = messageRes.message;
+      }
+      updateMessage(message);
       messagingState.scrollToBottom(true);
     } catch (error) {
       messagingState.message = text;

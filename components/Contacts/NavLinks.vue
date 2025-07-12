@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { Query } from "appwrite";
+import type { Models } from "node-appwrite";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
 import type { ContactType } from "~/types/messaging";
@@ -31,13 +32,16 @@ async function getContactNavLinks(contacts: ContactType[]) {
   if (contacts === undefined) return;
 
   const contactPromise = contacts.map(async (contact) => {
-    console.log(contact);
     if (state.user) {
       const chatId = makeChatId(state.user.$id, contact.id);
-      const res = await queryDocument("messages", [Query.equal("chatId", chatId), Query.orderDesc("$createdAt"), Query.limit(1)]);
+      const res = (await queryDocument("messages", [
+        Query.equal("chatId", chatId),
+        Query.orderDesc("$createdAt"),
+        Query.limit(1),
+      ])) as Models.Document & MessageType;
       return {
         contact: contact,
-        message: res,
+        message: { ...res, text: decryptMessageText(res.text, contact?.publicKey!) },
       };
     } else {
       const message = "state.user is undefined or null";

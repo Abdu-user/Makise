@@ -15,10 +15,10 @@ export async function getChatId() {
     if (!contactId) throw { contact, message: "Error: !contactId" };
     const chatId = makeChatId(state.user?.$id!, contactId);
 
-    return { chatId, contactId };
+    return { chatId, contactId, contact };
   } catch (error) {
     console.error(error);
-    return { error };
+    throw error;
   }
 }
 export default function useRealtimeUpdateMessages(isMyMessage: (senderId: string) => boolean) {
@@ -26,14 +26,15 @@ export default function useRealtimeUpdateMessages(isMyMessage: (senderId: string
   let realtime: ReturnType<typeof useRealtimeMessages> | null = null;
 
   async function onMountedFunction() {
-    const { chatId, contactId } = await getChatId();
+    const { chatId, contactId, contact } = await getChatId();
     if (typeof chatId === "string" && chatId.length > 39) {
+      // ^1 subscribe to realtime messaging
       realtime = useRealtimeMessages(chatId, (newMessage) => {
         const isMeMessageVar = isMyMessage(newMessage.senderId);
         const doesMessageAlreadyExists = messagingState.messages.some((msg) => msg.$id === newMessage.$id);
 
         if (newMessage.status === "read" && isMeMessageVar) {
-          // ^ Mark messages as read
+          // ^2.1  Mark my messages as read
 
           messagingState.messages = messagingState.messages.map((message) => {
             const isSentStatus = message.status === "sent" || message.status === "sending";
@@ -46,7 +47,8 @@ export default function useRealtimeUpdateMessages(isMyMessage: (senderId: string
             }
             return message;
           });
-          // && Make the last message in Contact's navbar as read
+
+          // ^2.2 Make the last message in Contact's navbar as read
           messagingState.contactsWithMessage = messagingState.contactsWithMessage.map((coWMsg) => {
             if (coWMsg.id === contactId) {
               return {
@@ -61,12 +63,14 @@ export default function useRealtimeUpdateMessages(isMyMessage: (senderId: string
             }
           });
         } else if (!doesMessageAlreadyExists && !isMeMessageVar) {
-          // ^ if the message is not mine ->  Add a new message in realtime
-          messagingState.addNewMessage(newMessage, contactId);
+          // ^3 if the message is not mine ->  Add a new message in realtime with decryption
+
+          const decryptedMessage = decryptMessageText(newMessage.text, contact.publicKey!);
+
+          messagingState.addNewMessage({ ...newMessage, text: decryptedMessage }, contactId);
           messagingState.unreadMessages.isThere = true;
           messagingState.unreadMessages.number++;
         } else {
-          console.log("🟡 Message already exists in state, or it is my message, ignoring", newMessage);
         }
 
         if (messagingState.isUserAtBottom) {

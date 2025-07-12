@@ -16,6 +16,7 @@ export type UserProfileType = {
   FCMToken?: string[];
   contacts?: string[];
   lastOnline?: string;
+  publicKey?: string;
 };
 
 export type ImgLocation = "top" | "center" | "bottom" | "left" | "left-top" | "left-bottom" | "right" | "right-top" | "right-bottom";

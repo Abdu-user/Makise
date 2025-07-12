@@ -48,6 +48,7 @@ export default defineEventHandler(async (event) => {
         lastName: contact.lastName ?? "",
         profileImage: contact.profileImage ?? "",
         lastOnline: contact.lastOnline ?? "",
+        publicKey: contact.publicKey ?? "",
       },
     };
     return response;

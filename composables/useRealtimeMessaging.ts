@@ -10,8 +10,6 @@ export function useRealtimeMessages(chatId: string, onNewMessage: (message: Mode
   let unsubscribe: () => void;
 
   const subscribe = () => {
-    console.log("📡 Subscribing to realtime for chatId:", chatId);
-
     unsubscribe = $appwrite.client.subscribe(
       [`databases.${databaseId}.collections.${messagesCollectionId}.documents`],
       (response: RealtimeResponseEvent<Models.Document & MessageType>) => {
@@ -29,15 +27,12 @@ export function useRealtimeMessages(chatId: string, onNewMessage: (message: Mode
 
         if (isCreate || isUpdate) {
           onNewMessage(message);
-        } else {
-          console.log("🚫 Ignored event (not create/update):", response.events);
         }
       }
     );
   };
 
   const stop = () => {
-    console.log("🛑 Unsubscribed from realtime");
     if (unsubscribe) unsubscribe();
   };
 

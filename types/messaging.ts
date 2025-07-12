@@ -5,6 +5,7 @@ export type ContactType = {
   name: string;
   lastName: string;
   lastOnline: string;
+  publicKey?: string;
 };
 
 export type NotificationType = {

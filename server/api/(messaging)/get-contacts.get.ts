@@ -61,6 +61,7 @@ export default defineEventHandler(async (event) => {
               name: user.name,
               lastName: user.lastName,
               lastOnline: user.lastOnline,
+              publicKey: user.publicKey,
             }
           : {
               //@ts-ignore
