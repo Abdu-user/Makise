@@ -39,6 +39,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // ^1 get the contact
     const contactQuery = await queryDocument([Query.equal("username", contactUserName)]);
     const contact = contactQuery.documents[0];
 
@@ -69,7 +70,7 @@ export default defineEventHandler(async (event) => {
         });
       }
 
-      return {
+      const addContactResults = {
         success: true,
         message: "Both users are now contacts",
         contactFound: true,
@@ -77,6 +78,7 @@ export default defineEventHandler(async (event) => {
         userAddedToContact: !contactAlreadyHas,
         contactId: contact.$id,
       };
+      return addContactResults;
     }
 
     return {

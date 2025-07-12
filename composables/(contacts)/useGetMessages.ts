@@ -41,7 +41,7 @@ export function useGetMessages(isMyMessage: (senderId: string) => boolean) {
       });
     } catch (error) {
       console.error(error);
-      router.replace("/contacts/no");
+      router.push("/contacts/no");
     }
   }
 

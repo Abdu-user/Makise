@@ -77,40 +77,24 @@ const searchQuery = ref("");
 const contactFound = ref(false);
 
 const timerId = ref();
-async function findContactFetch(addContact: boolean = false) {
-  return await fetch("/api/add-contact", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ contactUserName: searchQuery.value.trim(), userId: state.user?.$id, addContact }),
-  });
-}
-async function findContact() {
-  try {
-    const res = await findContactFetch();
-    const contact = await res.json();
-    if (contact.contactFound) {
-      contactFound.value = true;
-    } else contactFound.value = false;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 watch(
   () => searchQuery.value,
   () => {
     clearTimeout(timerId.value);
-    timerId.value = setTimeout(() => {
-      findContact();
+    timerId.value = setTimeout(async () => {
+      const contact = await findContact(searchQuery.value);
+      if (contact) {
+        contactFound.value = contact.contactFound as boolean;
+      } else {
+        console.error("Contact is not found: ", contact);
+      }
     }, 250);
   }
 );
 
 async function addContact() {
   try {
-    const contactFound = await findContactFetch(true);
+    const contactFound = await findContactFetch(searchQuery.value, true);
     const contactMsg = await contactFound.json();
 
     if (contactMsg.contactAlreadyExists) throw contactMsg;

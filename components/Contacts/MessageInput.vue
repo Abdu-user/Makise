@@ -77,21 +77,17 @@ async function sendMessage(text: string) {
       return;
     }
 
+    // ^ 1 add 'sending' state message
     const updateMessage = messagingState.addNewMessage({ text, userId: user.$id }, contactId);
 
     messagingState.message = "";
     const encText = await encryptMessageText(contact, text);
 
-    const body = JSON.stringify({ text, encText, userId: user.$id, userName: userData.username, contactUserName: route.params.username });
-
     try {
-      const response = await fetch("/api/send-message", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body,
-      });
+      const body = JSON.stringify({ text, encText, userId: user.$id, userName: userData.username, contactUserName: route.params.username });
+
+      // ^2 send message
+      const response = await postMessage(body);
 
       const messageRes = await response.json();
       if (messageRes.error) {
@@ -99,14 +95,19 @@ async function sendMessage(text: string) {
         throw messageRes;
       }
 
+      // ^3 decrypt the message
       let message;
       if (contact.publicKey) {
         message = { ...messageRes.message, text: decryptMessageText(messageRes.message.text, contact?.publicKey) };
       } else {
         message = messageRes.message;
       }
+
       updateMessage(message);
       messagingState.scrollToBottom(true);
+
+      // ^4 check if they are in contact, if not add to contacts
+      addToContact();
     } catch (error) {
       messagingState.message = text;
       updateMessage({ status: "failed" });
@@ -116,6 +117,29 @@ async function sendMessage(text: string) {
     }
   } else {
     console.warn("Cannot send an empty message.");
+  }
+  function postMessage(body: string) {
+    return fetch("/api/send-message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body,
+    });
+  }
+  async function addToContact() {
+    if (!route.params.username) return;
+    if (typeof route.params.username === "object") return;
+    const isContact = await findContact(route.params?.username);
+    if (isContact && isContact.contactFound) {
+      if (!isContact.userAddedToContact || !isContact.contactAddedToTheUser) {
+        const isContactAdded = await findContact(route.params?.username, true);
+
+        if (!isContactAdded?.userAddedToContact || !isContactAdded?.contactAddedToTheUser) {
+          console.error("Contact is not added: ", isContactAdded);
+        }
+      }
+    }
   }
 }
 </script>

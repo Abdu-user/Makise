@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
 
     const chatId = makeChatId(userId, contactId);
 
+    // ^ if there is no specific message, return all matching messages
     if (!messageId) {
       const messages = await queryDocument(
         [Query.equal("chatId", chatId), Query.limit(Number(messageLimit)), Query.orderDesc("$createdAt")],
@@ -35,6 +36,7 @@ export default defineEventHandler(async (event) => {
       );
       return { success: true, messages: messages.documents, total: messages.total };
     } else {
+      // ^ get specific message with the id
       const message = await getAppwriteDocument("messages", messageId);
       return { success: true, message };
     }

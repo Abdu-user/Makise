@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
   try {
     const { Query } = initializeServerAppWrite();
 
+    // ^1 Validate the props
     const userId = getCookie(event, "userId");
     const contactUsername = getRouterParam(event, "contactUsername");
 
@@ -22,21 +23,16 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 404, statusMessage: "User not found" });
     }
 
-    const contacts = user.contacts ?? [];
-    const contactId = (await queryDocument([Query.equal("username", contactUsername)], "users")).documents[0].$id;
+    // ^2 Find the contact by username
+    const contactResult = await queryDocument([Query.equal("username", contactUsername), Query.limit(1)], "users");
 
-    if (!contacts.includes(contactId)) {
-      throw createError({
-        statusCode: 403,
-        statusMessage: "This contact is not in your contacts list",
-      });
-    }
-
-    const contactResult = await queryDocument([Query.equal("username", contactUsername), Query.limit(1)]);
     const contact = contactResult.documents[0] as Models.Document & UserProfileType;
 
     if (!contact) {
-      throw createError({ statusCode: 404, statusMessage: "Contact not found" });
+      throw createError({
+        statusCode: 404,
+        statusMessage: "This contact does not exist",
+      });
     }
 
     const response: { success: boolean; contact: ContactType } = {
