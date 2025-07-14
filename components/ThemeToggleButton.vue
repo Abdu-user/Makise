@@ -6,7 +6,7 @@
       class="p-[2px]"
     >
       <CustomButton
-        :variant="themeMode === 'light' ? 'active' : 'text'"
+        :variant="state.themeMode === 'light' ? 'active' : 'text'"
         :is-primary-color="'theme'"
         :name="'material-symbols:light-mode'"
         :icon="true"
@@ -16,7 +16,7 @@
         @click="setTheme('light')"
       />
       <CustomButton
-        :variant="themeMode === 'dark' ? 'active' : 'text'"
+        :variant="state.themeMode === 'dark' ? 'active' : 'text'"
         :is-primary-color="'theme'"
         :name="'material-symbols:dark-mode'"
         :icon="true"
@@ -26,14 +26,14 @@
         @click="setTheme('dark')"
       />
       <CustomButton
-        :variant="themeMode === 'auto' ? 'active' : 'text'"
+        :variant="state.themeMode === 'auto' ? 'active' : 'text'"
         :is-primary-color="'theme'"
         :name="'material-symbols:computer-outline-rounded'"
         :icon="true"
         :icon-position="'right'"
         size="sm"
         class="w-6 h-6"
-        @click="((themeMode = 'auto'), state.setThemeMode('auto'), state.getPreferenceData())"
+        @click="((state.themeMode = 'auto'), state.setThemeMode('auto'), state.getPreferenceData())"
       />
     </CustomContainer>
   </div>
@@ -47,18 +47,7 @@ defineProps<{ text?: string }>();
 const themeMode = ref("auto");
 
 const setTheme = (theme: "dark" | "light") => {
-  document.documentElement.classList.remove(theme === "dark" ? "dark" : "light");
-  document.documentElement.classList.toggle("dark", theme === "dark");
-  localStorage.setItem("theme", theme === "dark" ? "dark" : "light");
   themeMode.value = theme;
   state.setThemeMode(theme);
 };
-onMounted(() => {
-  themeMode.value = state.themeMode;
-  if (state.themeMode !== "auto") {
-    setTheme(state.themeMode);
-  }
-  console.log(themeMode.value);
-  console.log("Theme mode on mounted:", state.themeMode);
-});
 </script>

@@ -1,0 +1,10 @@
+{
+  "loginMessage1": "Login is required to use the app fully",
+  "inspiration1": "This{br} web app {br} {gradient} {br} Makise Kurisu",
+  "inspired by -": "inspired by -",
+  "paragraph1": "In this app, you can create {br} an account to start messaging{br} like in {Telegram}. {br} The messages are client side encrypted.",
+  "users": "users",
+  "messages": "messages",
+  "verified users": "verified users",
+  "Chat with Amadeus": "Chat with Amadeus"
+}

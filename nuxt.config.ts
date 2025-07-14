@@ -3,7 +3,21 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
   plugins: ["~/plugins/firebase.client.ts"],
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/icon", "@nuxt/image"],
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/icon", "@nuxt/image", "@nuxtjs/i18n"],
+
+  i18n: {
+    vueI18n: "./i18n.config.ts", // or .js
+
+    locales: [
+      { code: "en", name: "English", file: "en.json" },
+      { code: "kz", name: "Kazakh", file: "kz.json" },
+      { code: "ru", name: "Russian", file: "ru.json" },
+    ],
+    defaultLocale: "en",
+    lazy: false, // loads only the needed language
+    langDir: "locales/",
+    strategy: "no_prefix", // or 'prefix_except_default'
+  },
   runtimeConfig: {
     resendApiKey: process.env.RESEND_API_KEY,
     public: {

@@ -124,9 +124,13 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       this.isScrollLinksExist = bool;
     },
     setThemeMode(themeMode: typeof this.themeMode) {
+      document.documentElement.classList.remove(themeMode === "dark" ? "dark" : "light");
+      document.documentElement.classList.toggle("dark", themeMode === "dark");
+      localStorage.setItem("theme", themeMode === "dark" ? "dark" : "light");
       this.themeMode = themeMode;
       this.saveToLocalStorage();
     },
+
     setFeedback(state: typeof this.feedback.state, message: string = "", duration?: number) {
       this.feedback.state = state;
       this.feedback.message = message;

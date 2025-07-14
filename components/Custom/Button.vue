@@ -84,7 +84,7 @@ const colors: { primary: typeof variants; theme: typeof variants } = {
 };
 const newColors: typeof variants = {
   default: "bg-bg text-text hover:bg-light hover:text-text-muted",
-  primary: "bg-primary text-bg hover:bg-secondary focus:outline-primary",
+  primary: "bg-primary text-bg hover:bg-secondary focus:outline-primary ",
   outlined: "bg-transparent text-primary border border-primary hover:bg-primary hover:text-bg",
   tonal: "bg-bg-light text-text-muted active:text-primary focus:outline-primary   ",
   text: "bg-transparent text-text hover:text-primary focus:outline-primary  ",

@@ -132,9 +132,22 @@ body {
 body {
   border-color: #848484;
 }
+
+:root {
+  overflow-x: hidden;
+}
 :root {
   --message-bubble: linear-gradient(rgb(255, 157, 0) 0%, rgb(253, 0, 253) 50%, rgb(167, 151, 255) 65%, rgb(0, 229, 255) 100%);
   --text-gradient: linear-gradient(to right, #c46767 0%, #ea7878 39%, #9280c9 69%, #ed7a7a 89%, #ee5656 100%);
+  --bg-gradient: linear-gradient(to right, #ef5d5d68 0%, #f3c9c965 70%, #ef5d5d83 100%);
+}
+.text-gradient {
+  background: var(--text-gradient);
+  background-clip: text;
+  color: transparent;
+}
+.bg-gradient {
+  background: linear-gradient(144.39deg, #ffffff -278.56%, #ffc3c3 -78.47%, #ff7b7b 91.61%);
 }
 
 :root {
