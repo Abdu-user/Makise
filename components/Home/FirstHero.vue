@@ -1,6 +1,6 @@
 <template>
   <section
-    class="md:flex grid-cols-2 h-[100dvh] md:min-h-[700px]"
+    class="md:flex grid-cols-2 md:h-[100dvh] md:min-h-[700px]"
     :id="homeHashLinks[0]"
   >
     <div class="ml-7 max-md:mr-7 md:ml-14 md:w-[40%] pb-10">
@@ -62,6 +62,7 @@
         alt=""
         class="h-full object-contain md:pt-16 relative z-10"
       />
+
       <div class="bg-red-700 w-96 h-96 absolute top-1/2 -translate-y-1/2 rounded-full blur-[450px]"></div>
     </div>
   </section>
