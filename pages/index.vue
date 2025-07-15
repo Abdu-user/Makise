@@ -4,10 +4,11 @@
     class="max-w-7xl mx-auto"
   >
     <HomeNavigation />
-    <div class="md:h-[100dvh]">
-      <HomeFirstHero />
-    </div>
+
+    <HomeFirstHero />
+
     <div>waawaw</div>
+
     <HomeSecondHero />
   </CustomContainer>
 </template>

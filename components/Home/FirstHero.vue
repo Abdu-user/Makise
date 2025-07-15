@@ -1,10 +1,10 @@
 <template>
   <section
-    class="md:flex grid-cols-2 h-full"
+    class="md:flex grid-cols-2 h-[100dvh] md:min-h-[700px]"
     :id="homeHashLinks[0]"
   >
     <div class="ml-7 max-md:mr-7 md:ml-14 md:w-[40%] pb-10">
-      <div class="pt-36 flex flex-col items-start md:gap-12 md:h-full">
+      <div class="pt-20 flex flex-col items-start md:h-full justify-evenly">
         <p
           class="px-4 py-2 inline-block rounded-lg slideLeft"
           style="background: var(--bg-gradient)"
@@ -12,7 +12,7 @@
           {{ $t("loginMessage1") }}
         </p>
         <div class="relative slideLeft">
-          <h1 class="text-5xl leading-[1.1] font-semibold uppercase mt-4">
+          <h1 class="text-4xl leading-[1.1] font-semibold uppercase mt-4">
             <i18n-t keypath="inspiration1">
               <template #gradient>
                 <span class="text-gradient">{{ $t("inspired by -") }}</span>
@@ -41,17 +41,19 @@
             </template>
           </i18n-t>
         </p>
-        <ul class="md:relative flex max-lg:flex-wrap mt-10 gap-x-12 gap-y-7 md:whitespace-nowrap slideLeft">
-          <li
-            v-for="info in webAppInfo"
-            class="whitespace-nowrap"
-          >
-            <span class="text-gradient text-4xl">
-              {{ info.number }}
-            </span>
-            {{ info.text }}
-          </li>
-        </ul>
+        <div class="relative h-20 w-full">
+          <ul class="md:absolute top-0 flex flex-wrap w-[140%] gap-5 md:whitespace-nowrap slideLeft">
+            <li
+              v-for="info in webAppInfo"
+              class="whitespace-nowrap"
+            >
+              <span class="text-gradient text-4xl">
+                {{ info.number }}
+              </span>
+              {{ info.text }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="md:h-full ml-auto relative flex items-center justify-center slideRight">
