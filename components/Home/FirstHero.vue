@@ -41,8 +41,8 @@
             </template>
           </i18n-t>
         </p>
-        <div class="relative h-20 w-full">
-          <ul class="md:absolute top-0 flex flex-wrap w-[140%] gap-5 md:whitespace-nowrap slideLeft">
+        <div class="relative h-20 w-full max-md:mt-4">
+          <ul class="md:absolute top-0 flex flex-wrap md:w-[140%] gap-5 md:whitespace-nowrap slideLeft">
             <li
               v-for="info in webAppInfo"
               class="whitespace-nowrap"
@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-    <div class="md:h-full ml-auto relative flex items-center justify-center slideRight">
+    <div class="max-md:pt-10 md:h-full ml-auto relative flex items-center justify-center slideRight">
       <img
         src="/backgrounds/makise-wallpaper3-bg-trans2.png"
         alt=""
