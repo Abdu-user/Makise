@@ -1,8 +1,7 @@
 import sodium from "libsodium-wrappers";
 
-await sodium.ready;
-
-export function useEncryption() {
+export async function useEncryption() {
+  await sodium.ready;
   const generateKeyPair = () => {
     return sodium.crypto_box_keypair();
   };
