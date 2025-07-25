@@ -19,7 +19,11 @@ import { onMounted, ref } from "vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 onMounted(() => {
-  state.setThemeMode("light");
+  document.documentElement.classList.remove("dark");
+  document.documentElement.classList.toggle("dark", false);
+});
+onBeforeUnmount(() => {
+  state.loadThemeMode();
 });
 </script>
 
@@ -34,7 +38,7 @@ onMounted(() => {
 
   animation-range:
     cover 0% cover 10%,
-    cover 90% cover 100%;
+    cover 85% cover 100%;
 }
 
 @keyframes slideInLeft {
@@ -68,7 +72,7 @@ onMounted(() => {
 
   animation-range:
     cover 0% cover 10%,
-    cover 90% cover 100%;
+    cover 85% cover 100%;
 }
 
 @keyframes slideInRight {

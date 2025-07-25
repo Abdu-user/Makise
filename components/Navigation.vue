@@ -5,7 +5,7 @@
   >
     <div class="max-w-7xl mx-auto">
       <div class="relative flex items-center justify-between gap-4 h-16 px-4 sm:px-6 lg:px-8 shadow-sm">
-        <div class="flex items-center no-auto-pos">
+        <div class="flex p-4 items-center">
           <MenuOpenButton
             :toggle="state.toggleIsNavOpen"
             :is-menu-open="state.isNavOpen"

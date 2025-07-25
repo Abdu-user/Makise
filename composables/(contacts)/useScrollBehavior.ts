@@ -36,6 +36,17 @@ export function useScrollBehavior(containerRef: Ref<HTMLElement | null>) {
     );
   }
 
+  function isContainerScrollable() {
+    const el = containerRef.value;
+    if (!el) return;
+    const isScrollable = el.scrollHeight > el.clientHeight;
+    if (isScrollable) {
+      console.log("It is scrollable");
+    } else {
+      messagingState.isUserAtBottom = true;
+    }
+  }
+
   function setupScrollListeners() {
     onMounted(() => {
       messagingState.scrollToBottom(scrollToBottom);
@@ -57,5 +68,6 @@ export function useScrollBehavior(containerRef: Ref<HTMLElement | null>) {
     detectScroll,
     watchMessagesAndScroll,
     setupScrollListeners,
+    isContainerScrollable,
   };
 }

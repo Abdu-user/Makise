@@ -49,7 +49,7 @@
           </div>
         </div>
         <div
-          class="relative w-10"
+          class="relative w-10 text-text"
           ref="langDiv"
         >
           <button

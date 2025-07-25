@@ -58,9 +58,16 @@ watch(
 );
 
 //  ~ Scroll down on mounded
-const { setupScrollListeners } = useScrollBehavior(messagesContainerRef);
+const { setupScrollListeners, isContainerScrollable } = useScrollBehavior(messagesContainerRef);
 
 setupScrollListeners();
+watch(
+  () => messagingState.messages,
+  () => {
+    isContainerScrollable();
+  },
+  { deep: true }
+);
 </script>
 
 <style>
