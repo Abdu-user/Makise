@@ -45,6 +45,14 @@ async function getContactNavLinks(contacts: ContactType[]) {
         Query.orderDesc("$createdAt"),
         Query.limit(1),
       ])) as Models.Document & MessageType;
+      if (res === undefined) {
+        console.error("Message response is undefined", res);
+        return { contact: contact, message: null };
+      }
+      if (contact.publicKey === undefined) {
+        console.error("Contact publicKey is undefined", contact);
+        return { contact: contact, message: res };
+      }
       return {
         contact: contact,
         message: { ...res, text: decryptMessageText(res.text, contact?.publicKey!) },
