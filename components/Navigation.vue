@@ -4,7 +4,7 @@
     :class="state.newColors ? 'bg-bg-transparent text-text' : 'bg-mainBg/80 dark:bg-darkMainBg text-textHeader'"
   >
     <div class="max-w-7xl mx-auto">
-      <div class="relative flex items-center justify-between gap-4 h-16 px-4 sm:px-6 lg:px-8 shadow-sm">
+      <div class="relative flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8 shadow-sm">
         <div class="flex p-4 items-center">
           <MenuOpenButton
             :toggle="state.toggleIsNavOpen"
@@ -15,10 +15,13 @@
             class="w-10 h-10"
           />
         </div>
-        <span class="font-bold text-2xl md:text-xl capitalize text-T1TextColor dark:text-darkT1TextColor">{{ state.routeName }}</span>
+        <span class="font-bold text-xl md:text-xl capitalize text-text">{{ state.routeName }}</span>
 
         <div class="flex items-center">
-          <ThemeToggleButton v-if="!state.isInProfilePage" />
+          <ThemeToggleButton
+            class="max-w-full"
+            v-if="!state.isInProfilePage"
+          />
 
           <CustomNuxtLink
             v-if="route.fullPath === '/contacts'"
