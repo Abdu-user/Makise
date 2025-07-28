@@ -56,16 +56,20 @@ async function getContactNavLinks(contacts: ContactType[]) {
   });
   console.log(contactWithDecryptedMessage, "contactWithDecryptedMessage before Promise.all");
 
-  const newContacts = await Promise.all(contactWithDecryptedMessage);
-  console.log(newContacts, "newContacts");
-  const contactsWithMessage = newContacts.map((newContact) => {
-    return { ...newContact?.contact, message: newContact?.message } as unknown as ContactType & {
-      message: MessageType;
-    };
-  });
+  try {
+    const newContacts = await Promise.all(contactWithDecryptedMessage);
+    console.log(newContacts, "newContacts");
+    const contactsWithMessage = newContacts.map((newContact) => {
+      return { ...newContact?.contact, message: newContact?.message } as unknown as ContactType & {
+        message: MessageType;
+      };
+    });
 
-  console.log(contactsWithMessage, "contactsWithMessage");
-  messagingState.contactsWithMessage = contactsWithMessage;
+    console.log(contactsWithMessage, "contactsWithMessage");
+    messagingState.contactsWithMessage = contactsWithMessage;
+  } catch (error) {
+    console.error("Error while resolving contact messages:", error);
+  }
 }
 </script>
 
