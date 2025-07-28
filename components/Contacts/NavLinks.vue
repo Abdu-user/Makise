@@ -37,25 +37,25 @@ async function getContactNavLinks(contacts: ContactType[]) {
   if (contacts === undefined) return console.log("Contacts are undefined");
   console.log(contacts, "contacts in getContactNavLinks");
 
-  const contactWithDecryptedMessage = contacts.map(async (contact) => {
-    if (state.user) {
-      const chatId = makeChatId(state.user.$id, contact.id);
-      const res = (await queryDocument("messages", [
-        Query.equal("chatId", chatId),
-        Query.orderDesc("$createdAt"),
-        Query.limit(1),
-      ])) as Models.Document & MessageType;
-      return {
-        contact: contact,
-        message: { ...res, text: decryptMessageText(res.text, contact?.publicKey!) },
-      };
-    } else {
-      const message = "state.user is undefined or null";
-      console.error(message);
-    }
-  });
-
   try {
+    const contactWithDecryptedMessage = contacts.map(async (contact) => {
+      if (state.user) {
+        const chatId = makeChatId(state.user.$id, contact.id);
+        const res = (await queryDocument("messages", [
+          Query.equal("chatId", chatId),
+          Query.orderDesc("$createdAt"),
+          Query.limit(1),
+        ])) as Models.Document & MessageType;
+        return {
+          contact: contact,
+          message: { ...res, text: decryptMessageText(res.text, contact?.publicKey!) },
+        };
+      } else {
+        const message = "state.user is undefined or null";
+        console.error(message);
+      }
+    });
+
     console.log(contactWithDecryptedMessage, "contactWithDecryptedMessage before Promise.all");
     console.log("does it work at all");
     const newContacts = await Promise.all(contactWithDecryptedMessage);
