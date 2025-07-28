@@ -70,10 +70,9 @@ function contactWIthDecryptMessageFn(contacts: ContactType[]) {
         console.error("Contact publicKey is undefined", contact);
         return { contact: contact, message: res };
       }
-      console.log(contact, res, "contact and res in contactWIthDecryptMessageFn");
       return {
         contact: contact,
-        message: { ...res, text: decryptMessageText(res.text, contact?.publicKey) },
+        message: { ...res, text: decryptMessageText(res.text, contact.publicKey) },
       };
     } else {
       const message = "state.user is undefined or null";

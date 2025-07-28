@@ -74,6 +74,10 @@ export function decryptMessageText(text: string, contactPublicKey: string) {
 
   // ^ 2. Get your private key
   const myPrivateKey = sodium.from_base64(localStorage.getItem("privateKey")!);
+  if (!myPrivateKey) {
+    console.warn("Private key is not found in localStorage, returning raw text");
+    return text;
+  }
 
   // ^ 3. Decrypt
   const plainText = decryptMessage(encrypted, myPrivateKey, senderPublicKey);
