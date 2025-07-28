@@ -34,10 +34,10 @@ onMounted(async () => {
 });
 
 async function getContactNavLinks(contacts: ContactType[]) {
+  if (contacts === undefined) return console.log("Contacts are undefined");
   console.log(contacts, "contacts in getContactNavLinks");
-  if (contacts === undefined) return;
 
-  const contactPromise = contacts.map(async (contact) => {
+  const contactWithDecryptedMessage = contacts.map(async (contact) => {
     if (state.user) {
       const chatId = makeChatId(state.user.$id, contact.id);
       const res = (await queryDocument("messages", [
@@ -54,8 +54,9 @@ async function getContactNavLinks(contacts: ContactType[]) {
       console.error(message);
     }
   });
+  console.log(contactWithDecryptedMessage, "contactWithDecryptedMessage before Promise.all");
 
-  const newContacts = await Promise.all(contactPromise);
+  const newContacts = await Promise.all(contactWithDecryptedMessage);
   console.log(newContacts, "newContacts");
   const contactsWithMessage = newContacts.map((newContact) => {
     return { ...newContact?.contact, message: newContact?.message } as unknown as ContactType & {
