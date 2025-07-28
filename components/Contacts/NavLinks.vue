@@ -37,31 +37,7 @@ async function getContactNavLinks(contacts: ContactType[]) {
   if (contacts === undefined) return console.log("Contacts are undefined");
   console.log(contacts, "contacts in getContactNavLinks");
 
-  const contactWithDecryptedMessage = contacts.map(async (contact) => {
-    if (state.user) {
-      const chatId = makeChatId(state.user.$id, contact.id);
-      const res = (await queryDocument("messages", [
-        Query.equal("chatId", chatId),
-        Query.orderDesc("$createdAt"),
-        Query.limit(1),
-      ])) as Models.Document & MessageType;
-      if (res === undefined) {
-        console.error("Message response is undefined", res);
-        return { contact: contact, message: null };
-      }
-      if (contact.publicKey === undefined) {
-        console.error("Contact publicKey is undefined", contact);
-        return { contact: contact, message: res };
-      }
-      return {
-        contact: contact,
-        message: { ...res, text: decryptMessageText(res.text, contact?.publicKey!) },
-      };
-    } else {
-      const message = "state.user is undefined or null";
-      console.error(message);
-    }
-  });
+  const contactWithDecryptedMessage = contactWIthDecryptMessageFn(contacts);
 
   console.log(contactWithDecryptedMessage, "contactWithDecryptedMessage before Promise.all");
   console.log("does it work at all");
@@ -75,6 +51,35 @@ async function getContactNavLinks(contacts: ContactType[]) {
 
   console.log(contactsWithMessage, "contactsWithMessage");
   messagingState.contactsWithMessage = contactsWithMessage;
+}
+
+function contactWIthDecryptMessageFn(contacts: ContactType[]) {
+  return contacts.map(async (contact) => {
+    if (state.user) {
+      const chatId = makeChatId(state.user.$id, contact.id);
+      const res = (await queryDocument("messages", [
+        Query.equal("chatId", chatId),
+        Query.orderDesc("$createdAt"),
+        Query.limit(1),
+      ])) as Models.Document & MessageType;
+      if (res === undefined) {
+        console.error("Message response is undefined", res);
+        return { contact: contact, message: null };
+      }
+      if (contact.publicKey === undefined || !res.text) {
+        console.error("Contact publicKey is undefined", contact);
+        return { contact: contact, message: res };
+      }
+      console.log(contact, res, "contact and res in contactWIthDecryptMessageFn");
+      return {
+        contact: contact,
+        message: { ...res, text: decryptMessageText(res.text, contact?.publicKey) },
+      };
+    } else {
+      const message = "state.user is undefined or null";
+      console.error(message);
+    }
+  });
 }
 </script>
 
