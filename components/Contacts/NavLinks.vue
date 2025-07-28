@@ -24,9 +24,6 @@ const messagingState = useMessagingStore();
 
 onMounted(async () => {
   const contacts = await messagingState.getContacts();
-  console.log(messagingState.contacts);
-  console.log(messagingState.contactsWithMessage, "contactsWithMessage before fetching messages");
-  console.log(messagingState);
 
   if (contacts) {
     await getContactNavLinks(contacts);
@@ -37,6 +34,7 @@ onMounted(async () => {
 });
 
 async function getContactNavLinks(contacts: ContactType[]) {
+  console.log(contacts, "contacts in getContactNavLinks");
   if (contacts === undefined) return;
 
   const contactPromise = contacts.map(async (contact) => {
@@ -58,11 +56,15 @@ async function getContactNavLinks(contacts: ContactType[]) {
   });
 
   const newContacts = await Promise.all(contactPromise);
-  messagingState.contactsWithMessage = newContacts.map((newContact) => {
+  console.log(newContacts, "newContacts");
+  const contactsWithMessage = newContacts.map((newContact) => {
     return { ...newContact?.contact, message: newContact?.message } as unknown as ContactType & {
       message: MessageType;
     };
   });
+
+  console.log(contactsWithMessage, "contactsWithMessage");
+  messagingState.contactsWithMessage = contactsWithMessage;
 }
 </script>
 

@@ -87,11 +87,6 @@ async function messageReceivedNotify(payload: MessagePayload) {
   }
 }
 function stateLog() {
-  console.log("state.user", state.user);
-  console.log("state.userData", state.userData);
-  console.log("state.contacts", messagingState.contacts);
-  console.log("state.contactsWithMessage", messagingState.contactsWithMessage);
-  console.log("state.messages", messagingState.messages);
   console.log("globalState", state);
   console.log("messagingState", messagingState);
 }
