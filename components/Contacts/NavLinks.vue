@@ -54,9 +54,10 @@ async function getContactNavLinks(contacts: ContactType[]) {
       console.error(message);
     }
   });
-  console.log(contactWithDecryptedMessage, "contactWithDecryptedMessage before Promise.all");
 
   try {
+    console.log(contactWithDecryptedMessage, "contactWithDecryptedMessage before Promise.all");
+    console.log("does it work at all");
     const newContacts = await Promise.all(contactWithDecryptedMessage);
     console.log(newContacts, "newContacts");
     const contactsWithMessage = newContacts.map((newContact) => {
