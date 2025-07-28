@@ -24,8 +24,16 @@ const messagingState = useMessagingStore();
 
 onMounted(async () => {
   const contacts = await messagingState.getContacts();
+  console.log(messagingState.contacts);
+  console.log(messagingState.contactsWithMessage, "contactsWithMessage before fetching messages");
+  console.log(messagingState);
 
-  if (contacts) await getContactNavLinks(contacts);
+  if (contacts) {
+    await getContactNavLinks(contacts);
+    console.log(contacts, "contacts fetched successfully");
+  } else {
+    console.error("No contacts found or error fetching contacts.");
+  }
 });
 
 async function getContactNavLinks(contacts: ContactType[]) {
