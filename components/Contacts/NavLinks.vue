@@ -37,40 +37,36 @@ async function getContactNavLinks(contacts: ContactType[]) {
   if (contacts === undefined) return console.log("Contacts are undefined");
   console.log(contacts, "contacts in getContactNavLinks");
 
-  try {
-    const contactWithDecryptedMessage = contacts.map(async (contact) => {
-      if (state.user) {
-        const chatId = makeChatId(state.user.$id, contact.id);
-        const res = (await queryDocument("messages", [
-          Query.equal("chatId", chatId),
-          Query.orderDesc("$createdAt"),
-          Query.limit(1),
-        ])) as Models.Document & MessageType;
-        return {
-          contact: contact,
-          message: { ...res, text: decryptMessageText(res.text, contact?.publicKey!) },
-        };
-      } else {
-        const message = "state.user is undefined or null";
-        console.error(message);
-      }
-    });
-
-    console.log(contactWithDecryptedMessage, "contactWithDecryptedMessage before Promise.all");
-    console.log("does it work at all");
-    const newContacts = await Promise.all(contactWithDecryptedMessage);
-    console.log(newContacts, "newContacts");
-    const contactsWithMessage = newContacts.map((newContact) => {
-      return { ...newContact?.contact, message: newContact?.message } as unknown as ContactType & {
-        message: MessageType;
+  const contactWithDecryptedMessage = contacts.map(async (contact) => {
+    if (state.user) {
+      const chatId = makeChatId(state.user.$id, contact.id);
+      const res = (await queryDocument("messages", [
+        Query.equal("chatId", chatId),
+        Query.orderDesc("$createdAt"),
+        Query.limit(1),
+      ])) as Models.Document & MessageType;
+      return {
+        contact: contact,
+        message: { ...res, text: decryptMessageText(res.text, contact?.publicKey!) },
       };
-    });
+    } else {
+      const message = "state.user is undefined or null";
+      console.error(message);
+    }
+  });
 
-    console.log(contactsWithMessage, "contactsWithMessage");
-    messagingState.contactsWithMessage = contactsWithMessage;
-  } catch (error) {
-    console.error("Error while resolving contact messages:", error);
-  }
+  console.log(contactWithDecryptedMessage, "contactWithDecryptedMessage before Promise.all");
+  console.log("does it work at all");
+  const newContacts = await Promise.all(contactWithDecryptedMessage);
+  console.log(newContacts, "newContacts");
+  const contactsWithMessage = newContacts.map((newContact) => {
+    return { ...newContact?.contact, message: newContact?.message } as unknown as ContactType & {
+      message: MessageType;
+    };
+  });
+
+  console.log(contactsWithMessage, "contactsWithMessage");
+  messagingState.contactsWithMessage = contactsWithMessage;
 }
 </script>
 
