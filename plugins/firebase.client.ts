@@ -10,6 +10,13 @@ import { getAnalytics } from "firebase/analytics";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 export default defineNuxtPlugin(() => {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !("MSStream" in window);
+
+  if (isIOS) {
+    console.warn("iOS detected — skipping Firebase init");
+    return;
+  }
+
   const config = useRuntimeConfig();
   if (!config.public.firebaseApiKey) {
     console.warn("[Firebase] Missing Firebase API Key");
