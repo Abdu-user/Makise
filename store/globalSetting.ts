@@ -61,7 +61,6 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
         STORAGE_KEY,
         JSON.stringify({
           isDebugPanelOpen: this.isDebugPanelOpen,
-          isNavOpen: this.isNavOpen,
           isEditingProfile: this.isEditingProfile,
           isPrefillTheUserField: this.isPrefillTheUserField,
           themeMode: this.themeMode,
@@ -73,7 +72,6 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       if (data) {
         const parsed = JSON.parse(data);
         this.isDebugPanelOpen = parsed.isDebugPanelOpen ?? false;
-        this.isNavOpen = parsed.isNavOpen ?? false;
         this.isEditingProfile = parsed.isEditingProfile ?? false;
         this.isPrefillTheUserField = parsed.isPrefillTheUserField ?? false;
         this.themeMode = parsed.themeMode ?? "auto";

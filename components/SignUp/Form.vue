@@ -35,7 +35,7 @@
           autocomplete="email"
           v-model="signUpState.email"
           variant="input"
-          placeholder="you@example.com"
+          placeholder="you@gmail.com"
           :error="Boolean(emailError)"
         />
       </div>

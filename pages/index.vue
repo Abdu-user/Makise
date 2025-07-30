@@ -1,11 +1,10 @@
 <template>
   <CustomContainer
     :variant="'mainContainer'"
-    :class="'overflow-hidden'"
-    class="max-w-7xl mx-auto"
+    class="max-w-7xl mx-auto overflow-clip"
   >
     <HomeNavigation />
-    5.5v
+    5.5.1v
     <HomeFirstHero />
 
     <div>waawaw</div>

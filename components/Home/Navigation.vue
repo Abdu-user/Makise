@@ -1,7 +1,10 @@
 <template>
   <nav class="absolute top-0 z-20 left-0 w-full">
     <div class="max-w-7xl mx-auto flex h-28 items-center justify-between px-4 md:px-11">
-      <div class="flex items-center gap-2">
+      <NuxtLink
+        to="/profile"
+        class="flex items-center gap-2"
+      >
         <img
           src="/images/favicon.png"
           alt="logo"
@@ -12,7 +15,7 @@
           style="background-image: var(--text-gradient)"
           >Makise</span
         >
-      </div>
+      </NuxtLink>
       <div class="flex gap-4">
         <div class="md:hidden relative">
           <custom-button
@@ -96,7 +99,6 @@ function isLangContain(e: Event) {
   const containsNavDiv = (navDiv.value as Node)?.contains(target);
   if (containsNavButton || containsNavDiv) {
   } else {
-    console.log(target);
     isNavOpenHome.value = false;
   }
 

@@ -101,6 +101,14 @@
             type="button"
             :variant="'primary'"
             size="md"
+            @click="logTheStates()"
+            >logTheStates()</CustomButton
+          >
+          <CustomButton
+            :is-primary-color="'theme'"
+            type="button"
+            :variant="'primary'"
+            size="md"
             @click="deleteUser('685e72247f8b4eacaf1b')"
             >delete User</CustomButton
           >
@@ -275,6 +283,10 @@ async function GiveUserPermission() {
 
 function ChangeTheKeyPair() {
   useKeyPair();
+}
+function logTheStates() {
+  console.log("Global State:", state);
+  console.log("Messaging State:", useMessagingStore());
 }
 </script>
 
