@@ -1,6 +1,7 @@
 <template>
   <CustomContainer
     :variant="'mainContainer'"
+    :class="'overflow-hidden'"
     class="max-w-7xl mx-auto"
   >
     <HomeNavigation />
@@ -28,8 +29,10 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
-:root {
-  overflow-x: hidden;
+:root,
+body {
+  /* overflow-x: hidden;
+  overflow-y: scroll; */
 }
 .slideLeft {
   animation:

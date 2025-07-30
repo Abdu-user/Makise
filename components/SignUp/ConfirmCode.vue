@@ -90,7 +90,7 @@ async function handleVerifyCode(code: string) {
 
     useKeyPair();
 
-    router.push("/");
+    router.push("/profile");
   } catch (err) {
     console.log("Error during verification:", err);
 
