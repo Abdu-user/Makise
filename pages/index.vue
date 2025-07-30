@@ -28,6 +28,9 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
+:root {
+  overflow-x: hidden;
+}
 .slideLeft {
   animation:
     slideInLeft ease-in-out forwards,
