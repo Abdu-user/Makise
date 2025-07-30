@@ -3,7 +3,7 @@
     class="md:flex grid-cols-2 md:h-[100dvh] md:min-h-[700px]"
     :id="homeHashLinks[0]"
   >
-    <div class="ml-7 max-md:mr-7 md:ml-14 md:w-[40%] pb-10">
+    <div class="ml-4 max-md:mr-4 md:ml-11 md:w-[40%] pb-10">
       <div class="pt-20 flex flex-col items-start md:h-full justify-evenly">
         <p
           class="px-4 py-2 inline-block rounded-lg slideLeft"
