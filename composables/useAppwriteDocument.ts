@@ -1,5 +1,5 @@
 // composables/useAppwrite.ts
-import { ID, Permission, Query, Role, Storage } from "appwrite";
+import { ID, Permission, Query, Role, Storage, type Models } from "appwrite";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { UserProfileType } from "~/types/type";
 import { generateRandomUsername } from "~/utils";
@@ -29,11 +29,15 @@ export async function useAppwriteDocumentUpdate(documentId: string, data: Partia
       body: JSON.stringify({ documentId, data }),
     });
   } catch (error) {
+    console.error(
+      "Error updating user document in Appwrite:",
+      error instanceof Error ? error.message : String(error) // Ensure we handle non-Error objects gracefully
+    );
     throw error;
   }
 }
 
-export function useAppwriteDocumentGet(documentId: string) {
+export function useAppwriteDocumentGet(documentId: string): Promise<Models.Document & UserProfileType> {
   const { $appwrite } = useNuxtApp();
   const databases = $appwrite.databases;
   const config = useRuntimeConfig();

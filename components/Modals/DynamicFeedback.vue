@@ -32,7 +32,7 @@ watch(
     if (newValue) {
       timerId.value = setTimeout(() => {
         globalState.setFeedback("idle", "");
-      }, globalState.feedback.duration || 6000);
+      }, globalState.feedback.duration || 60000);
     }
   },
   { deep: true }

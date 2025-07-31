@@ -1,4 +1,6 @@
 import sodium from "libsodium-wrappers";
+import { getDecryptedPrivateKey, storeSalt } from "./encryption/useAccountKey";
+import { savePrivateKey } from "./useKeyPair";
 
 export function useEncryption() {
   const generateKeyPair = () => {
@@ -33,4 +35,15 @@ export function useEncryption() {
     encryptMessage,
     decryptMessage,
   };
+}
+export async function createEncryption(password: string) {
+  try {
+    console.log("Encryption is not ready, creating again");
+    await storeSalt();
+    await useKeyPair(password);
+    const decryptedPrivateKey = await getDecryptedPrivateKey(password);
+    savePrivateKey(decryptedPrivateKey);
+  } catch (err) {
+    console.error(err);
+  }
 }

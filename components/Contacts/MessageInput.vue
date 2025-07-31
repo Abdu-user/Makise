@@ -128,6 +128,7 @@ async function sendMessage(text: string) {
     });
   }
   async function addToContact() {
+    if (messagingState.messages.length > 0) return;
     if (!route.params.username) return;
     if (typeof route.params.username === "object") return;
     const isContact = await findContact(route.params?.username);

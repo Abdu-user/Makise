@@ -72,24 +72,9 @@ async function messageReceivedNotify(payload: MessagePayload) {
 
     if (!p?.body) console.error("NO title in the Firebase notification");
     if (!p?.title) console.error("No body in the Firebase notification");
-    // const {title} = p
-    // const { body, title, senderUsername, time, link, messageId } = p;
-
-    // if (link.includes(route.fullPath)) {
-    //   const updateMessage = messagingState.addNewMessage({ text: body, userId: "" },);
-    //   const message = await getMessageById(senderUsername, messageId);
-    //   updateMessage(message);
-    //   messagingState.setUnreadMessages({
-    //     number: messagingState.unreadMessages.number + 1,
-    //     isThere: true,
-    //   });
-    // }
   }
 }
-function stateLog() {
-  console.log("globalState", state);
-  console.log("messagingState", messagingState);
-}
+function stateLog() {}
 
 async function saveUserCookie() {
   // ✅ Store userId cookie manually

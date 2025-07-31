@@ -17,6 +17,9 @@ export type UserProfileType = {
   contacts?: string[];
   lastOnline?: string;
   publicKey?: string;
+  encryptedPrivateKey?: string;
+  accountSalt?: string;
+  iv?: string;
 };
 
 export type ImgLocation = "top" | "center" | "bottom" | "left" | "left-top" | "left-bottom" | "right" | "right-top" | "right-bottom";

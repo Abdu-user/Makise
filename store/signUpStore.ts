@@ -4,4 +4,11 @@ export const useSIgnUpStore = defineStore("signUpStore", {
     password: "",
     confirmPassword: "",
   }),
+  actions: {
+    resetSignUpState() {
+      this.email = "";
+      this.password = "";
+      this.confirmPassword = "";
+    },
+  },
 });

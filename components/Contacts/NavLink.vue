@@ -41,7 +41,7 @@ defineProps({
   profileImgSrc: { type: String, required: true },
   name: { type: String, required: true },
   lastActive: { type: String, required: true },
-  myLastMessageStatus: { type: String as PropType<MessageType["status"] | null>, required: true },
+  myLastMessageStatus: { type: String as PropType<MessageType["status"] | null>, default: null },
   lastMessage: { type: String, required: true },
   to: { type: [String, Object], required: true, default: "/" },
 });

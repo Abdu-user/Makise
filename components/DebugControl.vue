@@ -282,7 +282,7 @@ async function GiveUserPermission() {
 }
 
 function ChangeTheKeyPair() {
-  useKeyPair();
+  // useKeyPair();
 }
 function logTheStates() {
   console.log("Global State:", state);

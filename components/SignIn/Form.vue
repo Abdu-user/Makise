@@ -94,6 +94,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { getDecryptedPrivateKey, getSalt } from "~/composables/encryption/useAccountKey";
+import { getPrivateKey } from "~/composables/useKeyPair";
 import { useAuth } from "~/composables/useSignUp";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const { login } = useAuth();
@@ -116,12 +118,17 @@ function onSignIn() {
 
   login(email.value, password.value)
     .then(async (res) => {
-      const conditionalRedirect = state.fromPage ? state.fromPage : "/";
+      const conditionalRedirect = state.fromPage ? state.fromPage : "/profile";
       router.push(conditionalRedirect);
 
       saveDeviceToken();
       await refreshUserData();
-      useKeyPair();
+      try {
+        await isEncryptionReadyIfNot_createAgain();
+      } catch (error) {
+        console.error("failed with encryption of salt, and privateKey ", error);
+      }
+
       state.setFeedback("success", "Successfully signed in");
     })
     .catch((error) => {
@@ -130,7 +137,7 @@ function onSignIn() {
       else {
         notifyError.value = error.message;
       }
-      state.setFeedback("error", "Failed to sign itn");
+      state.setFeedback("error", "Failed to sign in");
     });
 
   function validateEmail(email: string): boolean {
@@ -140,7 +147,7 @@ function onSignIn() {
 }
 
 function resetInputValues() {
-  email.value = state.isPrefillTheUserField ? "igromen1997@gmail.com" : "";
+  email.value = state.isPrefillTheUserField ? "vuereact517@gmail.com" : "";
   password.value = state.isPrefillTheUserField ? "12345678" : "";
 }
 
@@ -150,4 +157,27 @@ onMounted(() => {
 });
 
 onUnmounted(() => state.removeSingleResetFunction(resetInputValues));
+
+async function areCustomKeyPairAlreadyExists(password: string) {
+  const user = await useAuth().current();
+  const userData = await useAppwriteDocumentGet(user.$id);
+  const { encryptedPrivateKey, publicKey: savedPublicKey } = userData;
+  if (encryptedPrivateKey && savedPublicKey) {
+    return console.log("Key pair already exists, skipping generation", savedPublicKey, encryptedPrivateKey);
+  }
+
+  await useKeyPair(password);
+}
+async function isEncryptionReadyIfNot_createAgain() {
+  const user = await useAuth().current();
+  const userData = await useAppwriteDocumentGet(user.$id);
+  const { encryptedPrivateKey, publicKey: savedPublicKey } = userData;
+
+  if (encryptedPrivateKey && savedPublicKey && (await getSalt())) {
+    const decryptedPrivateKey = await getDecryptedPrivateKey(password.value);
+    savePrivateKey(decryptedPrivateKey);
+  } else {
+    createEncryption(password.value);
+  }
+}
 </script>

@@ -60,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+import { createEncryption } from "~/composables/useEncryption";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useSIgnUpStore } from "~/store/signUpStore";
 
@@ -87,10 +88,10 @@ async function handleVerifyCode(code: string) {
     router.push({ query: { ...route.query, "verify-email": undefined } });
 
     await createAppwriteUser(signUpState.email, signUpState.password);
-
-    useKeyPair();
+    await createEncryption(signUpState.password);
 
     router.push("/profile");
+    signUpState.resetSignUpState();
   } catch (err) {
     console.log("Error during verification:", err);
 

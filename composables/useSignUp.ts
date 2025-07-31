@@ -118,7 +118,6 @@ export const useAuth = () => {
   async function current() {
     try {
       const user = await $appwrite.account.get();
-      state.setUser(user);
 
       return user;
     } catch (error) {

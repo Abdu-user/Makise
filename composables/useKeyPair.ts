@@ -1,6 +1,7 @@
 import sodium from "libsodium-wrappers";
 import type { ContactType } from "~/types/messaging";
-export default async function useKeyPair() {
+import { saveEncryptedPrivateKey, useAccountKey } from "./encryption/useAccountKey";
+export default async function useKeyPair(password: string) {
   const { generateKeyPair } = useEncryption();
   const keyPair = generateKeyPair();
   const { $appwrite } = useNuxtApp();
@@ -12,11 +13,19 @@ export default async function useKeyPair() {
   const base64PublicKey = sodium.to_base64(keyPair.publicKey);
   const base64PrivateKey = sodium.to_base64(keyPair.privateKey);
 
-  useAppwriteDocumentUpdate((await $appwrite.account.get()).$id, {
-    publicKey: base64PublicKey,
-  });
-  const privateKey = JSON.stringify(keyPair.privateKey);
-  localStorage.setItem("privateKey", base64PrivateKey);
+  try {
+    await useAppwriteDocumentUpdate((await $appwrite.account.get()).$id, {
+      publicKey: base64PublicKey,
+    });
+    const accountKey = await useAccountKey(password);
+    if (accountKey) {
+      await saveEncryptedPrivateKey(accountKey, base64PrivateKey);
+    } else {
+      console.error("Failed to get account key for encryption", accountKey, password, base64PrivateKey);
+    }
+  } catch (err) {
+    console.error(err);
+  }
 }
 export async function encryptMessageText(contact: ContactType, text: string) {
   const { encryptMessage } = useEncryption();
@@ -29,8 +38,11 @@ export async function encryptMessageText(contact: ContactType, text: string) {
   const recipientPublicKey = sodium.from_base64(contact.publicKey); //^ Uint8Array
 
   //^ 2. Get your private key from localStorage
-  const myPrivateKey = sodium.from_base64(localStorage.getItem("privateKey")!);
-
+  const myPrivateKey = getPrivateKey();
+  if (!myPrivateKey) {
+    console.warn("Private key is not found in localStorage, returning raw text");
+    return text;
+  }
   //^ 3. Encrypt
   const encrypted = encryptMessage(text || "hello world", myPrivateKey, recipientPublicKey);
 
@@ -73,7 +85,7 @@ export function decryptMessageText(text: string, contactPublicKey: string) {
   const senderPublicKey = sodium.from_base64(contactPublicKey);
 
   // ^ 2. Get your private key
-  const myPrivateKey = sodium.from_base64(localStorage.getItem("privateKey")!);
+  const myPrivateKey = getPrivateKey();
   if (!myPrivateKey) {
     console.warn("Private key is not found in localStorage, returning raw text");
     return text;
@@ -91,4 +103,21 @@ export async function debugKeyPairs(contactPublicKey: string, myPublicKey: strin
   const senderPublicKey = sodium.from_base64(contactPublicKey);
   const receiverPublicKey = sodium.from_base64(myPublicKey);
   console.log(senderPublicKey, contactPublicKey, receiverPublicKey, myPublicKey);
+}
+
+export function getPrivateKey() {
+  const savedPrivateKey = localStorage.getItem("privateKey");
+  if (savedPrivateKey) {
+    return sodium.from_base64(savedPrivateKey);
+  } else {
+    console.error("Private key not found in localStorage");
+    return null;
+  }
+}
+export function savePrivateKey(decryptedPrivateKey: string | null) {
+  if (decryptedPrivateKey) {
+    localStorage.setItem("privateKey", decryptedPrivateKey);
+  } else {
+    throw new Error("Decrypted private key is falsy: " + decryptedPrivateKey);
+  }
 }
