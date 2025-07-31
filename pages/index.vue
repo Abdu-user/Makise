@@ -4,7 +4,7 @@
     class="max-w-7xl mx-auto overflow-clip"
   >
     <HomeNavigation />
-    5.5.1v
+    <span class="fixed bottom-0 right-0 opacity-95"> 5.5.1v </span>
     <HomeFirstHero />
 
     <div>waawaw</div>
@@ -44,7 +44,7 @@ onBeforeUnmount(() => {
 @keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateX(-100%);
+    transform: translateX(-25%);
   }
   to {
     opacity: 1;
@@ -59,7 +59,7 @@ onBeforeUnmount(() => {
   }
   to {
     opacity: 0;
-    transform: translateX(-100%);
+    transform: translateX(-25%);
   }
 }
 .slideRight {
@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(25%);
   }
   to {
     opacity: 1;
@@ -93,7 +93,7 @@ onBeforeUnmount(() => {
   }
   to {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(25%);
   }
 }
 </style>

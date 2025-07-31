@@ -100,6 +100,7 @@ const state = useGlobalSettingStore();
 const auth = useAuth();
 
 import { useAutoAnimate } from "@formkit/auto-animate/vue";
+import { deletePrivateKey } from "~/composables/useKeyPair";
 
 const [parent] = useAutoAnimate({
   duration: 150,
@@ -122,6 +123,7 @@ const logout = () => {
     auth.logout().then(() => {
       state.isLoginButtonDropdownOpen = false;
       state.setFromPage("/profile");
+      deletePrivateKey();
       router.push("/sign-in");
     });
 };

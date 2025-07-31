@@ -21,7 +21,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", {
       exists: false,
       state: "idle" as "idle" | "success" | "error",
       message: "",
-      duration: 5000, // Default duration for feedback messages
+      duration: 60000, // Default duration for feedback messages
     },
     consoleMessages: [] as string[],
     user: null as Models.User<Models.Preferences> | null,

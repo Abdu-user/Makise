@@ -97,15 +97,10 @@ export function decryptMessageText(text: string, contactPublicKey: string) {
 
   return plainText;
 }
-export async function debugKeyPairs(contactPublicKey: string, myPublicKey: string) {
-  await sodium.ready;
-
-  const senderPublicKey = sodium.from_base64(contactPublicKey);
-  const receiverPublicKey = sodium.from_base64(myPublicKey);
-  console.log(senderPublicKey, contactPublicKey, receiverPublicKey, myPublicKey);
-}
 
 export function getPrivateKey() {
+  // TODO: Replace this with secure key storage before production
+
   const savedPrivateKey = localStorage.getItem("privateKey");
   if (savedPrivateKey) {
     return sodium.from_base64(savedPrivateKey);
@@ -115,9 +110,14 @@ export function getPrivateKey() {
   }
 }
 export function savePrivateKey(decryptedPrivateKey: string | null) {
+  // TODO: Replace this with secure key storage before production
+
   if (decryptedPrivateKey) {
     localStorage.setItem("privateKey", decryptedPrivateKey);
   } else {
     throw new Error("Decrypted private key is falsy: " + decryptedPrivateKey);
   }
+}
+export function deletePrivateKey() {
+  localStorage.removeItem("privateKey");
 }

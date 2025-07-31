@@ -3,7 +3,7 @@
     <ClientOnly>
       <div
         v-if="state.isDebugPanelOpen"
-        class="bg-activeWeak text-white rounded-lg shadow-lg p-4 min-w-[250px] max-w-xs flex flex-col"
+        class="bg-activeWeak text-white rounded-lg shadow-lg p-4 min-w-[250px] max-w-xs flex flex-col gap-1"
       >
         <div
           class="flex justify-between items-center mb-2 overflow-y-auto"
@@ -26,126 +26,35 @@
             &times;
           </button>
         </div>
-        <div class="text-sm">
-          <!-- <slot> Debug info goes here. </slot> -->
-          <CustomButton
-            type="button"
-            :variant="'primary'"
-            :is-primary-color="'primary'"
-            size="md"
-            @click="logout"
+        <template
+          v-for="(category, index) in buttonGroups"
+          :key="index"
+        >
+          <template
+            v-for="(button, btnIndex) in category.buttons"
+            :key="btnIndex"
           >
-            Clear Auth
-          </CustomButton>
-          <CustomButton
-            :variant="'primary'"
-            :is-primary-color="'primary'"
-            type="button"
-            variety="secondary"
-            size="md"
-            @click="getUser"
-            >GetUser</CustomButton
-          >
-          <CustomButton
-            :variant="'primary'"
-            :is-primary-color="'primary'"
-            type="button"
-            variety="secondary"
-            size="md"
-            @click="getUserById(state.user?.$id!)"
-            >getUserById()</CustomButton
-          >
-          <CustomButton
-            :is-primary-color="'theme'"
-            variant="plain"
-            @click="console.log(state.fromPage)"
-          >
-            log pinia
-          </CustomButton>
-          <CustomButton
-            :variant="'primary'"
-            :is-primary-color="'primary'"
-            type="button"
-            variety="secondary"
-            size="md"
-            @click="tryToLogin"
-            >Login</CustomButton
-          >
-          <CustomButton
-            :variant="'primary'"
-            :is-primary-color="'primary'"
-            type="button"
-            variety="secondary"
-            size="md"
-            @click="sendNotification"
-            >sendNotification</CustomButton
-          >
-          <CustomButton
-            :is-primary-color="'theme'"
-            type="button"
-            :variant="'primary'"
-            size="md"
-            @click="logout"
-            >Logout</CustomButton
-          >
-          <CustomButton
-            :is-primary-color="'theme'"
-            type="button"
-            :variant="'primary'"
-            size="md"
-            @click="GiveUserPermission()"
-            >GiveUserPermission</CustomButton
-          >
-          <CustomButton
-            :is-primary-color="'theme'"
-            type="button"
-            :variant="'primary'"
-            size="md"
-            @click="logTheStates()"
-            >logTheStates()</CustomButton
-          >
-          <CustomButton
-            :is-primary-color="'theme'"
-            type="button"
-            :variant="'primary'"
-            size="md"
-            @click="deleteUser('685e72247f8b4eacaf1b')"
-            >delete User</CustomButton
-          >
-          <CustomButton
-            :is-primary-color="'theme'"
-            type="button"
-            :variant="'primary'"
-            size="md"
-            @click="console.log(useMessagingStore())"
-            >messaging state</CustomButton
-          >
-          <CustomButton
-            :is-primary-color="'theme'"
-            type="button"
-            :variant="'primary'"
-            size="md"
-            @click="ChangeTheKeyPair"
-            >ChangeTheKeyPair</CustomButton
-          >
-
-          <CustomButton
-            :variant="'primary'"
-            :is-primary-color="'theme'"
-            type="button"
-            size="md"
-            @click="toggleField()"
-            class="flex"
-            >Prefill the user Field
-            <CustomInput
-              class="w-full pointer-events-none"
-              type="checkBox"
-              :checked="state.isPrefillTheUserField"
-            />
-            {{ state.isPrefillTheUserField }}
-          </CustomButton>
-          <ThemeToggleButton />
-        </div>
+            <CustomButton
+              v-if="button.if"
+              :type="button.type"
+              :variant="button.variant"
+              :is-primary-color="button.isPrimaryColor"
+              :size="button.size"
+              @click="button.onClick"
+              :class="(button as any).class"
+            >
+              {{ button.label }}
+              <template v-if="(button as any).input">
+                <CustomInput
+                  :class="(button as any).input.class"
+                  :type="(button as any).input.type"
+                  :checked="(button as any).input.checked"
+                />
+                {{ (button as any).input.displayValue }}
+              </template>
+            </CustomButton>
+          </template>
+        </template>
         <!-- Tail -->
         <div class="w-6 h-6 absolute right-4 -bottom-3">
           <svg
@@ -192,14 +101,164 @@ import { useAuth } from "~/composables/useSignUp";
 import { cons } from "~/utils";
 import { useMessagingStore } from "~/store/messaging";
 import { Permission, Role } from "appwrite";
-import { debugKeyPairs } from "~/composables/useKeyPair";
+
 const state = useGlobalSettingStore();
 
 const { logout, current, login } = useAuth();
+
 const getUser = async () => {
   const res = await current();
   console.log("Current user:", res);
 };
+
+const buttonGroups = [
+  {
+    category: "Auth & User Management",
+    buttons: [
+      {
+        if: true,
+        label: "Clear Auth",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "primary" as "primary",
+        size: "md",
+        onClick: logout,
+      },
+      {
+        if: true,
+        label: "GetUser",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "primary" as "primary",
+        size: "md",
+        variety: "secondary",
+        onClick: getUser,
+      },
+      {
+        if: state.user?.$id,
+        label: "getUserById()",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "primary" as "primary",
+        size: "md",
+        variety: "secondary",
+        onClick: getUserById,
+      },
+      {
+        if: true,
+        label: "Logout",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "theme" as "theme",
+        size: "md",
+        onClick: logout,
+      },
+      {
+        if: true,
+        label: "delete User",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "theme" as "theme",
+        size: "md",
+        onClick: () => deleteUser("685e72247f8b4eacaf1b"),
+      },
+    ],
+  },
+  {
+    category: "State & Debugging",
+    buttons: [
+      {
+        if: true,
+        label: "log pinia",
+        type: "button",
+        variant: "plain" as "plain",
+        isPrimaryColor: "theme" as "theme",
+        onClick: () => console.log(state.fromPage),
+        size: "md",
+      },
+      {
+        if: true,
+        label: "logTheStates()",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "theme" as "theme",
+        size: "md",
+        onClick: logTheStates,
+      },
+      {
+        if: true,
+        label: "messaging state",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "theme" as "theme",
+        size: "md",
+        onClick: () => console.log(useMessagingStore()),
+      },
+    ],
+  },
+  {
+    category: "Actions",
+    buttons: [
+      {
+        if: true,
+        label: "Login",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "primary" as "primary",
+        size: "md",
+        variety: "secondary",
+        onClick: tryToLogin,
+      },
+      {
+        if: true,
+        label: "sendNotification",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "primary" as "primary",
+        size: "md",
+        variety: "secondary",
+        onClick: sendNotification,
+      },
+      {
+        if: true,
+        label: "GiveUserPermission",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "theme" as "theme",
+        size: "md",
+        onClick: GiveUserPermission,
+      },
+      {
+        if: true,
+        label: "ChangeTheKeyPair",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "theme" as "theme",
+        size: "md",
+        onClick: ChangeTheKeyPair,
+      },
+      {
+        if: true,
+        label: "Prefill the user Field",
+        type: "button",
+        variant: "primary" as "primary",
+        isPrimaryColor: "theme" as "theme",
+        size: "md",
+        onClick: toggleField,
+        class: "flex",
+        input: {
+          class: "w-full pointer-events-none",
+          type: "checkBox",
+          checked: state.isPrefillTheUserField,
+          displayValue: state.isPrefillTheUserField,
+        },
+      },
+    ],
+  },
+].map((group) => ({
+  ...group,
+  buttons: group.buttons.filter((button) => button.if),
+}));
 
 function toggleModal() {
   state.toggleDebugPanel();
