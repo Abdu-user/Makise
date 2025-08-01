@@ -125,6 +125,7 @@ const iconSizeClass = computed(() => {
 const button = ref<HTMLButtonElement>();
 defineExpose({
   button,
+  value: button,
 });
 </script>
 

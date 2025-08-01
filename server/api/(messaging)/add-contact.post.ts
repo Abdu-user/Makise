@@ -4,6 +4,7 @@ import {
   queryDocument,
   updateAppwriteDocument,
 } from "~/composables/server/useAppwriteWebClient";
+import { ContactType } from "~/types/messaging";
 
 export default defineEventHandler(async (event) => {
   try {
@@ -81,11 +82,13 @@ export default defineEventHandler(async (event) => {
       return addContactResults;
     }
 
+    // const contactTypeLike:ContactType = contact
     return {
       success: true,
       message: "Contact found. Set 'addContact' to true to add it",
       contactFound: true,
       contactId: contact.$id,
+      contact,
     };
   } catch (error: any) {
     console.error("Error in add contact handler:", error);

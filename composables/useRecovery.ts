@@ -25,6 +25,7 @@ export const resetPassword = async (password: string) => {
 
   try {
     await $appwrite.account.updateRecovery(userId, secret, password);
+    await createEncryption(password);
   } catch (err) {
     console.error(err);
     throw new Error("Reset failed. Link may be expired or invalid.");

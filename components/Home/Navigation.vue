@@ -91,7 +91,7 @@ const langDiv = ref<HTMLDivElement>();
 const isNavOpenHome = ref(false);
 const navButton = ref<{ button: HTMLButtonElement }>();
 const navDiv = ref<HTMLDivElement>();
-
+const el = ref<HTMLElement>();
 function isLangContain(e: Event) {
   const target = e.target as Node;
 

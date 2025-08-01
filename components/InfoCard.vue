@@ -11,7 +11,7 @@
       <EditButtons
         :reversed-buttons="true"
         :class-name="state.newColors ? 'text-text-muted' : 'text-T3TextColor dark:text-darkT3TextColor'"
-        class="-mt-2 ml-2"
+        class="ml-2"
         :is-editing="isEditing"
         @cancel="emit('cancel')"
         @edit="emit('edit')"

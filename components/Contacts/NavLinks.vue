@@ -1,7 +1,7 @@
 <template>
   <div>
     <ContactsNavLink
-      v-for="contact in messagingState.contactsWithMessage"
+      v-for="contact in computedContacts"
       :key="contact.id"
       :to="`/contacts/${contact.username}`"
       :last-active="getLastActive(contact)"
@@ -29,6 +29,18 @@ const getLastMessage = (c: C) => c.message?.text ?? "Start a chat";
 const getLastActive = (c: C) => getSmartTime(c.message?.timestamp || new Date().toISOString(), "en", 3);
 
 const getMyStatus = (c: C) => (c.message?.senderId === state.user?.$id ? (c.message?.status ?? null) : null);
+
+const props = defineProps({
+  contacts: {
+    type: Array as () => ContactType[] | C[],
+  },
+});
+const computedContacts = computed(() => {
+  if (props.contacts) {
+    return props.contacts as C[];
+  }
+  return messagingState.contactsWithMessage;
+});
 
 const state = useGlobalSettingStore();
 const messagingState = useMessagingStore();

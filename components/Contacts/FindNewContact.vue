@@ -85,6 +85,7 @@ watch(
       const contact = await findContact(searchQuery.value);
       if (contact) {
         contactFound.value = contact.contactFound as boolean;
+        console.log(contact);
       } else {
         console.error("Contact is not found: ", contact);
       }

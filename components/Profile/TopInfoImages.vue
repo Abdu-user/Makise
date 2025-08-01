@@ -34,8 +34,8 @@
       <!-- ToDO todo is used just to highlight this section -->
       <!-- User Info Section -->
       <div
-        :class="`relative grid   md:grid-cols-3 max-md:grid-rows-2 max-md:grid-cols-2
-      mt-16 px-6 md:px-16 pb-12 justify-center gap-10
+        :class="`relative grid md:grid-cols-3 max-md:grid-rows-2 max-md:grid-cols-2
+      mt-16 px-6 md:px-16 pb-12 justify-center md:gap-10
         max-md:text-xl
       `"
       >
@@ -91,7 +91,11 @@
         <div class="max-md:mt-3">
           <div class="grid grid-flow-col justify-start items-center gap-4">
             <CustomIcon name="material-symbols-light:stacked-email-rounded" />
-            <CustomParagraph :variant="'editSecondary'">{{ cmpUserData.email }}</CustomParagraph>
+            <CustomParagraph
+              :variant="'editSecondary'"
+              class="break-all w-full"
+              >{{ cmpUserData.email }}</CustomParagraph
+            >
           </div>
           <div class="grid grid-flow-col justify-start items-center gap-4">
             <CustomIcon name="material-symbols-light:settings-phone-sharp" />
@@ -157,7 +161,7 @@
               <template v-else>
                 <span class="font-semibold text-textParagraph text-xl"> {{ cmpUserData.profileStrength || pl.profileStrength }}% </span>
               </template>
-              <span class="text-textSecondary text-sm -mt-2 inline-block">Realm</span>
+              <span class="text-textSecondary text-sm -mt-2 inline-block"></span>
             </CustomParagraph>
             <ClientOnly>
               <circle-progress

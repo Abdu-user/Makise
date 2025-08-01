@@ -1,6 +1,7 @@
 <template>
   <div
     class="mt-8 flex gap-5 relative overflow-auto md:after:content-[''] md:after:block md:after:absolute md:after:bottom-[0px] md:after:left-0 md:after:w-full md:after:h-[2px] z-10"
+    style="scrollbar-width: thin; scrollbar-color: var(--border) transparent; -ms-overflow-style: none; overflow-x: auto"
     :class="state.newColors ? 'md:after:bg-border-muted' : 'md:after:bg-gray-300'"
   >
     <CustomNuxtLink

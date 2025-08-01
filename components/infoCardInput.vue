@@ -1,26 +1,20 @@
 <template>
-  <div class="grid grid-cols-2">
-    <p :class="state.newColors ? 'text-text-muted' : 'text-T3TextColor dark:text-darkT3TextColor'">
+  <div class="grid grid-cols-2 max-md:text-sm">
+    <p :class="state.newColors ? 'text-text-muted ' : 'text-T3TextColor dark:text-darkT3TextColor'">
       {{ subtitle }}
     </p>
     <p
       v-if="!isEditing"
       class="font-semibold"
-      :class="
-        value
-          ? state.newColors
-            ? ' text-text-muted '
-            : ' text-T3TextColor dark:text-darkT3TextColor '
-          : ` underline decoration-wavy  ${state.newColors ? 'text-warning' : ` text-T4TextColor dark:text-darkT4TextColor`}`
-      "
+      :class="value ? ' text-text-muted ' : 'text-[var(--text-ghost)] border-b border-[var(--text-ghost)] border-dashed'"
     >
-      {{ value ? value : placeholder }}
+      {{ value ? value : "" }}
     </p>
     <CustomInput
       v-else
-      :placeholder="placeholder"
       variant="edit"
       v-model="model"
+      class="border-b border-[var(--text-ghost)]"
     />
   </div>
 </template>

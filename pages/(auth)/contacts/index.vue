@@ -2,11 +2,13 @@
   <div :class="state.newColors ? ' text-text-muted' : 'text-T3TextColor dark:text-darkT3TextColor'">
     <ContactsNavLinks />
     <CustomParagraph :variant="'default'">Tap on the pencil to find a new contact </CustomParagraph>
-    <ContactsFindNewContact
-      :buttonClass="'absolute bottom-[100px] right-5 w-14 h-14 p-3 '"
-      :modalClass="'sticky bottom-0'"
-      class="md:hidden"
-    />
+    <div class="pointer-events-auto fixed bg-transparent inset-0 flex flex-col justify-center">
+      <ContactsFindNewContact
+        :buttonClass="' absolute bottom-[100px] right-5 w-14 h-14 p-3 '"
+        :modalClass="'  '"
+        class="md:hidden"
+      />
+    </div>
   </div>
 </template>
 

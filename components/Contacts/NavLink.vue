@@ -13,18 +13,18 @@
           :class="state.newColors ? 'text-text' : `text-T1TextColor dark:text-darkT1TextColor`"
           class="grid grid-cols-[1fr,auto] gap-2 pt-2 text-lg line-clamp-1"
         >
-          <span class="line-clamp-1">{{ name || "Name" }}</span>
+          <span class="line-clamp-1 text-base">{{ name || "Name" }}</span>
           <span class="flex items-start gap-1 text-xs">
             <ContactsMessageStateIcon
               :state="myLastMessageStatus"
               v-if="myLastMessageStatus"
             />
-            <span :class="state.newColors ? 'text-text-muted ' : `text-T3TextColor dark:text-darkT3TextColor`">
+            <span class="text-text-muted text-xs">
               {{ lastActive || "03:48" }}
             </span>
           </span>
         </p>
-        <p class="text-lg line-clamp-1 pb-2">
+        <p class="text-sm line-clamp-1 pb-2">
           {{ lastMessage || "No messages yet" }}
         </p>
       </div>

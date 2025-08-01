@@ -16,7 +16,7 @@ const variants = {
 ${state.newColors ? "text-text-muted" : "text-T3TextColor dark:text-darkT3TextColor"}
   `,
   edit: `${state.newColors ? "text-text-muted" : "text-T3TextColor dark:text-darkT3TextColor "}font-semibold text-xl`,
-  editSecondary: state.newColors ? "text-text-muted" : " text-textSecondary dark:text-darkT4TextColor/90 font-semibold text-base",
+  editSecondary: "text-text-muted font-semibold text-sm",
 };
 const props = defineProps({
   variant: { type: String as PropType<keyof typeof variants>, default: "default" },

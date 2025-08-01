@@ -158,6 +158,7 @@ body {
   --info: hsl(217 22% 41%);
   --bg-transparent: hsla(326, 14%, 90%, 0.628);
   /* --bg-light-gradient:  */
+  --text-ghost: hsla(320, 8%, 29%, 0.608);
 }
 :root.dark {
   --bg-dark: hsl(300, 20%, 1%);
@@ -175,5 +176,6 @@ body {
   --success: hsl(146 17% 59%);
   --info: hsl(217 28% 65%);
   --bg-transparent: hsla(300, 20%, 1%, 0.616);
+  --text-ghost: hsla(323, 8%, 70%, 0.608);
 }
 </style>

@@ -23,4 +23,5 @@ export type AddContactResultsType = {
   contactAddedToTheUser?: boolean;
   userAddedToContact?: boolean;
   contactId: string;
+  contact?: ContactType;
 };

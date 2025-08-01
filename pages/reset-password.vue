@@ -8,8 +8,38 @@
       class="p-5"
     >
       <h1 class="text-2xl mb-4">Reset Password</h1>
+      <div
+        class="border-l-4 p-4 rounded-lg shadow-sm space-y-3"
+        style="background-color: var(--bg-light); border-color: var(--warning); color: var(--text)"
+      >
+        <div class="flex items-start gap-2">
+          <span class="text-xl">⚠️</span>
+          <h2 class="text-lg font-semibold">Warning: You May Lose Access to Previous Messages</h2>
+        </div>
 
-      <div class="grid gap-4">
+        <p>Your private messages are securely encrypted using your current password. If you reset your password:</p>
+
+        <ul class="list-disc list-inside space-y-1 pl-2">
+          <li>
+            <span style="color: var(--danger); font-weight: 600">❌ You will not be able to read your past messages.</span>
+          </li>
+          <li>
+            <span style="color: var(--success); font-weight: 600"
+              >✅ You will still be able to send and receive new messages after the reset.</span
+            >
+          </li>
+        </ul>
+
+        <p>If you have saved your encryption key (private key), you can re-import it later to regain access.</p>
+        <p
+          class="text-sm font-medium"
+          style="color: var(--text-muted)"
+        >
+          Please continue only if you're aware of this and accept the risk.
+        </p>
+      </div>
+
+      <div class="grid gap-4 mt-5">
         <label for="newPassword"> New Password </label>
         <CustomPasswordInput
           id="newPassword"

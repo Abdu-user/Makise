@@ -25,7 +25,7 @@ const props = defineProps({
   to: { type: [String, Object], required: true, default: "/" },
 });
 const variants = {
-  underline: ` inline-block py-3 md:relative z-10 max-md:px-5 max-md:shadow-lg  rounded-md `,
+  underline: ` inline-block py-3 md:relative z-10 max-md:px-1 max-md:shadow-lg  rounded-md `,
   navigation: `px-5 py-3 md:px-3 md:py-2 gap-2 rounded 
   flex items-center  
   transition-colors duration-200
@@ -53,7 +53,7 @@ const variants = {
   link: `text-primary hover:underline outline-none focus:outline-primary rounded-lg focus:outline-2 focus:outline-offset-[6px]`,
 };
 
-const base = " text-2xl md:text-base";
+const base = " text-sm  md:text-base";
 const linkClass = computed(() => {
   return [base, variants[props.variant], props.block ? `w-full flex items-center justify-center` : ""].join(" ");
 });
