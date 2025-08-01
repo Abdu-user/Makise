@@ -3,7 +3,7 @@
     {{ text }}
     <CustomContainer
       :variant="'ReverseUIContainer'"
-      class="p-[2px] flex flex-wrap"
+      class="p-[2px] flex flex-row"
     >
       <CustomButton
         :variant="state.themeMode === 'light' ? 'active' : 'text'"

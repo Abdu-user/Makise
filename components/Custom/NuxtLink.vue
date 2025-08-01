@@ -26,7 +26,7 @@ const props = defineProps({
 });
 const variants = {
   underline: ` inline-block py-3 md:relative z-10 max-md:px-1 max-md:shadow-lg  rounded-md `,
-  navigation: `px-5 py-3 md:px-3 md:py-2 gap-2 rounded 
+  navigation: `px-3 py-3 md:px-3 md:py-2 gap-2 rounded 
   flex items-center  
   transition-colors duration-200
   ${

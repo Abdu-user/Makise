@@ -17,3 +17,12 @@ export async function addContact(contactName: string, successFunction?: () => vo
     console.error(error);
   }
 }
+export function filterContacts() {
+  const messagingState = useMessagingStore();
+  return messagingState.contactsWithMessage.filter((contact) => {
+    const username = contact.username.toLowerCase().includes(messagingState.searchQuery.toLowerCase());
+    const name = contact.name?.toLowerCase().includes(messagingState.searchQuery.toLowerCase());
+    const lastName = contact.lastName?.toLowerCase().includes(messagingState.searchQuery.toLowerCase());
+    return username || name || lastName;
+  });
+}

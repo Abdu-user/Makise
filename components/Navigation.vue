@@ -15,7 +15,9 @@
             class="w-10 h-10"
           />
         </div>
-        <span class="font-bold text-xl md:text-xl capitalize text-text">{{ state.routeName }}</span>
+        <ConditionalNavTitle>
+          <span class="font-bold text-xl md:text-xl capitalize text-text">{{ state.routeName }}</span>
+        </ConditionalNavTitle>
 
         <div class="flex items-center">
           <ThemeToggleButton
@@ -23,13 +25,27 @@
             v-if="!state.isInProfilePage"
           />
 
-          <CustomNuxtLink
+          <!-- <CustomNuxtLink
             v-if="route.fullPath === '/contacts'"
             to="/search-contacts"
             name="ic:outline-search"
             class="w-10 h-10 !p-0"
             :variant="'navigation'"
+          /> -->
+
+          <CustomButton
+            v-if="route.fullPath === '/contacts'"
+            @click="
+              messagingState.leftSideState === 'contacts'
+                ? (messagingState.changeLeftSideState('search'), messagingState.focusSearchInput())
+                : messagingState.changeLeftSideState('contacts')
+            "
+            :name="messagingState.leftSideState === 'contacts' ? 'ic:outline-search' : 'material-symbols:close'"
+            class="w-10 h-10 !p-0"
+            icon
+            :variant="'text'"
           />
+
           <LoginButton v-else />
         </div>
       </div>
@@ -61,10 +77,14 @@
 
 <script setup lang="ts">
 const state = useGlobalSettingStore();
+const messagingState = useMessagingStore();
+// messagingState.changeLeftSideState("search");
 
 const route = useRoute();
 
 import LoginButton from "./loginButton.vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { bigNames } from "../constants";
+import { CustomButton } from "#components";
+import { useMessagingStore } from "~/store/messaging";
 </script>

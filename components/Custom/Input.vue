@@ -34,15 +34,7 @@ const variants = {
     }
     `,
 
-  input: `w-full border ${
-    state.newColors
-      ? "bg-bg-light text-text rounded-lg border-border-muted focus:border-primary focus:outline-none"
-      : ` border-textParagraph
-    focus:border-textParagraph/20 rounded focus:outline-none focus:ring-2 focus:ring-activeStrong/30
-    focus:bg-hoverBg dark:focus:bg-darkHoverBg
-    bg-white text-base text-gray-900 dark:bg-darkMainBg dark:text-darkT1TextColor
-    dark:border-darkT2TextColor dark:focus:border-darkT1TextColor dark:focus:ring-darkHoverBg`
-  }`,
+  input: "w-full border bg-bg-light text-text rounded-lg border-border-muted focus:border-primary focus:outline-none",
 
   checkbox: "inline-block  ",
 } as const;

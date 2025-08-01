@@ -58,7 +58,7 @@
           <button
             ref="langButton"
             @click="isLangOpen = !isLangOpen"
-            class="uppercase"
+            class="uppercase font-semibold"
             v-show="!isLangOpen"
           >
             {{ locale }}

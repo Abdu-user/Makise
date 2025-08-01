@@ -1,18 +1,18 @@
 <template>
   <div :class="state.newColors ? ' text-text-muted' : 'text-T3TextColor dark:text-darkT3TextColor'">
-    <ContactsNavLinks />
+    <ContactsNavLinks :contacts="contacts" />
     <CustomParagraph :variant="'default'">Tap on the pencil to find a new contact </CustomParagraph>
-    <div class="pointer-events-auto fixed bg-transparent inset-0 flex flex-col justify-center">
-      <ContactsFindNewContact
-        :buttonClass="' absolute bottom-[100px] right-5 w-14 h-14 p-3 '"
-        :modalClass="'  '"
-        class="md:hidden"
-      />
-    </div>
+
+    <ContactsFindNewContact
+      :buttonClass="' absolute bottom-[100px] right-5 w-14 h-14 p-3 '"
+      :modalClass="'  '"
+      class="md:hidden"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { filterContacts } from "~/composables/(contacts)/useContact";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
 const state = useGlobalSettingStore();
@@ -46,5 +46,9 @@ useHead({
 definePageMeta({
   layout: "main",
   middleware: "auth",
+});
+
+const contacts = computed(() => {
+  return filterContacts();
 });
 </script>

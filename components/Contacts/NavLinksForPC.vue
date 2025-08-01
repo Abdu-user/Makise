@@ -34,27 +34,28 @@
       </button>
 
       <div class="relative mr-2">
-        <CustomInput
-          class="rounded-full border-none p-1 px-6"
+        <input
+          class="rounded-full border-none p-1 px-6 bg-bg-light text-text border-border-muted focus:border-primary focus:outline-none"
           placeholder="Search "
           @click="(changeLeftSideState('search'), inDevelopment)"
-          v-model="searchQuery"
+          v-model="messagingState.searchQuery"
+          ref="searchInput"
         />
         <CustomButton
-          v-if="leftSideState === 'search'"
+          v-if="messagingState.leftSideState === 'search'"
           name="material-symbols:close-small-outline"
           icon
           :variant="'text'"
           :is-primary-color="'theme'"
           class="absolute top-1/2 right-2 transform -translate-y-1/2 w-8 h-8 p-1"
-          @click="(changeLeftSideState('contacts'), (searchQuery = ''))"
+          @click="(changeLeftSideState('contacts'), (messagingState.searchQuery = ''))"
         ></CustomButton>
       </div>
     </div>
 
     <div>
       <div
-        v-if="leftSideState === 'search'"
+        v-if="messagingState.leftSideState === 'search'"
         class="px-3"
       >
         <ContactsNavLink
@@ -71,7 +72,7 @@
           :variant="'primary'"
           block
           class="mb-2 mx-2"
-          @click="addContact(searchQuery)"
+          @click="addContact(messagingState.searchQuery)"
           :disabled="isAddContactButtonDisabled()"
         >
           Add Contact
@@ -88,34 +89,34 @@
 </template>
 
 <script setup lang="ts">
-import { addContact } from "~/composables/(contacts)/useContact";
+import { addContact, filterContacts } from "~/composables/(contacts)/useContact";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
 import type { ContactType } from "~/types/messaging";
 
 const state = useGlobalSettingStore();
-const leftSideState = ref("contacts");
 
 function changeLeftSideState(state: "contacts" | "search") {
-  leftSideState.value = state;
+  messagingState.changeLeftSideState(state);
 }
 
 const navDiv = ref<HTMLDivElement | undefined>(undefined);
 const navButton = ref<HTMLButtonElement | undefined>(undefined);
-const searchQuery = ref("");
 const foundContact = ref<ContactType | null>(null);
+const messagingState = useMessagingStore();
+
+const searchInput = ref<HTMLInputElement | null>(null);
+messagingState.searchInputs["1"] = searchInput;
 
 function isAddContactButtonDisabled() {
   return !foundContact.value;
 }
 const contacts = computed(() => {
-  return useMessagingStore().contactsWithMessage.filter((contact) => {
-    return contact.username.toLowerCase().includes(searchQuery.value.toLowerCase());
-  });
+  return filterContacts();
 });
 
 watch(
-  () => searchQuery.value,
+  () => messagingState.searchQuery,
   async (newQuery) => {
     if (newQuery.trim() === "") {
       foundContact.value = null;

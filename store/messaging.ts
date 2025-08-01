@@ -15,6 +15,9 @@ export const useMessagingStore = defineStore("messaging", {
     contactsWithMessage: [] as (ContactType & { message: MessageType })[],
     contactInfo: null as ContactType | null,
     scrollDownFunction: null as null | (() => void),
+    searchInputs: [] as globalThis.Ref<HTMLInputElement | null>[],
+    searchQuery: "",
+    leftSideState: "contacts" as "contacts" | "search",
     isUserAtBottom: false,
     unreadMessages: {
       number: 0,
@@ -78,6 +81,20 @@ export const useMessagingStore = defineStore("messaging", {
       return updateMessagingState;
     },
 
+    changeLeftSideState(state: "contacts" | "search") {
+      this.leftSideState = state;
+    },
+    focusSearchInput() {
+      for (let i = 0; i < this.searchInputs.length; i++) {
+        const element = this.searchInputs[i];
+        if (element.value) {
+          nextTick().then(() => {
+            element.value?.focus();
+          });
+          return;
+        }
+      }
+    },
     scrollToBottom(functionORCallFunction: true | (() => void)) {
       if (!functionORCallFunction) {
         return console.error(`${functionORCallFunction} is not valid argument`);

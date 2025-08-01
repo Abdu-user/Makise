@@ -11,7 +11,7 @@
       />
       <BackButton
         class="md:hidden w-10 h-10 my-auto"
-        :onClick="() => router.push('./')"
+        @Click="router.replace('/contacts')"
         :size="'md'"
       />
     </div>

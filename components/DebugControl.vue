@@ -55,6 +55,12 @@
             </CustomButton>
           </template>
         </template>
+        <CustomButton
+          :variant="'primary'"
+          @click="messagingState.focusSearchInput()"
+        >
+          focusInput ELement
+        </CustomButton>
         <!-- Tail -->
         <div class="w-6 h-6 absolute right-4 -bottom-3">
           <svg
@@ -101,8 +107,10 @@ import { useAuth } from "~/composables/useSignUp";
 import { cons } from "~/utils";
 import { useMessagingStore } from "~/store/messaging";
 import { Permission, Role } from "appwrite";
+import { CustomButton } from "#components";
 
 const state = useGlobalSettingStore();
+const messagingState = useMessagingStore();
 
 const { logout, current, login } = useAuth();
 

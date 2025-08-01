@@ -60,14 +60,14 @@
     >
       <CustomParagraph
         :variant="'noMargin'"
-        class="px-5 md:px-3 mb-2"
+        class="px-3 md:px-3 mb-2"
       >
         {{ state.user?.email }}
       </CustomParagraph>
       <CustomNuxtLink
         to="/profile/account"
         :variant="'navigation'"
-        class="flex text-base p-1 text-start justify-between"
+        class="flex text-base md:p-1 text-start justify-between"
       >
         Account
         <Icon name="material-symbols:person"></Icon>
@@ -85,7 +85,7 @@
         Sign out
       </CustomButton>
       <ThemeToggleButton
-        class="max-md:mx-2 mt-2"
+        class="mt-2"
         :text="'Theme'"
       />
       <LanguageSelector class="mx-3 flex justify-between mt-1" />

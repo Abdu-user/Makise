@@ -12,51 +12,56 @@
     >
     </CustomButton>
 
-    <CustomTransitions :variant="'drop-down'">
-      <CustomContainer
-        :variant="'UIContainer'"
-        v-if="showModal"
-        @close="showModal = false"
-        :class="modalClass"
-        class="p-4 mx-3"
-        ref="modal"
-      >
-        <div style="display: flex; flex-direction: column; gap: 1rem">
-          <CustomLabel
-            for="searchContact"
-            class="text-center"
-          >
-            Search new Contact
-          </CustomLabel>
-          <div class="flex items-center gap-3">
-            <CustomInput
-              id="searchContact"
-              :variant="'edit'"
-              v-model="searchQuery"
-              class="my-3 !px-0"
-              :size="'lg'"
-              placeholder="Enter contact username"
-            />
-            <Icon
-              v-if="contactFound"
-              name="gg:search-found"
-              class="w-10 h-10 text-primary"
-            />
-          </div>
-          <div class="">
-            <CustomButton
-              :variant="'primary'"
-              block
-              class="mb-2"
-              @click="addContact"
-              :disabled="!contactFound"
+    <div
+      class="fixed bg-transparent inset-0 flex flex-col justify-center"
+      :class="showModal ? 'pointer-events-auto' : 'pointer-events-none'"
+    >
+      <CustomTransitions :variant="'drop-down'">
+        <CustomContainer
+          :variant="'UIContainer'"
+          v-if="showModal"
+          @close="showModal = false"
+          :class="modalClass"
+          class="p-4 mx-3"
+          ref="modal"
+        >
+          <div style="display: flex; flex-direction: column; gap: 1rem">
+            <CustomLabel
+              for="searchContact"
+              class="text-center"
             >
-              Add
-            </CustomButton>
+              Search new Contact
+            </CustomLabel>
+            <div class="flex items-center gap-3">
+              <CustomInput
+                id="searchContact"
+                :variant="'edit'"
+                v-model="searchQuery"
+                class="my-3 !px-0"
+                :size="'lg'"
+                placeholder="Enter contact username"
+              />
+              <Icon
+                v-if="contactFound"
+                name="gg:search-found"
+                class="w-10 h-10 text-primary"
+              />
+            </div>
+            <div class="">
+              <CustomButton
+                :variant="'primary'"
+                block
+                class="mb-2"
+                @click="addContact"
+                :disabled="!contactFound"
+              >
+                Add
+              </CustomButton>
+            </div>
           </div>
-        </div>
-      </CustomContainer>
-    </CustomTransitions>
+        </CustomContainer>
+      </CustomTransitions>
+    </div>
   </div>
 </template>
 
