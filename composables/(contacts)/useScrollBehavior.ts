@@ -41,7 +41,6 @@ export function useScrollBehavior(containerRef: Ref<HTMLElement | null>) {
     if (!el) return;
     const isScrollable = el.scrollHeight > el.clientHeight;
     if (isScrollable) {
-      console.log("It is scrollable");
     } else {
       messagingState.isUserAtBottom = true;
     }

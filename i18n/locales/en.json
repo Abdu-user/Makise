@@ -6,5 +6,13 @@
   "users": "users",
   "messages": "messages",
   "verified users": "verified users",
-  "Chat with Amadeus": "Chat with Amadeus"
+  "Chat with Amadeus": "Chat with Amadeus",
+  "YouTypeMessageHeader": "You type the \n message, \n we’ll deliver it",
+  "YouTypeMessageParagraph": "With the right credit card, you can improve your financial life by building credit, earning rewards and saving money. But with hundreds of credit cards on the market.",
+  "Rewards": "Rewards",
+  "RewardsDescription": "The best credit cards offer some tantalizing combinations of promotions and prizes",
+  "Secure": "Secure",
+  "SecureDescription": "We take proactive steps make sure your information and messages are secure.",
+  "Notifications": "Notifications",
+  "NotificationsDescription": "We deliver the notification to android and windows devices with  FCM (Firebase Cloud Messaging"
 }

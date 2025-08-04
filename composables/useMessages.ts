@@ -8,9 +8,6 @@ export async function getMessageById(contactUsername: string, messageId: string)
 
     const message = await res.json();
     return message as MessageType;
-
-    // console.log("Single message:", messageId, fetchedMessage);
-    // You can return it or update state as needed
   } catch (error) {
     console.error(error);
     throw error;

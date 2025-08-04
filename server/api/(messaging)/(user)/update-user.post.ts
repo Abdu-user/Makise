@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
       Query.equal("username", data.username),
     ]);
     if (existing.documents.length > 0 && existing.documents[0].$id !== documentId) {
-      throw createError({ statusCode: 400, statusMessage: "Username is already taken" });
+      throw createError({ statusCode: 400, statusMessage: "Username is already taken, choose a different username" });
     }
   }
 

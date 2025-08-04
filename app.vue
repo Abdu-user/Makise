@@ -159,6 +159,7 @@ body {
   --bg-transparent: hsla(326, 14%, 90%, 0.628);
   /* --bg-light-gradient:  */
   --text-ghost: hsla(320, 8%, 29%, 0.608);
+  --rewards-card-gradient: linear-gradient(-40deg, #d4d4d4 -20%, #ffcece 100%);
 }
 :root.dark {
   --bg-dark: hsl(300, 20%, 1%);
