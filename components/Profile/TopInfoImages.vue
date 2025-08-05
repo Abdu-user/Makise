@@ -218,7 +218,7 @@ const cmpUserData = computed((): UserProfileType & { profileImgUrl: string } => 
   address: state.userData?.address || "",
   email: state.userData?.email || "",
   phoneNumber: state.userData?.phoneNumber || "",
-  profileStrength: state.userData?.profileStrength ? state.userData?.profileStrength : 0,
+  profileStrength: state.userData?.profileStrength ? state.userData?.profileStrength : 50,
   profileImgUrl: "/images/placeholder-avatar.jpg",
 }));
 
