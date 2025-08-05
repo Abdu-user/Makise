@@ -6,6 +6,6 @@
 
 <style scoped>
 .bg-gradient {
-  background: linear-gradient(-52, #f56e99 0%, #c4416b 50%, #87304b 100%);
+  background: var(--button-color-gradient);
 }
 </style>

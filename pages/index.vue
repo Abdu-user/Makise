@@ -7,6 +7,8 @@
     <span class="fixed bottom-0 right-0 opacity-95"> 5.5.1v </span>
     <HomeFirstHero />
     <HomeSecondHero />
+    <HomeThirdHero />
+    <HomeFourthHero />
   </CustomContainer>
 </template>
 

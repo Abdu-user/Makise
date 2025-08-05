@@ -35,20 +35,12 @@
             }"
             ref="navDiv"
           >
-            <a
-              :href="'#' + hashLink"
-              v-for="hashLink in homeHashLinks"
-              >{{ hashLink }}</a
-            >
+            <HomeHashLinks />
           </div>
         </div>
         <div class="max-md:hidden flex text-base text-text font-semibold">
           <div class="flex gap-14 mr-14">
-            <a
-              :href="'#' + hashLink"
-              v-for="hashLink in homeHashLinks"
-              >{{ hashLink }}</a
-            >
+            <HomeHashLinks />
           </div>
         </div>
         <div
