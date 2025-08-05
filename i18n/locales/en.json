@@ -20,5 +20,27 @@
   "EasilyMessageParagraph": "Easily message with someone you know. {br} You can send messages, photos, and videos to your friends and family.",
   "Browsers": "Browsers",
   "LearnHowToStartMessaging": "Learn how to start messaging",
-  "aboutMeParagraph": "My name is SS$Abdurahman$SS. I live in SS$Shymkent$SS, Kazakhstan, and I’m growing as a frontend developer, especially with a focus on GG$Nuxt.js (Vue 3)$SS. My goal is to build modern, user-friendly web applications with clean architecture and strong performance.\n\nSS$Skills:$SS\nGG$- Vue 3 $SS – Confident with script setup, props, computed properties, directives, and routing  \n\nBB$- Tailwind CSS $SS – Main tool for styling  \n\nBB$- React Native $SS – Beginner level (using Expo and NativeWind)  \n\nBB$- TypeScript$SS – Used with Nuxt and React to detect bugs  \n\nRR$- Appwrite$SS – Used for authentication, database, and real-time features  \n\nVV$- Vite, GitHub Desktop$SS – Actively used in projects  \n\nFF$- Figma$SS – For website design\n\nSS$Projects:$SS\n\nBB$- Real-time Chat App$SS – Features scroll behavior, push notifications, and Appwrite integration\n\nPhone Number: SS$8705-525-35-84$SS"
+  "aboutMeParagraph": "My name is SS$Abdurahman$SS. I live in SS$Shymkent$SS, Kazakhstan, and I’m growing as a frontend developer, especially with a focus on GG$Nuxt.js (Vue 3)$SS. My goal is to build modern, user-friendly web applications with clean architecture and strong performance.\n\nSS$Skills:$SS\nGG$- Vue 3 $SS – Confident with script setup, props, computed properties, directives, and routing  \n\nBB$- Tailwind CSS $SS – Main tool for styling  \n\nBB$- React Native $SS – Beginner level (using Expo and NativeWind)  \n\nBB$- TypeScript$SS – Used with Nuxt and React to detect bugs  \n\nRR$- Appwrite$SS – Used for authentication, database, and real-time features  \n\nVV$- Vite, GitHub Desktop$SS – Actively used in projects  \n\nFF$- Figma$SS – For website design\n\nSS$Projects:$SS\n\nBB$- Real-time Chat App$SS – Features scroll behavior, push notifications, and Appwrite integration\n\nPhone Number: SS$8705-525-35-84$SS",
+  "Let'sTryOurServiceNow": "Let's try our service now",
+  "LetsTryParagraph": "Everything you need to sign then add a friend to contacts, and start messaging. ",
+  "footerLogoParagraph": "A new way to connect with people you know. ",
+  "copyRight": "Copyright © 2025 Makise. All Rights Reserved.",
+  "getStarted": "Get Started",
+  "fl.usefulLinks": "Useful Links",
+  "fl.content": "Content",
+  "fl.howItWorks": "How it Works",
+  "fl.create": "Create",
+  "fl.explore": "Explore",
+  "fl.termsAndServices": "Terms & Services",
+
+  "fl.community": "Community",
+  "fl.helpCenter": "Help Center",
+  "fl.partners": "Partners",
+  "fl.suggestions": "Suggestions",
+  "fl.blog": "Blog",
+  "fl.newsletters": "Newsletters",
+
+  "fl.partner": "Partner",
+  "fl.ourPartner": "Our Partner",
+  "fl.becomeAPartner": "Become a Partner"
 }

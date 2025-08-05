@@ -64,3 +64,18 @@ export const positionOptions: ImgLocation[] = ["top", "center", "bottom"];
 
 export const homeHashLinks = ["Home", "Messaging", "Skills"];
 export const smallUsersInfo = ["3500+", "30M+", "100+"];
+
+export const footerLinks = [
+  {
+    name: "fl.usefulLinks",
+    links: ["fl.content", "fl.howItWorks", "fl.create", "fl.explore", "fl.termsAndServices"],
+  },
+  {
+    name: "fl.community",
+    links: ["fl.helpCenter", "fl.partners", "fl.suggestions", "fl.blog", "fl.newsletters"],
+  },
+  {
+    name: "fl.partner",
+    links: ["fl.ourPartner", "fl.becomeAPartner"],
+  },
+];

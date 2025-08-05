@@ -3,14 +3,14 @@
     id="Messaging"
     class="grid md:grid-cols-2 mx-10 gap-10 py-6"
   >
-    <div class="">
+    <div class="max-md:order-2">
       <img
         src="/images/messagesImage.png"
         :alt="$t('MessagingImageAlt')"
         class="w-full h-auto slideLeft"
       />
     </div>
-    <div class="flex flex-col justify-between">
+    <div class="flex flex-col justify-between max-md:order-1">
       <h1 class="text-5xl font-bold mb-5 slideRight">{{ $t("EasilyMessage") }}</h1>
       <p class="slideRight">{{ $t("EasilyMessageParagraph") }}</p>
       <div class="flex items-center mt-5 slideRight">

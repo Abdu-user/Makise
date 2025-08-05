@@ -1,14 +1,15 @@
 <template>
   <CustomContainer
     :variant="'mainContainer'"
-    class="max-w-7xl mx-auto overflow-clip"
+    class="max-w-7xl mx-auto overflow-clip grid gap-20"
   >
     <HomeNavigation />
-    <span class="fixed bottom-0 right-0 opacity-95"> 5.5.1v </span>
     <HomeFirstHero />
     <HomeSecondHero />
     <HomeThirdHero />
     <HomeFourthHero />
+    <HomeTryOurService />
+    <HomeFooter />
   </CustomContainer>
 </template>
 

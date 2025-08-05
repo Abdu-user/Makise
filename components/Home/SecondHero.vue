@@ -8,7 +8,7 @@
         <span v-html="$t('YouTypeMessageHeader').replace(/\n/g, '<br />')"></span>
       </h1>
       <p class="font-semibold text-sm slideLeft">{{ $t("YouTypeMessageParagraph") }}</p>
-      <HomeButtonFromHome class="slideLeft h-fit">Get Started</HomeButtonFromHome>
+      <HomeButtonFromHome class="slideLeft h-fit">{{ $t("getStarted") }}</HomeButtonFromHome>
     </div>
     <div class="flex-col flex">
       <HomeRewardsCard
