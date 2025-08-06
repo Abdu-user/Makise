@@ -1,6 +1,7 @@
 <template>
   <footer class="px-6 md:px-12 pt-12 md:pb-8 max-md:w-screen">
     <div class="">
+      <div class="purpleBlur absolute right-0 translate-x-full"></div>
       <div>
         <div class="flex justify-between max-md:flex-col gap-10">
           <div>

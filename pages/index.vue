@@ -28,6 +28,21 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
+.purpleBlur {
+  background-color: rgba(108, 37, 249, 0.35);
+  width: 800px;
+  height: 800px;
+  filter: blur(750px);
+  border-radius: 9999px;
+}
+.redBlur {
+  background-color: rgba(185, 28, 28, 0.523);
+  width: 600px;
+  height: 600px;
+  border-radius: 9999px;
+  filter: blur(750px);
+}
+
 .slideLeft {
   animation:
     slideInLeft ease-in-out forwards,

@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { bigNames, navLinks } from "~/constants";
+import { bigNames, navLinks, SCREENS } from "~/constants";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const route = useRoute();
 const state = useGlobalSettingStore();
@@ -96,4 +96,11 @@ watch(
   () => route.fullPath,
   () => responsive(true)
 );
+onMounted(() => {
+  if (window.innerWidth > SCREENS.md) {
+    state.isNavOpen = true;
+  } else {
+    state.isNavOpen = false;
+  }
+});
 </script>

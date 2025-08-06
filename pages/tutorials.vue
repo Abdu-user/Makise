@@ -23,11 +23,22 @@
 </template>
 
 <script setup lang="ts">
+import { SCREENS } from "~/constants";
+import { useGlobalSettingStore } from "~/store/globalSetting";
+
+const state = useGlobalSettingStore();
 useHead({
   title: "Tutorials on Makise",
 });
 definePageMeta({
   layout: "documentation",
+});
+onMounted(() => {
+  if (window.innerWidth > SCREENS.md) {
+    state.isNavOpen = true;
+  } else {
+    state.isNavOpen = false;
+  }
 });
 </script>
 

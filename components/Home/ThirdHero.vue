@@ -12,6 +12,7 @@
         />
       </div>
       <div class="flex flex-col justify-between max-md:order-1">
+        <div class="redBlur right-0 translate-x-full absolute z-50"></div>
         <h1 class="text-4xl md:text-5xl font-bold mb-5 slideRight break-words contain-inline-size hyphens-manual">
           {{ $t("EasilyMessage") }}
         </h1>

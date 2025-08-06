@@ -1,5 +1,9 @@
 import type { ImgLocation, UserProfileType } from "./types/type";
 
+export const SCREENS = {
+  md: 768,
+};
+
 export const navLinks = {
   main: [
     { name: "home", icon: "material-symbols-light:home-rounded" },
