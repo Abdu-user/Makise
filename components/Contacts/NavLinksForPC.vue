@@ -63,10 +63,16 @@
           :last-active="' '"
           :last-message="''"
           :my-last-message-status="'sending'"
-          :name="foundContact.name"
+          :name="foundContact.name || foundContact.lastName || foundContact.username"
           :profile-img-src="foundContact.profileImage"
           :to="`/contacts/${foundContact.username}`"
         />
+        <p
+          v-if="foundContactTextStatus"
+          class="text-[var(--danger)] text-sm my-4 text-center"
+        >
+          {{ foundContactTextStatus }}
+        </p>
 
         <CustomButton
           :variant="'primary'"
@@ -103,6 +109,7 @@ function changeLeftSideState(state: "contacts" | "search") {
 const navDiv = ref<HTMLDivElement | undefined>(undefined);
 const navButton = ref<HTMLButtonElement | undefined>(undefined);
 const foundContact = ref<ContactType | null>(null);
+const foundContactTextStatus = ref("");
 const messagingState = useMessagingStore();
 
 const searchInput = ref<HTMLInputElement | null>(null);
@@ -125,9 +132,27 @@ watch(
 
     try {
       const contact = await findContact(newQuery);
+
+      //@ts-ignore
+      if (contact?.error) throw contact;
+
       if (contact) {
-        foundContact.value = contact?.contact as unknown as ContactType;
-        console.log(contact);
+        if (contact?.contact?.id === state.user?.$id) {
+          foundContact.value = null;
+          return;
+        } else if (isNewContactAlreadyExists()) {
+          foundContactTextStatus.value = "You already have this contact.";
+          foundContact.value = null;
+          return;
+        } else {
+          foundContact.value = contact?.contact as unknown as ContactType;
+        }
+        function isNewContactAlreadyExists() {
+          return (
+            contact?.contact?.username.toLowerCase() ===
+            messagingState.contacts.find((c) => c.username.toLowerCase() === newQuery.toLowerCase())?.username.toLowerCase()
+          );
+        }
       } else {
         foundContact.value = null;
       }

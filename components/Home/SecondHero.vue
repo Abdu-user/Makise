@@ -1,7 +1,7 @@
 <template>
   <section
     id=""
-    class="px-5 md:px-10 py-6 w-screen"
+    class="px-5 md:px-10 py-6 max-md:w-screen"
   >
     <div class="grid md:grid-cols-2 gap-6 max-w-7xl mx-auto">
       <div class="grid justify-between gap-6">

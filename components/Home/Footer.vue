@@ -1,5 +1,5 @@
 <template>
-  <footer class="px-6 md:px-12 pt-12 md:pb-8 w-screen">
+  <footer class="px-6 md:px-12 pt-12 md:pb-8 max-md:w-screen">
     <div class="">
       <div>
         <div class="flex justify-between max-md:flex-col gap-10">

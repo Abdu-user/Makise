@@ -1,7 +1,7 @@
 <template>
   <CustomContainer
     :variant="'mainContainer'"
-    class="max-w-7xl mx-auto overflow-clip grid gap-20"
+    class="max-w-7xl mx-auto max-md:overflow-clip grid gap-20"
   >
     <HomeNavigation />
     <HomeFirstHero />

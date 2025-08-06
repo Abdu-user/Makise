@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import { Query } from "appwrite";
 import type { Models } from "node-appwrite";
+import { getContactNavLinks } from "~/composables/(contacts)/useContact";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
 import type { ContactType } from "~/types/messaging";
@@ -54,55 +55,6 @@ onMounted(async () => {
     console.error("No contacts found or error fetching contacts.");
   }
 });
-
-async function getContactNavLinks(contacts: ContactType[]) {
-  if (contacts === undefined) return console.log("Contacts are undefined");
-
-  const contactWithDecryptedMessage = contactWIthDecryptMessageFn(contacts);
-
-  try {
-    const newContacts = await Promise.all(contactWithDecryptedMessage);
-    const contactsWithMessage = newContacts.map((newContact) => {
-      return { ...newContact?.contact, message: newContact?.message } as unknown as ContactType & {
-        message: MessageType;
-      };
-    });
-    messagingState.contactsWithMessage = contactsWithMessage;
-  } catch (error) {
-    console.error("Error fetching contacts with messages:", error);
-    messagingState.contactsWithMessage = messagingState.contacts.map((contact) => {
-      return { ...contact, message: {} } as ContactType & { message: MessageType };
-    });
-  }
-}
-
-function contactWIthDecryptMessageFn(contacts: ContactType[]) {
-  return contacts.map(async (contact) => {
-    if (state.user) {
-      const chatId = makeChatId(state.user.$id, contact.id);
-      const res = (await queryDocument("messages", [
-        Query.equal("chatId", chatId),
-        Query.orderDesc("$createdAt"),
-        Query.limit(1),
-      ])) as Models.Document & MessageType;
-      if (!res) {
-        console.error("Message response is undefined", res);
-        return { contact: contact, message: null };
-      }
-      if (!contact.publicKey || !res.text) {
-        console.error("Contact publicKey is falsy", contact);
-        return { contact: contact, message: res };
-      }
-      return {
-        contact: contact,
-        message: { ...res, text: decryptMessageText(res.text, contact.publicKey) },
-      };
-    } else {
-      const message = "state.user is undefined or null";
-      console.error(message);
-    }
-  });
-}
 </script>
 
 <style scoped></style>

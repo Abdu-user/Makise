@@ -62,7 +62,7 @@
             <button
               class="uppercase"
               v-for="locale in locales"
-              @click="setLocale(locale.code)"
+              @click="(setLocale(locale.code), (isLangOpen = false))"
             >
               {{ locale.code }}
             </button>
