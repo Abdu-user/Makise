@@ -1,7 +1,7 @@
 <template>
   <section
     id="Messaging"
-    class="px-10 py-6 max-md:w-screen"
+    class="px-10 py-6 max-md:w-screen relative"
   >
     <div class="grid md:grid-cols-2 gap-10">
       <div class="max-md:order-2 w-[290px]">

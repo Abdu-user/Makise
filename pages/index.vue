@@ -28,10 +28,17 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
+.purpleBlur,
+.redBlur {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  /* keep width/height for style, but remove from layout flow */
+}
 .purpleBlur {
   background-color: rgba(108, 37, 249, 0.35);
-  width: 800px;
-  height: 800px;
+  width: 600px;
+  height: 600px;
   filter: blur(750px);
   border-radius: 9999px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <footer class="px-6 md:px-12 pt-12 md:pb-8 max-md:w-screen">
+  <footer class="px-6 md:px-12 pt-12 md:pb-8 max-md:w-screen relative overflow-clip">
     <div class="">
       <div class="purpleBlur absolute right-0 translate-x-full"></div>
       <div>

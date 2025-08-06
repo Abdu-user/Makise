@@ -1,7 +1,7 @@
 <template>
   <section
     id="Skills"
-    class="grid md:grid-cols-2 mx-10 gap-10 py-6"
+    class="grid md:grid-cols-2 mx-10 gap-10 py-6 relative"
   >
     <div class="purpleBlur absolute left-0 -translate-x-full"></div>
     <div>

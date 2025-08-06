@@ -4,7 +4,7 @@
     :id="homeHashLinks[0]"
   >
     <div class="grid justify-start pl-4 max-md:pr-4 md:ml-11 md:w-[40%] pb-10">
-      <div class="pt-24 grid items-start md:h-full justify-evenly">
+      <div class="pt-20 grid items-start md:h-full justify-evenly">
         <p
           class="px-4 py-2 inline-block rounded-lg slideLeft"
           style="background: var(--bg-gradient)"
