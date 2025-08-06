@@ -1,10 +1,10 @@
 <template>
   <section
-    class="md:flex grid-cols-2 md:h-[100dvh] md:min-h-[700px]"
+    class="md:flex grid-cols-2 md:h-[100dvh] md:min-h-[700px] w-screen"
     :id="homeHashLinks[0]"
   >
-    <div class="ml-4 max-md:mr-4 md:ml-11 md:w-[40%] pb-10">
-      <div class="pt-20 flex flex-col items-start md:h-full justify-evenly">
+    <div class="grid pl-4 max-md:pr-4 md:ml-11 md:w-[40%] pb-10">
+      <div class="pt-20 grid items-start md:h-full justify-evenly">
         <p
           class="px-4 py-2 inline-block rounded-lg slideLeft"
           style="background: var(--bg-gradient)"
