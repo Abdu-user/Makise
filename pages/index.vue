@@ -3,7 +3,7 @@
     :variant="'mainContainer'"
     class="max-w-7xl mx-auto max-md:overflow-clip grid gap-20"
   >
-    <span class="fixed bottom-0 right-0">6.1.8v</span>
+    <span class="fixed bottom-0 right-0">6.1.9v</span>
     <HomeNavigation />
     <HomeFirstHero />
     <HomeSecondHero />
@@ -69,10 +69,10 @@ onBeforeUnmount(() => {
   background-color: rgba(185, 28, 28, 0.523);
 }
 .animate-slide-in-left {
-  animation: slideInLeft 0.3s ease-in-out forwards;
+  animation: slideInLeft 0.6s ease-in-out forwards;
 }
 .animate-slide-in-right {
-  animation: slideInRight 0.3s ease-in-out forwards;
+  animation: slideInRight 0.6s ease-in-out forwards;
 }
 
 .animate-slide-up {
@@ -81,7 +81,7 @@ onBeforeUnmount(() => {
 
 @keyframes slideInLeft {
   from {
-    opacity: 0;
+    opacity: 0.4;
     transform: translateX(-25%);
   }
   to {
@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
 
 @keyframes slideInRight {
   from {
-    opacity: 0;
+    opacity: 0.4;
     transform: translateX(25%);
   }
   to {
@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
 
 @keyframes slideUp {
   from {
-    opacity: 0;
+    opacity: 0.4;
     transform: translateY(25%);
   }
   to {
