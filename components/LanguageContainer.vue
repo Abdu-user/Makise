@@ -2,9 +2,7 @@
   <div>
     <span> Language: </span>
     <span>
-      EN
-
-      <Icon name="entypo:language" />
+      <LanguagePicker />
     </span>
   </div>
 </template>

@@ -111,6 +111,14 @@ onMounted(() => {
   const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1";
   if (isLocalhost) inDev.value = true;
 });
+const router = useRouter();
+onMounted(() => {
+  if (state.user?.$id) {
+    router.push("/profile");
+  } else if (route.path === "/") {
+    document.documentElement.classList.remove("dark");
+  }
+});
 </script>
 <style>
 body {
@@ -138,7 +146,7 @@ body {
   color: transparent;
 }
 .bg-gradient {
-  background: linear-gradient(144.39deg, #ffffff -278.56%, #ffc3c3 -78.47%, #ff7b7b 91.61%);
+  background: var(--bg-gradient-color);
 }
 
 :root {
@@ -161,6 +169,7 @@ body {
   /* --bg-light-gradient:  */
   --text-ghost: hsla(320, 8%, 29%, 0.608);
   --rewards-card-gradient: linear-gradient(-40deg, #d4d4d4 -20%, #ffcece 100%);
+  --bg-gradient-color: linear-gradient(144.39deg, #ffffff -278.56%, #ffc3c3 -78.47%, #ff7b7b 91.61%);
 }
 :root.dark {
   --bg-dark: hsl(300, 20%, 1%);
@@ -179,5 +188,7 @@ body {
   --info: hsl(217 28% 65%);
   --bg-transparent: hsla(300, 20%, 1%, 0.616);
   --text-ghost: hsla(323, 8%, 70%, 0.608);
+  --rewards-card-gradient: linear-gradient(-40deg, #3a3a3a -20%, #7b4232 100%);
+  --bg-gradient-color: linear-gradient(144.39deg, #2c2c2c -278.56%, #7b4232 -78.47%, #320f0f 91.61%);
 }
 </style>

@@ -19,8 +19,8 @@ import { onMounted, ref } from "vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 onMounted(() => {
-  document.documentElement.classList.remove("dark");
-  document.documentElement.classList.toggle("dark", false);
+  // document.documentElement.classList.remove("dark");
+  // document.documentElement.classList.toggle("dark", false);
 });
 onBeforeUnmount(() => {
   state.loadThemeMode();

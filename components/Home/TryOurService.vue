@@ -16,4 +16,9 @@
 .bg-gradient2 {
   background: linear-gradient(90deg, #ffc9c9, #fbb8b8);
 }
+:root.dark {
+  .bg-gradient2 {
+    background: linear-gradient(90deg, #412d2d, #7c2222);
+  }
+}
 </style>
