@@ -3,7 +3,7 @@
     :variant="'mainContainer'"
     class="max-w-7xl mx-auto max-md:overflow-clip grid gap-20"
   >
-    <span class="fixed bottom-0 right-0">6.1.6v</span>
+    <span class="fixed bottom-0 right-0">6.1.7v</span>
     <HomeNavigation />
     <HomeFirstHero />
     <HomeSecondHero />
@@ -30,10 +30,6 @@ onBeforeUnmount(() => {
 
 <style>
 /* Prevent horizontal overflow from visual effects (Safari safe) */
-section,
-div {
-  overflow-x: clip;
-}
 
 .purpleBlur,
 .redBlur {
