@@ -45,5 +45,94 @@
   "fl.becomeAPartner": "Become a Partner",
 
   "messaging": "Messaging",
-  "signUp": "Sign Up"
+  "signIn": {
+    "title": "Sign In",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "buttonText": "Sign In",
+    "forgotPassword": "Forgot password",
+    "noAccountPrompt": "Don't have an account?",
+    "signUpLink": "Sign Up",
+    "errors": {
+      "emailRequired": "Email is required",
+      "invalidEmailFormat": "Invalid email format",
+      "emailNotFound": "Email not found",
+      "incorrectPassword": "Incorrect password"
+    },
+    "feedback": {
+      "success": "Successfully signed in",
+      "failed": "Failed to sign in"
+    }
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPasswordPlaceholder": "••••••••",
+    "buttonText": "Receive A Code",
+    "alreadyAccountPrompt": "Already have an account?",
+    "signInLink": "Sign In",
+    "errors": {
+      "emailRequired": "Email is required.",
+      "invalidEmailFormat": "Enter a valid email address.",
+      "passwordRequired": "Password is required.",
+      "passwordMinLength": "Password must be at least 4 characters long.",
+      "confirmPasswordRequired": "Password confirmation is required.",
+      "passwordsMustMatch": "Passwords must match.",
+      "unexpected": "An unexpected error occurred during sign up.",
+      "userExists": "User with this email already exists or an error occurred."
+    },
+    "feedback": {
+      "codeSent": "Code was sent to {email}"
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "backButtonAriaLabel": "back button",
+    "profileImageAlt": "Profile Image",
+    "profileStrengthLabel": "Profile Strength:",
+    "placeholder": {
+      "name": "Name",
+      "lastName": "Last Name",
+      "username": "username",
+      "address": "Address",
+      "phoneNumber": "Phone Number",
+      "profileStrength": "50"
+    },
+    "feedback": {
+      "usernameEmpty": "Username is empty",
+      "usernameCopied": "Username copied to clipboard",
+      "profileUpdated": "Profile data has been updated successfully",
+      "profileImageUpdated": "Profile image and data have been updated successfully",
+      "updateFailed": "Failed to update profile, {message}"
+    }
+  },
+  "headerNav": {
+    "loginButton": "Login",
+    "accountLink": "Account",
+    "signOutButton": "Sign out",
+    "themeToggle": "Theme",
+    "loadingAriaLabel": "loading",
+    "settingsAriaLabel": "settings",
+    "signOutConfirm": "Are you sure you want to sign out?"
+  },
+  "contactHeader": {
+    "nameFallback": "Name",
+    "lastSeenPrefix": "Last seen",
+    "lastSeenFallbackTime": "at 33:33"
+  },
+  "navLinks": {
+    "home": "Home",
+    "about": "About",
+    "contacts": "Contacts",
+    "profile": "Profile",
+    "documentation": "Documentation",
+    "components": "Components",
+    "tutorials": "Tutorials",
+    "separator1": "documentation"
+  }
 }

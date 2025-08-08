@@ -11,7 +11,6 @@
         <ProfileWideImg />
 
         <!-- Profile Image -->
-
         <label
           class="absolute -translate-y-3/4 md:left-[15%] left-1/2 -translate-x-1/2 w-36 h-36 border-4 border-mainBg !p-0 overflow-hidden bg-mainBg rounded-full"
           :class="`${state.isEditingProfile ? 'cursor-pointer' : ''}`"
@@ -26,32 +25,34 @@
           <CustomImg
             :src="profileImgUrl || state.userData?.profileImage || ''"
             :defaultImgSrc="'/images/placeholder-avatar.jpg'"
-            alt="Profile Image"
+            :alt="$t('profile.profileImageAlt')"
             class="w-full h-full object-cover"
           />
         </label>
       </div>
-      <!-- ToDO todo is used just to highlight this section -->
       <!-- User Info Section -->
       <div
         :class="`relative grid md:grid-cols-3 max-md:grid-rows-2 max-md:grid-cols-2
-      mt-16 px-6 md:px-16 pb-12 justify-center md:gap-10
-        max-md:text-xl
-      `"
+          mt-16 px-6 md:px-16 pb-12 justify-center md:gap-10
+          max-md:text-xl
+        `"
       >
         <template v-if="!state.isEditingProfile">
           <!-- Not Editing: Name + Username + Address -->
           <div class="max-md:mx-auto max-md:text-center max-md:col-span-2">
-            <CustomParagraph :variant="'edit'">{{ cmpUserData.name || pl.name }} {{ cmpUserData.lastName || pl.lastName }}</CustomParagraph>
+            <CustomParagraph :variant="'edit'">
+              {{ cmpUserData.name || $t("profile.placeholder.name") }}
+              {{ cmpUserData.lastName || $t("profile.placeholder.lastName") }}
+            </CustomParagraph>
             <CustomParagraph
               @click="copyUsername"
               ref="usernameRef"
               :variant="'editSecondary'"
             >
-              @{{ cmpUserData.username || pl.username }}
+              @{{ cmpUserData.username || $t("profile.placeholder.username") }}
             </CustomParagraph>
             <CustomParagraph :variant="'editSecondary'">
-              {{ cmpUserData.address || pl.address }}
+              {{ cmpUserData.address || $t("profile.placeholder.address") }}
             </CustomParagraph>
           </div>
         </template>
@@ -63,30 +64,29 @@
               <CustomInput
                 variant="edit"
                 v-model="nameRef"
-                :placeholder="pl.name"
+                :placeholder="$t('profile.placeholder.name')"
               />
               <CustomInput
                 variant="edit"
                 v-model="lastNameRef"
-                :placeholder="pl.lastName"
+                :placeholder="$t('profile.placeholder.lastName')"
               />
             </div>
             <CustomInput
               variant="edit"
               class="text-text-Paragraph text-base max-md:text-center max-md:mx-auto"
               v-model="username"
-              :placeholder="pl.username"
+              :placeholder="$t('profile.placeholder.username')"
             />
             <CustomInput
               variant="edit"
               class="text-textSecondary bg-transparent max-md:text-center max-md:mx-auto"
               v-model="addressRef"
-              :placeholder="pl.address"
+              :placeholder="$t('profile.placeholder.address')"
             />
           </div>
         </template>
 
-        <!-- <div class="flex basis-2/3 justify-between max-md:w-full"> -->
         <!-- Contact Info -->
         <div class="max-md:mt-3">
           <div class="grid grid-flow-col justify-start items-center gap-4">
@@ -94,20 +94,23 @@
             <CustomParagraph
               :variant="'editSecondary'"
               class="break-all w-full"
-              >{{ cmpUserData.email }}</CustomParagraph
             >
+              {{ cmpUserData.email }}
+            </CustomParagraph>
           </div>
           <div class="grid grid-flow-col justify-start items-center gap-4">
             <CustomIcon name="material-symbols-light:settings-phone-sharp" />
             <template v-if="!state.isEditingProfile">
-              <CustomParagraph :variant="'editSecondary'">{{ cmpUserData.phoneNumber || pl.phoneNumber }}</CustomParagraph>
+              <CustomParagraph :variant="'editSecondary'">
+                {{ cmpUserData.phoneNumber || $t("profile.placeholder.phoneNumber") }}
+              </CustomParagraph>
             </template>
             <template v-else>
               <CustomInput
                 variant="edit"
                 class="text-textSecondary"
                 v-model="phoneNumberRef"
-                :placeholder="pl.phoneNumber"
+                :placeholder="$t('profile.placeholder.phoneNumber')"
               />
             </template>
           </div>
@@ -120,7 +123,7 @@
               :variant="'editSecondary'"
               class="text-textSecondary flex justify-between"
             >
-              Profile Strength:
+              {{ $t("profile.profileStrengthLabel") }}
               <template v-if="state.isEditingProfile">
                 <CustomInput
                   variant="edit"
@@ -128,13 +131,17 @@
                   v-model="profileStrengthRef"
                   type="number"
                   :maxNumber="100"
-                  :placeholder="pl.profileStrength"
+                  :placeholder="$t('profile.placeholder.profileStrength')"
                 />
               </template>
             </CustomParagraph>
             <LinearProgress
               class="w-52 mb-2"
-              :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
+              :percent="
+                Number(
+                  state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || $t('profile.placeholder.profileStrength')
+                )
+              "
               :show-percent="true"
               :startColor="colors.activeWeak"
               :stopColor="colors.activeStrong"
@@ -155,17 +162,23 @@
                   type="number"
                   :maxNumber="100"
                   :min="0"
-                  :placeholder="pl.profileStrength"
+                  :placeholder="$t('profile.placeholder.profileStrength')"
                 />
               </template>
               <template v-else>
-                <span class="font-semibold text-textParagraph text-xl"> {{ cmpUserData.profileStrength || pl.profileStrength }}% </span>
+                <span class="font-semibold text-textParagraph text-xl">
+                  {{ cmpUserData.profileStrength || $t("profile.placeholder.profileStrength") }}%
+                </span>
               </template>
               <span class="text-textSecondary text-sm -mt-2 inline-block"></span>
             </CustomParagraph>
             <ClientOnly>
               <circle-progress
-                :percent="Number(state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || pl.profileStrength)"
+                :percent="
+                  Number(
+                    state.isEditingProfile ? profileStrengthRef : cmpUserData.profileStrength || $t('profile.placeholder.profileStrength')
+                  )
+                "
                 :viewport="true"
                 :size="90"
                 :border-width="8"
@@ -182,8 +195,6 @@
             </ClientOnly>
           </div>
         </div>
-        <!-- </div> -->
-
         <!-- Edit / Save / Cancel Buttons -->
         <EditButtons
           class="absolute z-10 -top-10 right-5"
@@ -200,17 +211,21 @@
 <script setup lang="ts">
 /// @ts-ignore
 import CircleProgress from "vue3-circle-progress";
+import { useI18n } from "vue-i18n"; // Import useI18n
 
 import colors from "../../colors";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 const state = useGlobalSettingStore();
 
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, onMounted } from "vue"; // Added onMounted
 import type { UserProfileType } from "~/types/type";
-import { profileInputPlaceholders } from "~/constants";
+// Removed import of profileInputPlaceholders as it's now handled by i18n
 import { refreshUserData } from "~/composables/useSignUp";
 
-const pl = computed(() => profileInputPlaceholders); // pl means placeholder-text
+const { t } = useI18n(); // Initialize t for translations
+
+// Removed pl computed property as placeholders are now directly translated
+
 const cmpUserData = computed((): UserProfileType & { profileImgUrl: string } => ({
   name: state.userData?.name || "",
   lastName: state.userData?.lastName || "",
@@ -236,12 +251,12 @@ function copyUsername(e: Event) {
 
   const paragraph = usernameRef.value?.paragraphRef;
   if (!paragraph?.textContent) {
-    state.setFeedback("error", "Username is empty");
+    state.setFeedback("error", t("profile.feedback.usernameEmpty"));
     return;
   }
 
   navigator.clipboard.writeText(paragraph.textContent);
-  state.setFeedback("success", "Username copied to clipboard");
+  state.setFeedback("success", t("profile.feedback.usernameCopied"));
 }
 
 const profileImgFile = ref<File | null>(null);
@@ -280,7 +295,7 @@ async function updateUser() {
       const userData = await res.json();
       console.log(userData);
       state.setUserData(userData as unknown as UserProfileType);
-      state.setFeedback("success", "Profile data has been updated successfully");
+      state.setFeedback("success", t("profile.feedback.profileUpdated"));
       if (!profileImgFile.value) return "image profileImgFile doesn't exist. when string to upload to Appwrite";
 
       const imgUrl = await uploadFileToAppwrite(profileImgFile.value);
@@ -291,11 +306,11 @@ async function updateUser() {
 
       await useAppwriteDocumentUpdate(state.user.$id, data);
       await refreshUserData();
-      state.setFeedback("success", "Profile img and data has been updated successfully");
+      state.setFeedback("success", t("profile.feedback.profileImageUpdated"));
     } catch (error: any) {
       const parsedError = JSON.parse(await error);
       console.error(parsedError);
-      state.setFeedback("error", `Failed to update profile, ${parsedError.message}`, 10000);
+      state.setFeedback("error", t("profile.feedback.updateFailed", { message: parsedError.message }), 10000);
     }
   }
 }

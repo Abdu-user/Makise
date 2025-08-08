@@ -41,5 +41,95 @@
 
   "fl.partner": "Серіктес",
   "fl.ourPartner": "Біздің серіктес",
-  "fl.becomeAPartner": "Серіктес болу"
+  "fl.becomeAPartner": "Серіктес болу",
+  "signIn": {
+    "title": "Кіру",
+    "emailLabel": "Электрондық пошта",
+    "emailPlaceholder": "Электрондық пошта",
+    "passwordLabel": "Құпия сөз",
+    "passwordPlaceholder": "Құпия сөз",
+    "buttonText": "Кіру",
+    "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
+    "noAccountPrompt": "Тіркелгіңіз жоқ па?",
+    "signUpLink": "Тіркелу",
+    "errors": {
+      "emailRequired": "Электрондық пошта қажет",
+      "invalidEmailFormat": "Жарамсыз электрондық пошта пішімі",
+      "emailNotFound": "Электрондық пошта табылмады",
+      "incorrectPassword": "Қате құпия сөз"
+    },
+    "feedback": {
+      "success": "Сәтті кірдіңіз",
+      "failed": "Кіру сәтсіз аяқталды"
+    }
+  },
+  "signUp": {
+    "title": "Тіркелу",
+    "emailLabel": "Электрондық пошта",
+    "passwordLabel": "Құпия сөз",
+    "passwordPlaceholder": "••••••••",
+    "confirmPasswordLabel": "Құпия сөзді растау",
+    "confirmPasswordPlaceholder": "••••••••",
+    "buttonText": "Код алу",
+    "alreadyAccountPrompt": "Тіркелгіңіз бар ма?",
+    "signInLink": "Кіру",
+    "errors": {
+      "emailRequired": "Электрондық пошта қажет.",
+      "invalidEmailFormat": "Жарамды электрондық пошта мекенжайын енгізіңіз.",
+      "passwordRequired": "Құпия сөз қажет.",
+      "passwordMinLength": "Құпия сөз кемінде 4 таңбадан тұруы керек.",
+      "confirmPasswordRequired": "Құпия сөзді растау қажет.",
+      "passwordsMustMatch": "Құпия сөздер сәйкес келуі керек.",
+      "unexpected": "Тіркелу кезінде күтпеген қате пайда болды.",
+      "userExists": "Бұл электрондық поштамен пайдаланушы тіркелген немесе қате пайда болды."
+    },
+    "feedback": {
+      "codeSent": "Код {email} мекенжайына жіберілді"
+    }
+  },
+  "profile": {
+    "title": "Менің профилім",
+    "backButtonAriaLabel": "артқа батырмасы",
+    "profileImageAlt": "Профиль суреті",
+    "profileStrengthLabel": "Профиль күші:",
+    "placeholder": {
+      "name": "Аты",
+      "lastName": "Тегі",
+      "username": "пайдаланушы аты",
+      "address": "Мекенжайы",
+      "phoneNumber": "Телефон нөмірі",
+      "profileStrength": "50"
+    },
+    "feedback": {
+      "usernameEmpty": "Пайдаланушы аты бос",
+      "usernameCopied": "Пайдаланушы аты алмасу буферіне көшірілді",
+      "profileUpdated": "Профиль деректері сәтті жаңартылды",
+      "profileImageUpdated": "Профиль суреті мен деректері сәтті жаңартылды",
+      "updateFailed": "Профильді жаңарту сәтсіз аяқталды, {message}"
+    }
+  },
+  "headerNav": {
+    "loginButton": "Кіру",
+    "accountLink": "Есептік жазба",
+    "signOutButton": "Шығу",
+    "themeToggle": "Тақырып",
+    "loadingAriaLabel": "жүктелуде",
+    "settingsAriaLabel": "параметрлер",
+    "signOutConfirm": "Шыққыңыз келетініне сенімдісіз бе?"
+  },
+  "contactHeader": {
+    "nameFallback": "Аты",
+    "lastSeenPrefix": "Соңғы рет көрінген",
+    "lastSeenFallbackTime": "сағат 33:33-те"
+  },
+  "navLinks": {
+    "home": "Басты бет",
+    "about": "Біз туралы",
+    "contacts": "Контактілер",
+    "profile": "Профиль",
+    "documentation": "Құжаттама",
+    "components": "Компоненттер",
+    "tutorials": "Оқулықтар",
+    "separator1": "Құжаттама"
+  }
 }

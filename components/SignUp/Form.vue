@@ -1,8 +1,7 @@
 <template>
-  <!-- <ModalsAlert v-if="errorMessage || false"> </ModalsAlert> -->
   <CustomContainer
     :variant="'UIContainer'"
-    :class="`p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0  ${props.class}`"
+    :class="`p-8 rounded-lg shadow-lg w-full mx-auto max-w-md md:sticky bottom-0 ${props.class}`"
   >
     <div class="relative flex items-center justify-center">
       <CustomButton
@@ -15,7 +14,7 @@
         size="lg"
         @click="router.push('/')"
       />
-      <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign Up</h2>
+      <h2 class="text-2xl font-bold text-primary mb-6 text-center">{{ $t("signUp.title") }}</h2>
     </div>
     <form
       class="space-y-6"
@@ -26,8 +25,9 @@
           :error="emailError"
           for="email"
           :is-animating-n="isAnimatingN"
-          >Email</CustomLabel
         >
+          {{ $t("signUp.emailLabel") }}
+        </CustomLabel>
         <CustomInput
           :size="'lg'"
           id="email"
@@ -35,7 +35,7 @@
           autocomplete="email"
           v-model="signUpState.email"
           variant="input"
-          placeholder="you@gmail.com"
+          :placeholder="'you@gmail.com'"
           :error="Boolean(emailError)"
         />
       </div>
@@ -44,8 +44,9 @@
           for="password"
           :error="passwordError"
           :is-animating-n="isAnimatingN"
-          >Password</CustomLabel
         >
+          {{ $t("signUp.passwordLabel") }}
+        </CustomLabel>
 
         <CustomPasswordInput
           :size="'lg'"
@@ -53,7 +54,7 @@
           autocomplete="new-password"
           v-model="signUpState.password"
           :error="Boolean(passwordError)"
-          placeholder="••••••••"
+          :placeholder="$t('signUp.passwordPlaceholder')"
         />
       </div>
       <div>
@@ -62,14 +63,15 @@
           class="mb-2"
           :error="confirmPasswordError"
           :is-animating-n="isAnimatingN"
-          >Confirm Password</CustomLabel
         >
+          {{ $t("signUp.confirmPasswordLabel") }}
+        </CustomLabel>
         <CustomPasswordInput
           :size="'lg'"
           id="confirmPassword"
           autocomplete="new-password"
           v-model="signUpState.confirmPassword"
-          placeholder="••••••••"
+          :placeholder="$t('signUp.confirmPasswordPlaceholder')"
           :error="Boolean(confirmPasswordError)"
         />
       </div>
@@ -80,17 +82,18 @@
         block
         size="lg"
       >
-        Receive A Code
+        {{ $t("signUp.buttonText") }}
       </CustomButton>
     </form>
     <p class="mt-6 text-center text-textParagraph text-base">
-      Already have an account?
+      {{ $t("signUp.alreadyAccountPrompt") }}
       <CustomNuxtLink
         to="/sign-in"
         replace
         :variant="'link'"
-        >Sign In</CustomNuxtLink
       >
+        {{ $t("signUp.signInLink") }}
+      </CustomNuxtLink>
     </p>
   </CustomContainer>
 
@@ -100,10 +103,13 @@
 import useVuelidate from "@vuelidate/core";
 import { required, email as emailValidator, minLength, sameAs } from "@vuelidate/validators";
 import { useRoute, useRouter } from "vue-router";
-const defErrorMessage = "An unexpected error occurred during sign up.";
+// Use i18n for default error message
+// const defErrorMessage = "An unexpected error occurred during sign up.";
 import { ref, watch, onMounted } from "vue";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useSIgnUpStore } from "~/store/signUpStore";
+import { useI18n } from "vue-i18n"; // Import useI18n
+
 const props = defineProps({ class: String });
 
 const state = useGlobalSettingStore();
@@ -111,6 +117,7 @@ const isAnimatingN = ref(0);
 
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n(); // Initialize t for translations
 
 const isHappy = ref(true);
 const errorMessage = ref("");
@@ -137,12 +144,12 @@ async function handleSubmit() {
     const res = await sendCode(signUpState.email);
 
     if (typeof res === "object" && !res.success) throw res.error;
-    state.setFeedback("success", `Code was sent to ${signUpState.email}`);
+    state.setFeedback("success", t("signUp.feedback.codeSent", { email: signUpState.email }));
     router.push("/confirm-code");
     isHappy.value = true;
     errorMessage.value = "";
   } catch (err) {
-    errorMessage.value = (err as string) || defErrorMessage;
+    errorMessage.value = (err as string) || t("signUp.errors.unexpected");
   } finally {
   }
 }
@@ -155,7 +162,7 @@ async function doesUserAlreadyExist() {
     return false;
   } catch (err) {
     console.log(err);
-    state.setFeedback("error", "" + err);
+    state.setFeedback("error", t("signUp.errors.userExists")); // Use a generic error for now, or parse Appwrite specific errors
     return true;
   }
 }
@@ -182,20 +189,20 @@ async function isValidForm() {
   if (!isValid) {
     if (v$.value.email.$errors.length) {
       v$.value.email.$errors.forEach((err) => {
-        if (err.$validator === "required") emailError.value += "Email is required.\n";
-        if (err.$validator === "email") emailError.value += "Enter a valid email address.\n";
+        if (err.$validator === "required") emailError.value += t("signUp.errors.emailRequired") + "\n";
+        if (err.$validator === "email") emailError.value += t("signUp.errors.invalidEmailFormat") + "\n";
       });
     }
     if (v$.value.password.$errors.length) {
       v$.value.password.$errors.forEach((err) => {
-        if (err.$validator === "required") passwordError.value += "Password is required.\n";
-        if (err.$validator === "minLength") passwordError.value += "Password must be at least 6 characters long.\n";
+        if (err.$validator === "required") passwordError.value += t("signUp.errors.passwordRequired") + "\n";
+        if (err.$validator === "minLength") passwordError.value += t("signUp.errors.passwordMinLength") + "\n";
       });
     }
     if (v$.value.confirmPassword.$errors.length) {
       v$.value.confirmPassword.$errors.forEach((err) => {
-        if (err.$validator === "required") confirmPasswordError.value += "Password confirmation is required.\n";
-        if (err.$validator === "sameAsPassword") confirmPasswordError.value += "Passwords must match.\n";
+        if (err.$validator === "required") confirmPasswordError.value += t("signUp.errors.confirmPasswordRequired") + "\n";
+        if (err.$validator === "sameAsPassword") confirmPasswordError.value += t("signUp.errors.passwordsMustMatch") + "\n";
       });
     }
     return true;

@@ -22,12 +22,17 @@
     <div class="ml-2 grid">
       <p class="text-text text-base pr-4 truncate">
         <span>
-          {{ `${contactInfo?.name ?? ""} ${contactInfo?.lastName ?? ""}`.trim() || contactInfo?.username || "Name" }}
+          {{
+            `${contactInfo?.name ?? ""} ${contactInfo?.lastName ?? ""}`.trim() || contactInfo?.username || $t("contactHeader.nameFallback")
+          }}
         </span>
       </p>
 
       <p class="text-xs -mt-1 truncate text-muted">
-        <span> Last seen {{ contactInfo?.lastOnline ? getSmartTime(contactInfo.lastOnline) : "at 33:33" }} </span>
+        <span>
+          {{ $t("contactHeader.lastSeenPrefix") }}
+          {{ contactInfo?.lastOnline ? getSmartTime(contactInfo.lastOnline) : $t("contactHeader.lastSeenFallbackTime") }}
+        </span>
       </p>
     </div>
 
@@ -60,9 +65,11 @@
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { ContactType } from "~/types/messaging";
 import { inDevelopment } from "~/utils/devFunctions";
-const state = useGlobalSettingStore();
+import { useI18n } from "vue-i18n"; // Import useI18n
 
+const state = useGlobalSettingStore();
 const router = useRouter();
+const { t } = useI18n(); // Initialize t for translations
 
 const props = defineProps<{
   contactInfo: ContactType | undefined;

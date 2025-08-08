@@ -15,7 +15,7 @@
         @click="router.push('/')"
       />
 
-      <h2 class="text-2xl font-bold text-primary mb-6 text-center">Sign In</h2>
+      <h2 class="text-2xl font-bold text-primary mb-6 text-center">{{ $t("signIn.title") }}</h2>
     </div>
     <form @submit.prevent="onSignIn">
       <div class="mb-4">
@@ -24,7 +24,7 @@
           :error="emailError"
           for="email"
         >
-          Email
+          {{ $t("signIn.emailLabel") }}
         </CustomLabel>
         <CustomInput
           :size="'lg'"
@@ -33,7 +33,7 @@
           type="email"
           autocomplete="email"
           required
-          placeholder="Email"
+          :placeholder="$t('signIn.emailPlaceholder')"
           variant="input"
         />
       </div>
@@ -43,15 +43,15 @@
           :error="passwordError"
           for="password"
         >
-          Password</CustomLabel
+          {{ $t("signIn.passwordLabel") }}</CustomLabel
         >
         <CustomPasswordInput
           :size="'lg'"
           id="password"
           v-model="password"
           required
-          aria-placeholder="password"
-          placeholder="Password"
+          :aria-placeholder="$t('signIn.passwordPlaceholder')"
+          :placeholder="$t('signIn.passwordPlaceholder')"
           autocomplete="current-password"
         />
       </div>
@@ -62,24 +62,24 @@
         block
         size="lg"
       >
-        Sign In
+        {{ $t("signIn.buttonText") }}
       </CustomButton>
       <p class="mt-4 text-center text-sm text-textParagraph">
         <NuxtLink
           href="/recovery"
           replace
           class="text-primary hover:underline outline-none focus:outline-primary rounded-lg focus:outline-2 focus:outline-offset-[6px]"
-          >Forgot password</NuxtLink
+          >{{ $t("signIn.forgotPassword") }}</NuxtLink
         >
       </p>
     </form>
     <p class="mt-4 text-center text-sm text-textParagraph">
-      Don't have an account?
+      {{ $t("signIn.noAccountPrompt") }}
       <NuxtLink
         href="/sign-up"
         replace
         class="text-primary hover:underline outline-none focus:outline-primary rounded-lg focus:outline-2 focus:outline-offset-[6px]"
-        >Sign Up</NuxtLink
+        >{{ $t("signIn.signUpLink") }}</NuxtLink
       >
     </p>
     <ModalsError
@@ -94,10 +94,13 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n"; // Import useI18n
 import { getDecryptedPrivateKey, getSalt } from "~/composables/encryption/useAccountKey";
 import { getPrivateKey } from "~/composables/useKeyPair";
 import { useAuth } from "~/composables/useSignUp";
 import { useGlobalSettingStore } from "~/store/globalSetting";
+
+const { t } = useI18n(); // Initialize t for translations
 const { login } = useAuth();
 const router = useRouter();
 const state = useGlobalSettingStore();
@@ -112,9 +115,9 @@ function onSignIn() {
   emailError.value = "";
   passwordError.value = "";
 
-  if (!email.value) emailError.value = "Email is required";
+  if (!email.value) emailError.value = t("signIn.errors.emailRequired");
 
-  if (!validateEmail(email.value)) emailError.value = "Invalid email format";
+  if (!validateEmail(email.value)) emailError.value = t("signIn.errors.invalidEmailFormat");
 
   login(email.value, password.value)
     .then(async (res) => {
@@ -129,15 +132,15 @@ function onSignIn() {
         console.error("failed with encryption of salt, and privateKey ", error);
       }
 
-      state.setFeedback("success", "Successfully signed in");
+      state.setFeedback("success", t("signIn.feedback.success"));
     })
     .catch((error) => {
-      if (error.message.includes("email")) emailError.value = "Email not found";
-      else if (error.message.includes("password")) passwordError.value = "Incorrect password";
+      if (error.message.includes("email")) emailError.value = t("signIn.errors.emailNotFound");
+      else if (error.message.includes("password")) passwordError.value = t("signIn.errors.incorrectPassword");
       else {
         notifyError.value = error.message;
       }
-      state.setFeedback("error", "Failed to sign in");
+      state.setFeedback("error", t("signIn.feedback.failed"));
     });
 
   function validateEmail(email: string): boolean {

@@ -11,7 +11,7 @@
         v-if="state.loading"
         name="material-symbols-light:forward-circle"
         class="w-full h-full animate-spin"
-        aria-label="loading"
+        :aria-label="$t('headerNav.loadingAriaLabel')"
       />
 
       <template v-else>
@@ -20,8 +20,9 @@
           to="/sign-in"
           @click="setRoutePath"
           class="flex items-center justify-center border border-primary bg-accent hover:bg-active/5 w-[90%] h-[90%] hover:text-secondary text-textHeader font-semibold rounded-full"
-          >Login</NuxtLink
         >
+          {{ $t("headerNav.loginButton") }}
+        </NuxtLink>
         <template v-else>
           <NuxtLink
             :to="state.isInProfilePage ? '' : '/profile'"
@@ -36,7 +37,7 @@
               v-if="state.isInProfilePage"
               name="meteor-icons:gear"
               class="w-full h-full m-2"
-              aria-label="settings"
+              :aria-label="$t('headerNav.settingsAriaLabel')"
             />
             <CustomImg
               v-else-if="state.userData?.profileImage"
@@ -69,7 +70,7 @@
         :variant="'navigation'"
         class="flex text-base md:p-1 text-start justify-between"
       >
-        Account
+        {{ $t("headerNav.accountLink") }}
         <Icon name="material-symbols:person"></Icon>
       </CustomNuxtLink>
       <CustomButton
@@ -82,11 +83,11 @@
         :size="'sm'"
         @click="logout()"
       >
-        Sign out
+        {{ $t("headerNav.signOutButton") }}
       </CustomButton>
       <ThemeToggleButton
         class="mt-2"
-        :text="'Theme'"
+        :text="$t('headerNav.themeToggle')"
       />
       <LanguageContainer class="mx-3 flex justify-between mt-1" />
     </CustomContainer>
@@ -102,6 +103,9 @@ const auth = useAuth();
 import { useAutoAnimate } from "@formkit/auto-animate/vue";
 import { deletePrivateKey } from "~/composables/useKeyPair";
 import LanguageContainer from "./LanguageContainer.vue";
+import { useI18n } from "vue-i18n"; // Import useI18n
+
+const { t } = useI18n(); // Initialize t for translations
 
 const [parent] = useAutoAnimate({
   duration: 150,
@@ -120,7 +124,8 @@ onMounted(() => {
 });
 
 const logout = () => {
-  confirm("Are you sure you want to sign out?") &&
+  // Use t() for the confirmation message
+  confirm(t("headerNav.signOutConfirm")) &&
     auth.logout().then(() => {
       state.isLoginButtonDropdownOpen = false;
       state.setFromPage("/profile");

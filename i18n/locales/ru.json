@@ -41,5 +41,95 @@
 
   "fl.partner": "Партнер",
   "fl.ourPartner": "Наш партнер",
-  "fl.becomeAPartner": "Стать партнером"
+  "fl.becomeAPartner": "Стать партнером",
+  "signIn": {
+    "title": "Войти",
+    "emailLabel": "Электронная почта",
+    "emailPlaceholder": "Электронная почта",
+    "passwordLabel": "Пароль",
+    "passwordPlaceholder": "Пароль",
+    "buttonText": "Войти",
+    "forgotPassword": "Забыли пароль?",
+    "noAccountPrompt": "Нет аккаунта?",
+    "signUpLink": "Зарегистрироваться",
+    "errors": {
+      "emailRequired": "Требуется адрес электронной почты",
+      "invalidEmailFormat": "Неверный формат электронной почты",
+      "emailNotFound": "Электронная почта не найдена",
+      "incorrectPassword": "Неверный пароль"
+    },
+    "feedback": {
+      "success": "Успешный вход",
+      "failed": "Не удалось войти"
+    }
+  },
+  "signUp": {
+    "title": "Регистрация",
+    "emailLabel": "Электронная почта",
+    "passwordLabel": "Пароль",
+    "passwordPlaceholder": "••••••••",
+    "confirmPasswordLabel": "Подтвердите пароль",
+    "confirmPasswordPlaceholder": "••••••••",
+    "buttonText": "Получить код",
+    "alreadyAccountPrompt": "Уже есть аккаунт?",
+    "signInLink": "Войти",
+    "errors": {
+      "emailRequired": "Требуется адрес электронной почты.",
+      "invalidEmailFormat": "Введите действительный адрес электронной почты.",
+      "passwordRequired": "Пароль обязателен.",
+      "passwordMinLength": "Пароль должен быть не менее 4 символов.",
+      "confirmPasswordRequired": "Подтверждение пароля обязательно.",
+      "passwordsMustMatch": "Пароли должны совпадать.",
+      "unexpected": "Произошла непредвиденная ошибка при регистрации.",
+      "userExists": "Пользователь с этим адресом электронной почты уже существует или произошла ошибка."
+    },
+    "feedback": {
+      "codeSent": "Код отправлен на {email}"
+    }
+  },
+  "profile": {
+    "title": "Мой профиль",
+    "backButtonAriaLabel": "кнопка назад",
+    "profileImageAlt": "Изображение профиля",
+    "profileStrengthLabel": "Сила профиля:",
+    "placeholder": {
+      "name": "Имя",
+      "lastName": "Фамилия",
+      "username": "имя пользователя",
+      "address": "Адрес",
+      "phoneNumber": "Номер телефона",
+      "profileStrength": "50"
+    },
+    "feedback": {
+      "usernameEmpty": "Имя пользователя пусто",
+      "usernameCopied": "Имя пользователя скопировано в буфер обмена",
+      "profileUpdated": "Данные профиля успешно обновлены",
+      "profileImageUpdated": "Изображение профиля и данные успешно обновлены",
+      "updateFailed": "Не удалось обновить профиль, {message}"
+    }
+  },
+  "headerNav": {
+    "loginButton": "Войти",
+    "accountLink": "Аккаунт",
+    "signOutButton": "Выйти",
+    "themeToggle": "Тема",
+    "loadingAriaLabel": "загрузка",
+    "settingsAriaLabel": "настройки",
+    "signOutConfirm": "Вы уверены, что хотите выйти?"
+  },
+  "contactHeader": {
+    "nameFallback": "Имя",
+    "lastSeenPrefix": "Последний раз был(а) в сети",
+    "lastSeenFallbackTime": "в 33:33"
+  },
+  "navLinks": {
+    "home": "Главная",
+    "about": "О нас",
+    "contacts": "Контакты",
+    "profile": "Профиль",
+    "documentation": "Документация",
+    "components": "Компоненты",
+    "tutorials": "Учебники",
+    "separator1": "Документация"
+  }
 }
