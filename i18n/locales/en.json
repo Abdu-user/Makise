@@ -42,5 +42,8 @@
 
   "fl.partner": "Partner",
   "fl.ourPartner": "Our Partner",
-  "fl.becomeAPartner": "Become a Partner"
+  "fl.becomeAPartner": "Become a Partner",
+
+  "messaging": "Messaging",
+  "signUp": "Sign Up"
 }

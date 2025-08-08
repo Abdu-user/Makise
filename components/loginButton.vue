@@ -88,7 +88,7 @@
         class="mt-2"
         :text="'Theme'"
       />
-      <LanguageSelector class="mx-3 flex justify-between mt-1" />
+      <LanguageContainer class="mx-3 flex justify-between mt-1" />
     </CustomContainer>
   </div>
 </template>
@@ -101,6 +101,7 @@ const auth = useAuth();
 
 import { useAutoAnimate } from "@formkit/auto-animate/vue";
 import { deletePrivateKey } from "~/composables/useKeyPair";
+import LanguageContainer from "./LanguageContainer.vue";
 
 const [parent] = useAutoAnimate({
   duration: 150,
