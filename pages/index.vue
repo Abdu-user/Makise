@@ -125,4 +125,14 @@ div {
     transform: translateX(25%);
   }
 }
+@supports not (animation-timeline: view()) {
+  .slideLeft,
+  .slideRight {
+    opacity: 1;
+    transform: translateX(0) !important;
+    transition:
+      opacity 0.6s,
+      transform 0.6s;
+  }
+}
 </style>
