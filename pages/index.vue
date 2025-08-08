@@ -3,6 +3,7 @@
     :variant="'mainContainer'"
     class="max-w-7xl mx-auto max-md:overflow-clip grid gap-20"
   >
+    <span class="absolute bottom-0 right-0">6.1.4v</span>
     <HomeNavigation />
     <HomeFirstHero />
     <HomeSecondHero />
