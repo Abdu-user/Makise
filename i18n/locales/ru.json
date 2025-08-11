@@ -131,5 +131,59 @@
     "components": "Компоненты",
     "tutorials": "Учебники",
     "separator1": "Документация"
+  },
+  "account": {
+    "personalInfoTitle": "Личная информация",
+    "idProofTitle": "Подтверждение личности",
+    "routeName": "Аккаунт",
+    "feedback": {
+      "personalInfoSuccess": "Личная информация успешно обновлена.",
+      "personalInfoFailed": "Не удалось обновить личную информацию.",
+      "idProofSuccess": "Подтверждение личности успешно обновлено.",
+      "idProofFailed": "Не удалось обновить подтверждение личности."
+    }
+  },
+  "personalInfo": {
+    "fullnameSubtitle": "Имя",
+    "fullnamePlaceholder": "Ваше имя",
+    "birthdaySubtitle": "Дата рождения",
+    "birthdayPlaceholder": "Ваша дата рождения",
+    "ageSubtitle": "Возраст",
+    "agePlaceholder": "Ваш возраст",
+    "bloodGroupSubtitle": "Группа крови",
+    "bloodGroupPlaceholder": "Ваша группа крови",
+    "maritalStatusSubtitle": "Семейное положение",
+    "maritalStatusPlaceholder": "Ваше семейное положение",
+    "genderSubtitle": "Пол",
+    "genderPlaceholder": "Ваш пол",
+    "languagesSubtitle": "Языки",
+    "languagesPlaceholder": "Языки, на которых вы говорите",
+    "regionSubtitle": "Регион",
+    "regionPlaceholder": "Ваш регион",
+    "nationalitySubtitle": "Национальность",
+    "nationalityPlaceholder": "Ваша национальность"
+  },
+  "idProof": {
+    "atomicsSubtitle": "Атомикс",
+    "atomicsPlaceholder": "Ваш ID атомикс",
+    "pinSubtitle": "ПИН",
+    "pinPlaceholder": "Ваш персональный идентификационный номер",
+    "passportSubtitle": "Паспорт",
+    "passportPlaceholder": "Номер вашего паспорта",
+    "drivingLicenseSubtitle": "Водительское удостоверение",
+    "drivingLicensePlaceholder": "Номер вашего водительского удостоверения"
+  },
+  "profileNavLinks": {
+    "personal": "Личные данные",
+    "contact": "Контактные данные",
+    "education": "Образование",
+    "skills": "Навыки",
+    "account": "Аккаунт",
+    "work": "Работа"
+  },
+  "profileLayout": {
+    "routeName": "Мой профиль",
+    "pageTitle": "Профиль",
+    "metaDescription": "Страница профиля пользователя для аутентифицированных пользователей."
   }
 }

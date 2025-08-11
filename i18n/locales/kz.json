@@ -131,5 +131,59 @@
     "components": "Компоненттер",
     "tutorials": "Оқулықтар",
     "separator1": "Құжаттама"
+  },
+  "account": {
+    "personalInfoTitle": "Жеке ақпарат",
+    "idProofTitle": "Жеке куәлік",
+    "routeName": "Есептік жазба",
+    "feedback": {
+      "personalInfoSuccess": "Жеке ақпарат сәтті жаңартылды.",
+      "personalInfoFailed": "Жеке ақпаратты жаңарту сәтсіз аяқталды.",
+      "idProofSuccess": "Жеке куәлік сәтті жаңартылды.",
+      "idProofFailed": "Жеке куәлікті жаңарту сәтсіз аяқталды."
+    }
+  },
+  "personalInfo": {
+    "fullnameSubtitle": "Аты-жөні",
+    "fullnamePlaceholder": "Аты-жөніңіз",
+    "birthdaySubtitle": "Туған күні",
+    "birthdayPlaceholder": "Туған күніңіз",
+    "ageSubtitle": "Жасы",
+    "agePlaceholder": "Жасыңыз",
+    "bloodGroupSubtitle": "Қан тобы",
+    "bloodGroupPlaceholder": "Қан тобыңыз",
+    "maritalStatusSubtitle": "Отбасылық жағдайы",
+    "maritalStatusPlaceholder": "Отбасылық жағдайыңыз",
+    "genderSubtitle": "Жынысы",
+    "genderPlaceholder": "Жынысыңыз",
+    "languagesSubtitle": "Тілдер",
+    "languagesPlaceholder": "Сөйлейтін тілдеріңіз",
+    "regionSubtitle": "Аймағы",
+    "regionPlaceholder": "Аймағыңыз",
+    "nationalitySubtitle": "Ұлты",
+    "nationalityPlaceholder": "Ұлтыңыз"
+  },
+  "idProof": {
+    "atomicsSubtitle": "Атомикалық",
+    "atomicsPlaceholder": "Атомикалық ID",
+    "pinSubtitle": "PIN",
+    "pinPlaceholder": "Жеке сәйкестендіру нөміріңіз",
+    "passportSubtitle": "Паспорт",
+    "passportPlaceholder": "Паспорт нөміріңіз",
+    "drivingLicenseSubtitle": "Жүргізуші куәлігі",
+    "drivingLicensePlaceholder": "Жүргізуші куәлігіңіздің нөмірі"
+  },
+  "profileNavLinks": {
+    "personal": "Жеке",
+    "contact": "Байланыс",
+    "education": "Білім",
+    "skills": "Дағдылар",
+    "account": "Есептік жазба",
+    "work": "Жұмыс"
+  },
+  "profileLayout": {
+    "routeName": "Менің профилім",
+    "pageTitle": "Профиль",
+    "metaDescription": "Расталған пайдаланушыларға арналған пайдаланушы профилі беті."
   }
 }

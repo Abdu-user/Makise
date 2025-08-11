@@ -12,7 +12,7 @@
       class="capitalize"
       :class="state.newColors ? 'text-text-muted hover:text-text' : 'text-T3TextColor dark:text-darkT3TextColor'"
     >
-      {{ route.name }}
+      {{ $t(`profileNavLinks.${route.name.toLowerCase()}`) }}
     </CustomNuxtLink>
   </div>
 </template>
@@ -20,14 +20,19 @@
 <script setup lang="ts">
 import { ProfileRoutes } from "~/constants";
 import { useGlobalSettingStore } from "~/store/globalSetting";
+import { useI18n } from "vue-i18n"; // Import useI18n
+
 const state = useGlobalSettingStore();
+const { t } = useI18n(); // Initialize t for translations
 
 const normalizedRoutes = computed(() =>
   ProfileRoutes.map((route, i) => {
     return {
       path: "/profile/" + (i === 0 ? "" : route.toLowerCase()),
-      name: route,
+      name: route, // Keep original name for key, but use it for translation lookup
     };
   })
 );
 </script>
+
+<style scoped></style>

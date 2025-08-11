@@ -9,11 +9,16 @@
 </template>
 <script lang="ts" setup>
 import { useGlobalSettingStore } from "~/store/globalSetting";
+import { useI18n } from "vue-i18n"; // Import useI18n
 
 const state = useGlobalSettingStore();
-state.setRouteName("My Profile");
+const { t } = useI18n(); // Initialize t for translations
+
+// Set route name using i18n
+state.setRouteName(t("profileLayout.routeName"));
+
 useHead({
-  title: "Profile",
-  meta: [{ name: "description", content: "User profile page for authenticated users." }],
+  title: t("profileLayout.pageTitle"),
+  meta: [{ name: "description", content: t("profileLayout.metaDescription") }],
 });
 </script>

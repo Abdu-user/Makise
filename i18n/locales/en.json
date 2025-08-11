@@ -134,5 +134,59 @@
     "components": "Components",
     "tutorials": "Tutorials",
     "separator1": "documentation"
+  },
+  "account": {
+    "personalInfoTitle": "Personal Information",
+    "idProofTitle": "ID Proof",
+    "routeName": "Account",
+    "feedback": {
+      "personalInfoSuccess": "Personal information updated successfully.",
+      "personalInfoFailed": "Failed to update personal information.",
+      "idProofSuccess": "ID Proof updated successfully.",
+      "idProofFailed": "Failed to update ID Proof."
+    }
+  },
+  "personalInfo": {
+    "fullnameSubtitle": "Name",
+    "fullnamePlaceholder": "Your Name",
+    "birthdaySubtitle": "Birthday",
+    "birthdayPlaceholder": "Your Birthday",
+    "ageSubtitle": "Age",
+    "agePlaceholder": "Your Age",
+    "bloodGroupSubtitle": "Blood Group",
+    "bloodGroupPlaceholder": "Your Blood Group",
+    "maritalStatusSubtitle": "Marital Status",
+    "maritalStatusPlaceholder": "Your Marital Status",
+    "genderSubtitle": "Gender",
+    "genderPlaceholder": "Your Gender",
+    "languagesSubtitle": "Languages",
+    "languagesPlaceholder": "Languages You Speak",
+    "regionSubtitle": "Region",
+    "regionPlaceholder": "Your Region",
+    "nationalitySubtitle": "Nationality",
+    "nationalityPlaceholder": "Your Nationality"
+  },
+  "idProof": {
+    "atomicsSubtitle": "Atomics",
+    "atomicsPlaceholder": "Your Atomics ID",
+    "pinSubtitle": "PIN",
+    "pinPlaceholder": "Your Personal Identification Number",
+    "passportSubtitle": "Passport",
+    "passportPlaceholder": "Your Passport Number",
+    "drivingLicenseSubtitle": "Driving License",
+    "drivingLicensePlaceholder": "Your Driving License Number"
+  },
+  "profileNavLinks": {
+    "personal": "Personal",
+    "contact": "Contact",
+    "education": "Education",
+    "skills": "Skills",
+    "account": "Account",
+    "work": "Work"
+  },
+  "profileLayout": {
+    "routeName": "My Profile",
+    "pageTitle": "Profile",
+    "metaDescription": "User profile page for authenticated users."
   }
 }

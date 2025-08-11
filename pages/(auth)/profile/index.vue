@@ -1,33 +1,29 @@
 <template>
-  <!-- <InfoCard -->
   <div
     class="grid md:grid-cols-2 gap-7 pb-10 items-start"
     v-if="state.userData?.personalInformation || isMounted"
   >
-    <!-- <ClientOnly> -->
     <InfoCard
-      :title="'Personal Information'"
+      :title="$t('account.personalInfoTitle')"
       :is-editing="isEditingPersonal"
       @save="updatePersonalInfo"
       @toggle="isEditingPersonal = !isEditingPersonal"
       @cancel="resetPersonalInfo"
     >
       <div class="mt-4 grid gap-3">
-        <!-- <ClientOnly> -->
         <InfoCardInput
           :is-editing="isEditingPersonal"
           v-for="personal in personalInformations"
           :key="personal.variableName"
           :value="personalInfo[personal.variableName as keyof typeof personalInfo]"
           v-model="personalInfo[personal.variableName as keyof typeof personalInfo]"
-          :subtitle="personal.subtitle"
-          :placeholder="personal.placeholder"
+          :subtitle="$t(personal.subtitleKey)"
+          :placeholder="$t(personal.placeholderKey)"
         />
-        <!-- </ClientOnly> -->
       </div>
     </InfoCard>
     <InfoCard
-      :title="'ID Proof'"
+      :title="$t('account.idProofTitle')"
       :is-editing="isEditingIDProof"
       @save="updateIDProof"
       @toggle="isEditingIDProof = !isEditingIDProof"
@@ -39,18 +35,20 @@
           :is-editing="isEditingIDProof"
           :value="IDProof[idProof.variableName as keyof typeof IDProof]"
           v-model="IDProof[idProof.variableName as keyof typeof IDProof]"
-          :subtitle="idProof.subtitle"
-          :placeholder="idProof.placeholder"
+          :subtitle="$t(idProof.subtitleKey)"
+          :placeholder="$t(idProof.placeholderKey)"
         />
       </div>
     </InfoCard>
-    <!-- </ClientOnly> -->
   </div>
 </template>
 <script setup lang="ts">
 import { IDProofs, personalInformations } from "~/constants";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import type { IDProofType, PersonalInfoType } from "~/types/type";
+import { useI18n } from "vue-i18n"; // Import useI18n
+
+const { t } = useI18n(); // Initialize t for translations
 
 definePageMeta({
   layout: "profile",
@@ -76,15 +74,15 @@ const personalInfo = ref<PersonalInfoType>({
   nationality: "",
 });
 const isEditingPersonal = ref(false);
-onMounted;
+
 async function updatePersonalInfo() {
   if (!state.user?.$id) return;
   try {
-    const updateUserPerInf = await useAppwriteDocumentUpdate(state.user?.$id, { personalInformation: JSON.stringify(personalInfo.value) });
-    state.setFeedback("success", "Personal information updated successfully.");
+    await useAppwriteDocumentUpdate(state.user?.$id, { personalInformation: JSON.stringify(personalInfo.value) });
+    state.setFeedback("success", t("account.feedback.personalInfoSuccess"));
   } catch (error) {
     console.error("Error updating personal information:", error);
-    state.setFeedback("error", "Failed to update personal information.");
+    state.setFeedback("error", t("account.feedback.personalInfoFailed"));
   }
 }
 const resetPersonalInfo = () => {
@@ -108,11 +106,11 @@ const isEditingIDProof = ref(false);
 const updateIDProof = async () => {
   if (!state.user?.$id) return;
   try {
-    const updateUserPerInf = await useAppwriteDocumentUpdate(state.user?.$id, { IDProof: JSON.stringify(IDProof.value) });
-    state.setFeedback("success", "ID Proof updated successfully.");
+    await useAppwriteDocumentUpdate(state.user?.$id, { IDProof: JSON.stringify(IDProof.value) });
+    state.setFeedback("success", t("account.feedback.idProofSuccess"));
   } catch (error) {
     console.error("Error updating ID Proof:", error);
-    state.setFeedback("error", "Failed to update ID Proof.");
+    state.setFeedback("error", t("account.feedback.idProofFailed"));
   }
 };
 const resetIDProof = () => {
@@ -126,5 +124,7 @@ watch(
 
 onMounted(() => resetIDProof());
 
-onMounted(() => state.setRouteName("Profile"));
+onMounted(() => state.setRouteName(t("account.routeName")));
 </script>
+
+<style scoped></style>
