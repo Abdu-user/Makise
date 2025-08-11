@@ -173,6 +173,7 @@ async function areCustomKeyPairAlreadyExists(password: string) {
   await useKeyPair(password);
 }
 async function isEncryptionReadyIfNot_createAgain() {
+  deletePrivateKey();
   const user = await useAuth().current();
   const userData = await useAppwriteDocumentGet(user.$id);
   const { encryptedPrivateKey, publicKey: savedPublicKey } = userData;

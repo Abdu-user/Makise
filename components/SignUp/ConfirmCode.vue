@@ -82,6 +82,7 @@ async function handleVerifyCode(code: string) {
   }
 
   codeInputMessage.value = "";
+  deletePrivateKey();
   try {
     const res = await verifyCode(signUpState.email, code);
     if (!res.success) throw res;
