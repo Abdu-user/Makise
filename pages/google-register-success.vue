@@ -5,6 +5,7 @@ import { useGlobalSettingStore } from "~/store/globalSetting";
 
 onMounted(async () => {
   try {
+    saveDeviceToken();
     const account = useNuxtApp().$appwrite.account;
     const user = await account.get();
     const email = user.email || "";

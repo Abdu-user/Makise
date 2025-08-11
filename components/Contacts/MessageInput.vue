@@ -46,6 +46,7 @@
 </template>
 
 <script setup lang="ts">
+import { addContact } from "~/composables/(contacts)/useContact";
 import { getChatId } from "~/composables/(contacts)/useRealtimeUpdateMessages";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
@@ -128,19 +129,21 @@ async function sendMessage(text: string) {
     });
   }
   async function addToContact() {
+    console.log("ee");
     if (messagingState.messages.length > 0) return;
     if (!route.params.username) return;
     if (typeof route.params.username === "object") return;
     const isContact = await findContact(route.params?.username);
-    if (isContact && isContact.contactFound) {
-      if (!isContact.userAddedToContact || !isContact.contactAddedToTheUser) {
-        const isContactAdded = await findContact(route.params?.username, true);
+    if (!isContact || !isContact.contactFound) return;
+    if (!isContact.userAddedToContact || !isContact.contactAddedToTheUser) {
+      // add contact to user
+      const isContactAdded = await findContact(route.params?.username, true);
 
-        if (!isContactAdded?.userAddedToContact || !isContactAdded?.contactAddedToTheUser) {
-          console.error("Contact is not added: ", isContactAdded);
-        } else {
-          await messagingState.getContacts();
-        }
+      if (!isContactAdded?.userAddedToContact || !isContactAdded?.contactAddedToTheUser) {
+        console.error("Contact is not added: ", isContactAdded);
+      } else {
+        await messagingState.getContacts();
+        console.log("Contact has been added successfully");
       }
     }
   }
