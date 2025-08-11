@@ -95,6 +95,7 @@
         {{ $t("signUp.signInLink") }}
       </CustomNuxtLink>
     </p>
+    <GoogleSignButton />
   </CustomContainer>
 
   <!-- Modal Verify Modal -->

@@ -82,6 +82,7 @@
         >{{ $t("signIn.signUpLink") }}</NuxtLink
       >
     </p>
+    <GoogleSignButton />
     <ModalsError
       @handleOk="notifyError = ''"
       :isOpen="Boolean(notifyError)"

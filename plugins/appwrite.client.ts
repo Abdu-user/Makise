@@ -1,5 +1,5 @@
 // plugins/appwrite.client.ts
-import { Client, Account, Databases, Storage, Messaging } from "appwrite";
+import { Client, Account, Databases, Storage, Messaging, OAuthProvider } from "appwrite";
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
@@ -27,6 +27,7 @@ export default defineNuxtPlugin(() => {
         databases,
         storage,
         messaging,
+        OAuthProvider,
       },
     },
   };

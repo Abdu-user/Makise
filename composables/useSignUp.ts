@@ -186,3 +186,19 @@ export async function saveDeviceToken() {
   });
   console.log("token:", token);
 }
+
+export const loginWithGoogle = async () => {
+  const { $appwrite } = useNuxtApp();
+  const account = $appwrite.account;
+  const OAuthProvider = $appwrite.OAuthProvider;
+  const config = useRuntimeConfig();
+  try {
+    const res = await account.createOAuth2Session(
+      OAuthProvider.Google,
+      config.public.appwriteRecoveryUrlPage + "/google-register-success", // Success URL (your site)
+      config.public.appwriteRecoveryUrlPage + "/login-failed" // failure
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
