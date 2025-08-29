@@ -14,8 +14,7 @@ import { useI18n } from "vue-i18n"; // Import useI18n
 const state = useGlobalSettingStore();
 const { t } = useI18n(); // Initialize t for translations
 
-// Set route name using i18n
-state.setRouteName(t("profileLayout.routeName"));
+state.setRouteName("Profile");
 
 useHead({
   title: t("profileLayout.pageTitle"),

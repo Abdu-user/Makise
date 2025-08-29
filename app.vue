@@ -7,7 +7,7 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-    <DebugControl v-if="inDev" />
+    <!-- <DebugControl v-if="inDev" /> -->
     <ModalsDynamicFeedback />
   </CustomContainer>
 </template>

@@ -4,7 +4,7 @@
     :id="homeHashLinks[0]"
   >
     <div class="grid justify-start pl-4 max-md:pr-4 md:ml-11 md:w-[40%] pb-10">
-      <div class="pt-20 grid items-start md:h-full justify-evenly">
+      <div class="pt-20 md:pt-28 grid items-start md:h-full justify-evenly">
         <p
           class="px-4 py-2 inline-block rounded-lg slideLeft"
           style="background: var(--bg-gradient)"
@@ -41,6 +41,11 @@
             </template>
           </i18n-t>
         </p>
+        <home-button-from-home
+          class="w-full mt-8 slideLeft"
+          @click="$router.push('/sign-up')"
+          >{{ $t("signUp.title") }}</home-button-from-home
+        >
         <div class="relative h-20 w-full max-md:mt-4">
           <ul class="md:absolute top-0 flex flex-wrap md:w-[140%] gap-5 md:whitespace-nowrap slideLeft">
             <li

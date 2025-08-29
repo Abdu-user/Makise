@@ -24,7 +24,7 @@
           :variant="'edit'"
           class="w-fit !p-0 -mt-2"
           :size="'lg'"
-          placeholder="Type a message..."
+          :placeholder="$t('message.inputPlaceholder')"
           @keydown.enter="sendMessage(messagingState.message)"
           type="text"
         />

@@ -151,8 +151,8 @@ function onSignIn() {
 }
 
 function resetInputValues() {
-  email.value = state.isPrefillTheUserField ? "vuereact517@gmail.com" : "";
-  password.value = state.isPrefillTheUserField ? "12345678" : "";
+  email.value = "";
+  password.value = "";
 }
 
 onMounted(() => {
@@ -162,16 +162,6 @@ onMounted(() => {
 
 onUnmounted(() => state.removeSingleResetFunction(resetInputValues));
 
-async function areCustomKeyPairAlreadyExists(password: string) {
-  const user = await useAuth().current();
-  const userData = await useAppwriteDocumentGet(user.$id);
-  const { encryptedPrivateKey, publicKey: savedPublicKey } = userData;
-  if (encryptedPrivateKey && savedPublicKey) {
-    return console.log("Key pair already exists, skipping generation", savedPublicKey, encryptedPrivateKey);
-  }
-
-  await useKeyPair(password);
-}
 async function isEncryptionReadyIfNot_createAgain() {
   deletePrivateKey();
   const user = await useAuth().current();
@@ -182,7 +172,12 @@ async function isEncryptionReadyIfNot_createAgain() {
     const decryptedPrivateKey = await getDecryptedPrivateKey(password.value);
     savePrivateKey(decryptedPrivateKey);
   } else {
-    createEncryption(password.value);
+    try {
+      createEncryption(password.value);
+    } catch (error) {
+      console.error("Error during encryption setup:", error);
+      throw new Error("Encryption setup failed: " + error);
+    }
   }
 }
 </script>

@@ -1,8 +1,5 @@
 <template>
-  <button
-    class="text-[var(--bg)] rounded-xl bg-gradient w-fit px-6 py-3"
-    @click="$router.push('/contacts')"
-  >
+  <button class="text-[var(--bg)] rounded-xl bg-gradient w-fit px-6 py-3">
     <slot></slot>
   </button>
 </template>

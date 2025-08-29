@@ -89,3 +89,7 @@ export const footerLinks = [
     links: ["fl.ourPartner", "fl.becomeAPartner"],
   },
 ];
+export const pcMobile = [
+  { text: "pc" as "pc", name: "material-symbols:computer" },
+  { text: "mobile" as "mobile", name: "material-symbols:smartphone" },
+];

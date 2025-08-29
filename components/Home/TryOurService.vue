@@ -7,7 +7,11 @@
         <h2 class="text-4xl md:text-5xl font-bold">{{ $t("Let'sTryOurServiceNow") }}!</h2>
         <p class="mt-10 text-[var(--text-ghost)]">{{ $t("LetsTryParagraph") }}</p>
       </div>
-      <HomeButtonFromHome class="h-fit max-md:w-full">{{ $t("getStarted") }}</HomeButtonFromHome>
+      <HomeButtonFromHome
+        @click="$router.push('/contacts')"
+        class="h-fit max-md:w-full"
+        >{{ $t("getStarted") }}</HomeButtonFromHome
+      >
     </div>
   </div>
 </template>

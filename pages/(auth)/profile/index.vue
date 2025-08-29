@@ -124,7 +124,7 @@ watch(
 
 onMounted(() => resetIDProof());
 
-onMounted(() => state.setRouteName(t("account.routeName")));
+onMounted(() => state.setRouteName("Profile"));
 </script>
 
 <style scoped></style>

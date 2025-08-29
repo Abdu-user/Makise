@@ -26,6 +26,7 @@
       class="absolute right-2"
       icon
       size="md"
+      :aria-label="$t('common.togglePasswordVisibility')"
       variant="text"
       :name="!showPassword ? 'material-symbols-light:eye-tracking-outline-sharp' : 'material-symbols-light:eye-tracking-rounded'"
       @click="toggleShowPassword"

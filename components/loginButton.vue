@@ -19,7 +19,7 @@
           v-if="!state.user"
           to="/sign-in"
           @click="setRoutePath"
-          class="flex items-center justify-center border border-primary bg-accent hover:bg-active/5 w-[90%] h-[90%] hover:text-secondary text-textHeader font-semibold rounded-full"
+          class="flex items-center justify-center border border-primary bg-bg hover:bg-active/5 w-[90%] h-[90%] text-text-muted text-sm hover:text-text font-semibold rounded-full"
         >
           {{ $t("headerNav.loginButton") }}
         </NuxtLink>

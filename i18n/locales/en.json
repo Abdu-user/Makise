@@ -45,6 +45,10 @@
   "fl.becomeAPartner": "Become a Partner",
 
   "messaging": "Messaging",
+  "message": {
+    "inputPlaceholder": "Type a message..."
+  },
+
   "signIn": {
     "title": "Sign In",
     "emailLabel": "Email",
@@ -188,5 +192,75 @@
     "routeName": "My Profile",
     "pageTitle": "Profile",
     "metaDescription": "User profile page for authenticated users."
+  },
+  "common": {
+    "togglePasswordVisibility": "Toggle password visibility",
+    "step": "Step"
+  },
+  "projectDetails": {
+    "title": "Project Overview",
+    "developerNameLabel": "Developer",
+    "developerName": "Abdurahman Narbekov",
+    "roleLabel": "Primary Role",
+    "role": "Frontend  Developer (Nuxt 3, Vue 3, TailwindCSS)",
+    "overviewLabel": "Project Summary",
+    "overview": "A real-time messaging platform built with Nuxt 3 and Vue 3, designed for security, speed, and multilingual access. It features client-side encryption, seamless authentication via Appwrite and Google, and responsive UI powered by TailwindCSS. The architecture is modular, thoroughly tested with Cypress, and optimized for scalable growth.",
+    "highlightsLabel": "Key Achievements",
+    "highlights": "• Implemented full internationalization (English, Russian, Kazakh) using Nuxt i18n.\n• Integrated secure authentication and data management with Appwrite and Firebase.\n• Automated end-to-end tests with Cypress to ensure stability and reliability.\n• Developed responsive UI with TailwindCSS and advanced Vue animations.\n• Enhanced security using cryptography powered by libsodium.",
+    "techStackLabel": "Core Technologies",
+    "techStack": "BBBFrontend:$BB Nuxt 3, Vue 3, TailwindCSS\nBBBBackend & APIs:$BB Appwrite, Firebase (Client & Admin), Nodemailer\nBBBState Management:$BB Pinia\nBBBInternationalization:$BB nuxtjs/i18n, intlify/unplugin-vue-i18n\nBBBTesting:$BB Cypress (E2E automation)\nBBBUtilities:$BB dayjs for date and time processing\nBBBSecurity:$BB libsodium for cryptography",
+    "additionalInfoLabel": "Additional Notes",
+    "additionalInfo": "The application was architected with modular components and clean state management for long-term maintainability. It includes real-time data synchronization, secure cloud functions, and robust form validation using Vuelidate. Deployment pipelines were optimized for speed and reliability, while automated testing ensured consistent behavior across updates.",
+    "languagesLabel": "Supported Languages",
+    "languages": "English, Russian, Kazakh ",
+    "externalLinks": {
+      "label": "Relevant Links",
+      "githubRepo": {
+        "label": "GitHub Repository",
+        "url": "https://github.com/Abdu-user/Makise",
+        "description": "Source code and development history"
+      },
+      "liveDemo": {
+        "label": "Live Demo",
+        "url": "https://your-live-demo-link-here.com",
+        "description": "Deployed application for public access"
+      },
+      "figmaDesign": {
+        "label": "Figma Design",
+        "url": "https://www.figma.com/design/C27wTG2gSKtzB3l5Uwpqcd/Makise-landing-page?m=auto&t=exnjwT833V3Wq8Vn-6",
+        "description": "UI/UX design files and prototype"
+      },
+      "otherProject": {
+        "label": "Other Project",
+        "url": "https://charles-kahn.netlify.app",
+        "description": "Additional work demonstrating related skills"
+      }
+    },
+    "whatCanYouDoHere": "What can you do in this app",
+    "authorize": "Authenticate ",
+    "authorizeText": "You can create an account and sign up. Alternatively, you can sign in with Google.",
+    "authorizeHowTo": "How to sign up?",
+    "authorizeSignIn": "Sign in Page",
+    "profile": "Profile Page",
+    "profileText": "You can view and edit your profile information, including your name, username, profile image and profile background image.",
+    "profileHowTo": "How to edit your profile?",
+    "messaging": "Messaging",
+    "messagingText": "You can send messages to your friends and family, and receive notifications when they reply (if they are on windows or an android).",
+    "messagingHowTo": "How to start sending messages?"
+  },
+  "routes": {
+    "about": "About",
+    "contacts": "Contacts",
+    "home": "Home",
+    "profile": "Profile",
+    "documentation": "Documentation",
+    "components": "Components",
+    "tutorials": "Tutorials",
+    "account": "Account"
+  },
+  "tutorial": {
+    "howToSignUpDesc": "There are two ways to sign up: \n 1) using email and password, or \n 2) using Google account. ",
+    "howtoSignUpWithEmail": "To sign up with email and password, go to the Sign Up page, enter your email, password and confirm password, then click the 'Receive A Code' button. You will receive a verification code via email. Enter the code to complete the sign-up process.",
+    "howtoSignUpWithGoogle": "To sign up with Google, go to the Sign In or Sign Up pages and click the 'Google' button. You will be redirected to Google's authentication page. After signing in, you will be redirected to the profile page and your account will be created."
   }
 }

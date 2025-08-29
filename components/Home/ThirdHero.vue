@@ -31,7 +31,7 @@
           </div>
         </div>
         <a
-          href="/tutorials/messaging/get-started"
+          href="/about"
           class="w-full h-14 border link-style text-[var(--text-muted)] border-[#F56E99] rounded-2xl flex items-center justify-center mt-5 slideRight break-words hyphens-manual px-3"
           >{{ $t("LearnHowToStartMessaging") }} -></a
         >

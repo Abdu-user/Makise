@@ -1,8 +1,9 @@
 <template>
   <CustomTransitions :variant="'drop-down'">
-    <div
+    <button
       v-if="globalState.feedback.exists"
       class="fixed top-20 left-0 right-0 z-50"
+      @click="globalState.setFeedback('idle', '')"
     >
       <div
         class="p-4 w-fit mx-auto rounded-lg border border-1 border-gray-500/30"
@@ -11,7 +12,7 @@
       >
         {{ globalState.feedback.message }}
       </div>
-    </div>
+    </button>
   </CustomTransitions>
 </template>
 <script setup lang="ts">

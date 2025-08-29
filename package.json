@@ -7,7 +7,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
@@ -36,6 +37,7 @@
     "@types/node": "^22.15.21",
     "@types/nodemailer": "^6.4.17",
     "autoprefixer": "^10.4.21",
+    "cypress": "^14.5.4",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17"
   }

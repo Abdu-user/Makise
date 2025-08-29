@@ -9,7 +9,11 @@
           <span v-html="$t('YouTypeMessageHeader').replace(/\n/g, '<br />')"></span>
         </h1>
         <p class="font-semibold text-sm slideLeft">{{ $t("YouTypeMessageParagraph") }}</p>
-        <HomeButtonFromHome class="slideLeft h-fit w-full md:w-fit">{{ $t("getStarted") }}</HomeButtonFromHome>
+        <HomeButtonFromHome
+          class="slideLeft h-fit w-full md:w-fit"
+          @click="$router.push('/contacts')"
+          >{{ $t("getStarted") }}</HomeButtonFromHome
+        >
       </div>
       <div class="flex-col flex">
         <HomeRewardsCard
