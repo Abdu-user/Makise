@@ -16,7 +16,7 @@
           />
         </div>
         <ConditionalNavTitle>
-          <span class="font-bold text-xl md:text-xl capitalize text-text">{{ $t("routes." + state.routeName.toLowerCase()) }}</span>
+          <span class="font-bold text-base md:text-xl capitalize text-text">{{ $t("routes." + state.routeName.toLowerCase()) }}</span>
         </ConditionalNavTitle>
 
         <div class="flex items-center">
