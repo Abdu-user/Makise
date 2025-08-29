@@ -11,6 +11,7 @@
       :title="$t('projectDetails.authorizeHowTo')"
       :description="$t('signUpDescription')"
       :number="1"
+      :initial-state="$route.query.open === 'how-to-sign-up'"
     >
       <p class="font-bold text-text-muted text-lg mb-2">{{ $t("tutorial.howToSignUpDesc") }}</p>
       <p class="text-text-muted">
@@ -37,6 +38,18 @@
         alt=""
       />
     </TutorialsStepsCard>
+    <TutorialsStepsCard
+      :title="$t('projectDetails.profileHowTo')"
+      :description="$t('signUpDescription')"
+      :number="2"
+      >Beta</TutorialsStepsCard
+    >
+    <TutorialsStepsCard
+      :title="$t('projectDetails.messagingHowTo')"
+      :description="$t('signUpDescription')"
+      :number="3"
+      >Beta</TutorialsStepsCard
+    >
   </div>
   <div class="sticky top-20 bottom-0 bg-green-600 max-xl:hidden">ssss</div>
 </template>

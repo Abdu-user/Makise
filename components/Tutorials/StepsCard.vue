@@ -16,8 +16,7 @@
 </template>
 
 <script setup lang="ts">
-const isOpen = ref(true);
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     required: true,
@@ -30,7 +29,12 @@ defineProps({
     type: Number,
     required: true,
   },
+  initialState: {
+    type: Boolean,
+    default: false,
+  },
 });
+const isOpen = ref(props.initialState);
 </script>
 
 <style scoped></style>

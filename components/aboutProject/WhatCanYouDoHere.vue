@@ -8,7 +8,7 @@
       {{ $t("projectDetails.authorizeText") }}
     </p>
     <a
-      href="/tutorials#sign-up"
+      href="/tutorials?open=how-to-sign-up"
       class="text-base text-blue-400"
     >
       {{ $t("projectDetails.authorizeHowTo") }}
