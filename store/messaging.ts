@@ -128,5 +128,6 @@ export const useMessagingStore = defineStore("messaging", {
         console.error(error);
       }
     },
+    async refreshContactsWithMessage() {},
   },
 });

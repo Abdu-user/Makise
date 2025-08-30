@@ -26,9 +26,19 @@
           ref="modal"
         >
           <div style="display: flex; flex-direction: column; gap: 1rem">
+            <ContactsNavLink
+              v-if="contactFound"
+              :last-active="' '"
+              :last-message="''"
+              :my-last-message-status="'sending'"
+              :name="contactFound.name || contactFound.lastName || contactFound.username"
+              :profile-img-src="contactFound.profileImage"
+              :to="`/contacts/${contactFound.username}`"
+            />
             <CustomLabel
               for="searchContact"
               class="text-center"
+              v-else
             >
               Search new Contact
             </CustomLabel>
@@ -67,8 +77,10 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { getContactNavLinks } from "~/composables/(contacts)/useContact";
 import { useGlobalSettingStore } from "~/store/globalSetting";
 import { useMessagingStore } from "~/store/messaging";
+import type { AddContactResultsType, ContactType } from "~/types/messaging";
 defineProps({
   buttonClass: { type: String, default: "" },
   modalClass: { type: String, default: "" },
@@ -79,7 +91,7 @@ const messagingState = useMessagingStore();
 const showModal = ref(false);
 const searchQuery = ref("");
 
-const contactFound = ref(false);
+const contactFound = ref<ContactType | null>(null);
 
 const timerId = ref();
 watch(
@@ -89,8 +101,7 @@ watch(
     timerId.value = setTimeout(async () => {
       const contact = await findContact(searchQuery.value);
       if (contact) {
-        contactFound.value = contact.contactFound as boolean;
-        console.log(contact);
+        contactFound.value = contact.contact || null;
       } else {
         console.error("Contact is not found: ", contact);
       }
@@ -104,9 +115,15 @@ async function addContact() {
     const contactMsg = await contactFound.json();
 
     if (contactMsg.contactAlreadyExists) throw contactMsg;
+
+    const contact = await messagingState.getContacts();
+    if (contact) {
+      await getContactNavLinks(contact);
+    } else {
+      throw new Error("Could not fetch contacts after adding new contact");
+    }
     state.setFeedback("success", "contact has been added1");
     showModal.value = false;
-    await messagingState.getContacts();
   } catch (error: any) {
     state.setFeedback("error", error.error);
     console.error(error);
