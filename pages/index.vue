@@ -5,10 +5,10 @@
   >
     <span class="fixed bottom-0 right-0">7.0v</span>
     <HomeNavigation />
-    <HomeFirstHero />
-    <HomeSecondHero />
+    <!-- <HomeFirstHero /> -->
+    <HomeSecondHero class="mt-20" />
     <HomeThirdHero />
-    <HomeFourthHero />
+    <!-- <HomeFourthHero /> -->
     <HomeTryOurService />
     <HomeFooter />
   </CustomContainer>
