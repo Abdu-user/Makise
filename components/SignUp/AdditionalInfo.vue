@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full">
-    <video
+    <!-- <video
       src="/videos/MissMakima.mp4"
       loop
       autoplay
@@ -9,7 +9,7 @@
       playsinline
     >
       Your browser does not support the video tag.
-    </video>
+    </video> -->
   </div>
 </template>
 
