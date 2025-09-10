@@ -129,13 +129,3 @@ self.addEventListener("notificationclick", function (event) {
     })
   );
 });
-
-self.addEventListener("install", (event) => {
-  console.log("[SW] Installed");
-  self.skipWaiting();
-});
-
-self.addEventListener("activate", (event) => {
-  console.log("[SW] Activated");
-  event.waitUntil(self.clients.claim());
-});
