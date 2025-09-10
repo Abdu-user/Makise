@@ -29,6 +29,10 @@ export default defineNuxtConfig({
         },
       ],
     },
+    workbox: {
+      navigateFallback: "/", // 👈 this makes Workbox fall back to your root HTML
+      navigateFallbackAllowlist: [/^\/$/], // only apply to homepage
+    },
   },
 
   i18n: {
