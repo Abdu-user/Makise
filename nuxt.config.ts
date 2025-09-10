@@ -2,34 +2,8 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
-
   plugins: ["~/plugins/firebase.client.ts"],
-
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/icon", "@vite-pwa/nuxt", "@nuxt/image", "@nuxtjs/i18n"],
-
-  pwa: {
-    registerType: "autoUpdate",
-    manifest: {
-      name: "Makise",
-      short_name: "Makise",
-      theme_color: "#e9e2e6", // ⚠️ you had invalid hsl() here
-      background_color: "#e9e2e6",
-      display: "standalone",
-      start_url: "/",
-      icons: [
-        {
-          src: "/pwa-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-        },
-        {
-          src: "/pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-        },
-      ],
-    },
-  },
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/icon", "@nuxt/image", "@nuxtjs/i18n"],
 
   i18n: {
     vueI18n: "./i18n.config.ts", // or .js
