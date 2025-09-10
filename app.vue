@@ -151,7 +151,7 @@ body {
 
 :root {
   /* hsl (fallback color) */
-  --bg-dark: hsl(323 15% 90%);
+  --bg-dark: hsl(326, 14%, 90%);
   --bg: hsl(323 31% 95%);
   --bg-light: hsl(323 100% 100%);
   --text: hsl(321 36% 5%);
